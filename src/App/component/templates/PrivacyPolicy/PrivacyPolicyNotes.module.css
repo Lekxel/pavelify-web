@@ -1,0 +1,21 @@
+.PrivacyPolicyNotes {
+  margin: 7rem 0rem;
+}
+.heading {
+  color: #333;
+  margin-bottom: 2rem;
+}
+.para {
+  margin-bottom: 1rem;
+  width: 80%;
+}
+
+.BeforeList{
+  font-size: 2rem;
+}
+
+@media screen and (max-width:600px) {
+  .BeforeList{
+    font-size: 1.5rem;
+  }
+}

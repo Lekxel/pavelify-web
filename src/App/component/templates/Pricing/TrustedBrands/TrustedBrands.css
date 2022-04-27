@@ -1,0 +1,35 @@
+.TrustedBrands {
+  background-color: rgb(236, 236, 236);
+  padding: 5rem 0rem;
+}
+.TrustedBrands .content_wrapper > h1 {
+  color: #353a40;
+  font-size: 1.5rem;
+  line-height: 1.25em;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 3rem;
+}
+
+.logos_wrapper {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr 2fr 1fr 1fr 2fr;
+  justify-items: center;
+  grid-gap: 2rem;
+  align-items: center;
+}
+.logos_wrapper img {
+  width: 100%;
+}
+@media screen and (max-width: 850px) {
+  .logos_wrapper {
+    justify-items: center;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .logos_wrapper img {
+    width: 150px;
+  }
+  .logos_wrapper > * + * {
+    margin-top: 1rem;
+  }
+}

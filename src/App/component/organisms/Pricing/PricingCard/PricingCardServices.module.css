@@ -1,0 +1,27 @@
+.PricingCardServices {
+  width: 100%;
+  margin-top: 2rem;
+
+  margin-left: 0px;
+  padding-left: 0px;
+}
+.listItem {
+  padding: 0.6rem 0rem;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+
+  color: #333;
+}
+
+.listItem:first-child {
+  padding-top: 2rem;
+  border-top: 1px solid #dee2e6;
+}
+.listItem p {
+  margin-bottom: 0px;
+  color: #585c62;
+  font-size: 1rem;
+  line-height: 1.5em;
+  text-align: left;
+}

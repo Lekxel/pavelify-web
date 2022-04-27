@@ -1,0 +1,65 @@
+.FreePlanGet {
+  margin-bottom: 13rem;
+  margin-top: 10rem;
+}
+.FreePlanGet .content_wrapper > h1 {
+  text-align: center;
+  font-weight: 700;
+  width: 40%;
+  font-size: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 4rem;
+}
+.FreePlanGet .content_wrapper .grid_wrapper_free_plan {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  grid-gap: 2rem;
+  margin-top: 5rem;
+}
+.FreePlanGet .content_wrapper .grid_wrapper_free_plan .box {
+  display: flex;
+  align-items: center;
+}
+.FreePlanGet .content_wrapper .grid_wrapper_free_plan .box img {
+  width: 3.5em;
+  height: 3.5em;
+}
+.FreePlanGet .content_wrapper .grid_wrapper_free_plan .presentation {
+  margin-left: 1.5rem;
+}
+
+.FreePlanGet .content_wrapper .grid_wrapper_free_plan .box h1 {
+  margin-bottom: 0.25em;
+
+  color: #302357;
+  font-size: 1.25rem;
+  line-height: 1.2em;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.FreePlanGet .content_wrapper .grid_wrapper_free_plan .box p {
+  color: #5c6166;
+  font-size: 1rem;
+  margin-bottom: 0px;
+  line-height: 1.5em;
+}
+
+@media screen and (max-width: 850px) {
+  .FreePlanGet .content_wrapper > h1 {
+    width: 100%;
+  }
+  .FreePlanGet .content_wrapper .grid_wrapper_free_plan {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media screen and (max-width: 500px) {
+  .FreePlanGet .content_wrapper > h1 {
+    width: 100%;
+    font-size: 28px;
+  }
+  .FreePlanGet .content_wrapper .grid_wrapper_free_plan {
+    grid-template-columns: 1fr;
+  }
+}
