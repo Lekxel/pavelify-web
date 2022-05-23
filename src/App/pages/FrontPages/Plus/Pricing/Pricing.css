@@ -25,6 +25,12 @@
 }
 
 @media screen and (max-width: 500px) {
+  .pricng_banner {
+    height: unset;
+    padding-top: 7rem;
+    padding-bottom: 3rem;
+  }
+
   .pricng_banner > h1 {
     font-size: 28px;
   }

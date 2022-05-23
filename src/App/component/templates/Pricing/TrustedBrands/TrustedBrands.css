@@ -21,14 +21,25 @@
 .logos_wrapper img {
   width: 100%;
 }
+.logos_wrapper img:nth-child(3) {
+  width: 45%;
+}
+.logos_wrapper img:last-child {
+  width: 85%;
+}
 @media screen and (max-width: 850px) {
   .logos_wrapper {
     justify-items: center;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
+
   .logos_wrapper img {
-    width: 150px;
+    width: 100px;
   }
+  .logos_wrapper img:nth-child(2) {
+    width: 80px;
+  }
+
   .logos_wrapper > * + * {
     margin-top: 1rem;
   }
