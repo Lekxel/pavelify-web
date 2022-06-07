@@ -47,7 +47,7 @@ function Sidebar({ active }) {
         </li>
 
         <li className={`${active == "EmailTickets" && "active"}`}>
-          <Link to="/dashhboard/EmailTickets">
+          <Link to="/dashboard/EmailTickets">
             <svg
               width="34"
               height="34"
@@ -64,7 +64,7 @@ function Sidebar({ active }) {
         </li>
 
         <li className={`${active == "calender" && "active"}`}>
-          <Link to="/dashhboard/CalenderBooking">
+          <Link to="/dashboard/CalenderBooking">
             <svg
               width="34"
               height="34"
@@ -126,7 +126,7 @@ function Sidebar({ active }) {
         </li>
 
         <li className={`${active == "contact" && "active"}`}>
-          <Link to="/dashhboard/contact">
+          <Link to="/dashboard/contact">
             <svg
               width="30"
               height="30"
@@ -147,7 +147,7 @@ function Sidebar({ active }) {
         </li>
 
         <li className={`${active == "help_desk" && "active"}`}>
-          <Link to="/dashhboard/help_desk">
+          <Link to="/dashboard/help_desk">
             <svg
               width="34"
               height="34"
@@ -180,7 +180,7 @@ function Sidebar({ active }) {
         </li>
 
         <li className={`${active == "Analytics" && "active"}`}>
-          <Link to="/dashhboard/Analytics">
+          <Link to="/dashboard/Analytics">
             <svg
               width="34"
               height="34"
@@ -212,7 +212,7 @@ function Sidebar({ active }) {
           </Link>
         </li>
         <li className={`${active == "settings" && "active"}`}>
-          <Link to="/dashhboard/settings">
+          <Link to="/dashboard/settings">
             <svg
               width="34"
               height="34"

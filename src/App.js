@@ -37,43 +37,43 @@ function App() {
           <Route path="/Features" exact>
             <Features />
           </Route>
-          {/* <Route path="/" exact>
-            <HomePage />
-          </Route> */}
-          <Route path="/dashhboard/help_desk" exact>
+          <Route path="/dashboard" exact>
+            <Home />
+          </Route>
+          <Route path="/dashboard/help_desk" exact>
             <Home_Desk />
           </Route>
-          <Route path="/dashhboard/Analytics" exact>
+          <Route path="/dashboard/Analytics" exact>
             <Analytics />
           </Route>
-          <Route path="/dashhboard/CalenderBooking" exact>
+          <Route path="/dashboard/CalenderBooking" exact>
             <CalenderBooking />
           </Route>
           <Route path="/" exact>
             <HomePage />
           </Route>
-          {/* <Route path="/dashhboard/settings" exact>
+          <Route path="/dashboard/settings" exact>
             <Settings />
-          </Route> */}
-          <Route path="/dashhboard/SettingsAccount" exact>
+          </Route>
+          <Route path="/dashboard/SettingsAccount" exact>
             <SettingsAccount />
           </Route>
-          <Route path="/dashhboard/SettingsIntegration" exact>
+          <Route path="/dashboard/SettingsIntegration" exact>
             <SettingsIntegrations />
           </Route>
-          <Route path="/dashhboard/SettingsEmailSetup" exact>
+          <Route path="/dashboard/SettingsEmailSetup" exact>
             <SettingsEmailSetup />
           </Route>
-          <Route path="/dashhboard/SettingsOperatingHours" exact>
+          <Route path="/dashboard/SettingsOperatingHours" exact>
             <SettingsOperatingHours />
           </Route>
-          <Route path="/dashhboard/SettingsNotifications" exact>
+          <Route path="/dashboard/SettingsNotifications" exact>
             <SettingsNotification />
           </Route>
-          <Route path="/dashhboard/contact" exact>
+          <Route path="/dashboard/contact" exact>
             <Contact />
           </Route>
-          <Route path="/dashhboard/EmailTickets" exact>
+          <Route path="/dashboard/EmailTickets" exact>
             <EmailTickets />
           </Route>
           <Route path="/dashboard/operators" exact>

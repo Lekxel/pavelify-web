@@ -31,7 +31,7 @@ function BodyHeader({ active }) {
           </Link>
         </li>
         <li className={`${active == "EmailTickets" && "active"}`}>
-          <Link to="/dashhboard/EmailTickets">
+          <Link to="/dashboard/EmailTickets">
             <svg
               width="34"
               height="34"
@@ -48,7 +48,7 @@ function BodyHeader({ active }) {
         </li>
 
         <li className={`${active == "calender" && "active"}`}>
-          <Link to="/dashhboard/CalenderBooking">
+          <Link to="/dashboard/CalenderBooking">
             <svg
               width="34"
               height="34"
@@ -72,7 +72,7 @@ function BodyHeader({ active }) {
           </Link>
         </li>
         <li className={`${active == "settings" && "active"}`}>
-          <Link to="/dashhboard/settings">
+          <Link to="/dashboard/settings">
             <svg
               width="34"
               height="34"

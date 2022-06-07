@@ -55,10 +55,10 @@ function Settings() {
                   <Link>Departements</Link>
                 </li>{" "}
                 <li>
-                  <Link to="/dashhboard/SettingsIntegration">Integration</Link>
+                  <Link to="/dashboard/SettingsIntegration">Integration</Link>
                 </li>{" "}
                 <li>
-                  <Link to="/dashhboard/SettingsEmailSetup">Email Setup</Link>
+                  <Link to="/dashboard/SettingsEmailSetup">Email Setup</Link>
                 </li>
               </ul>
 
@@ -66,15 +66,15 @@ function Settings() {
               <ul>
                 <li className="heading">Personal</li>
                 <li>
-                  <Link to="/dashhboard/SettingsAccount">Account</Link>
+                  <Link to="/dashboard/SettingsAccount">Account</Link>
                 </li>
                 <li>
-                  <Link to="/dashhboard/SettingsNotifications">
+                  <Link to="/dashboard/SettingsNotifications">
                     Notifications
                   </Link>
                 </li>
                 <li>
-                  <Link to="/dashhboard/SettingsOperatingHours">
+                  <Link to="/dashboard/SettingsOperatingHours">
                     Operation Hours
                   </Link>
                 </li>
