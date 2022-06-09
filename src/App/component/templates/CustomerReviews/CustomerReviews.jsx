@@ -20,16 +20,16 @@ const CustomerReviews = () => {
             perPage: 3,
             breakpoints: {
               1100: {
-                perPage: 2,
+                perPage: 2
               },
               750: {
-                perPage: 1,
-              },
-            },
+                perPage: 1
+              }
+            }
           }}
         >
-          {Reviews.map((Each) => (
-            <SplideSlide>
+          {Reviews.map((Each, index) => (
+            <SplideSlide key={String(index)}>
               <CardReview
                 review={Each.review}
                 img={Each.img}

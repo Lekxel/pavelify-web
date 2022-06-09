@@ -14,7 +14,7 @@ export const SelecTimeArea = () => {
 
       <div className={styles.days}>
         {days.map((day) => (
-          <div className={`${styles.day} days`} onClick={RemovePopUp}>
+          <div key={day} className={`${styles.day} days`} onClick={RemovePopUp}>
             <p style={{ pointerEvents: "none" }}>{day}</p>
           </div>
         ))}

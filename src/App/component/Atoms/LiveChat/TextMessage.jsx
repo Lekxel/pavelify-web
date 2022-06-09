@@ -7,7 +7,7 @@ export const TextMessage = ({ text, my_message = null }) => {
       style={{
         alignSelf: my_message && "flex-end",
         background: my_message && "#13215E",
-        color: my_message && "#fff",
+        color: my_message && "#fff"
       }}
     >
       {text}

@@ -8,7 +8,8 @@ import { PricingQuestion } from "../../../../../helpers/constants/PricingQuestio
 import { CommonHero } from "../../../../component/templates/Common/CommonHero/CommonHero";
 import { HomeContactBanner } from "../../../../component/organisms/Home/HomeContactBanner/HomeContactBanner";
 import { PrivacyPolicyNotes } from "../../../../component/templates/PrivacyPolicy/PrivacyPolicyNotes";
-export const PrivacyPolicy = () => {
+
+const PrivacyPolicy = () => {
   return (
     <FrontPageLayout>
       <CommonHero
@@ -22,3 +23,5 @@ export const PrivacyPolicy = () => {
     </FrontPageLayout>
   );
 };
+
+export default PrivacyPolicy;

@@ -8,37 +8,44 @@ export const Button = ({
   style,
   onClick = null,
   ext_class = null,
+  to = "#",
+  disabled = false
 }) => {
-  return onClick == null ? (
+  return onClick === null ? (
     <button
-      className={`${styles.button} ${outline == true && styles.outline} 
-      }`}
+      disabled={disabled}
+      className={`${styles.button} ${outline === true && styles.outline} 
+      ${disabled && styles.disabled}`}
       style={style}
     >
       {type !== null ? (
-        <Link className={`${styles.link} ${outline == true && styles.outline}`}>
+        <Link
+          to={to}
+          className={`${styles.link} ${outline === true && styles.outline} ${
+            disabled && styles.disabled
+          }`}
+        >
           {text}
         </Link>
       ) : (
-        <p style={{marginBottom:0}}>{text}</p>
+        <p style={{ marginBottom: 0 }}>{text}</p>
       )}
     </button>
   ) : (
     <button
-      className={`${styles.button} ${outline == true && styles.outline}
-      
-      ${ext_class !== null && "next_button"}
-      
-      `}
+      disabled={disabled}
+      className={`${styles.button} ${outline === true && styles.outline} ${
+        ext_class !== null && "next_button"
+      } ${disabled && styles.disabled}`}
       style={style}
       onClick={onClick}
     >
       {type !== null ? (
-        <Link className={`${styles.link} ${outline == true && styles.outline}`}>
+        <Link to={to} className={`${styles.link} ${outline === true && styles.outline}`}>
           {text}
         </Link>
       ) : (
-        <p style={{marginBottom:0}}>{text}</p>
+        <p style={{ marginBottom: 0 }}>{text}</p>
       )}
     </button>
   );

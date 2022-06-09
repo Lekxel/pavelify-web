@@ -11,7 +11,7 @@ export const FrontPageLayout = ({
   activeLink,
   auth = null,
   not_margin = null,
-  showbg = null,
+  showbg = null
 }) => {
   return (
     <div className={styles.FrontPageLayout}>
@@ -24,9 +24,7 @@ export const FrontPageLayout = ({
         showbg={showbg}
       />
 
-      <div className={`${styles.MainBody} ${auth != null && styles.Auth}`}>
-        {children}
-      </div>
+      <div className={`${styles.MainBody} ${auth != null && styles.Auth}`}>{children}</div>
 
       {/* Live Widget */}
       <LiveChat />

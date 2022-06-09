@@ -8,7 +8,7 @@ import CustomerReviews from "../../../component/templates/CustomerReviews/Custom
 import { HomeContactBanner } from "../../../component/organisms/Home/HomeContactBanner/HomeContactBanner";
 import { CommonHero } from "../../../component/templates/Common/CommonHero/CommonHero";
 
-export const HomePage = () => {
+const HomePage = () => {
   return (
     <FrontPageLayout>
       {/* home */}
@@ -36,3 +36,5 @@ Real Time Analytics
     </FrontPageLayout>
   );
 };
+
+export default HomePage;

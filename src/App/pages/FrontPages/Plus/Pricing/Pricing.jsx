@@ -9,13 +9,12 @@ import { HomeContactBanner } from "../../../../component/organisms/Home/HomeCont
 import "./Pricing.css";
 import FreePlanGet from "../../../../component/templates/Pricing/FreePlanGet/FreePlanGet";
 import TrustedBrands from "../../../../component/templates/Pricing/TrustedBrands/TrustedBrands";
-export const Pricing = () => {
+
+const Pricing = () => {
   const [showbg, setshowbg] = useState(false);
 
   const ShowScrolling = (e) => {
-    let BottomArea = document
-      .querySelector(".pricng_banner")
-      .getBoundingClientRect().bottom;
+    let BottomArea = document.querySelector(".pricng_banner").getBoundingClientRect().bottom;
 
     if (BottomArea < 400) {
       setshowbg(true);
@@ -47,3 +46,5 @@ export const Pricing = () => {
     </FrontPageLayout>
   );
 };
+
+export default Pricing;

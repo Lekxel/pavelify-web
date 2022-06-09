@@ -4,7 +4,7 @@ export const ConversationMembers = ({ members }) => {
   return (
     <div className={styles.ConversationMembers}>
       {members.map((Member) => (
-        <img src={Member} className={styles.img} />
+        <img key={Member} src={Member} className={styles.img} />
       ))}
     </div>
   );

@@ -69,14 +69,10 @@ function SettingsAccount() {
                   <Link to="/dashboard/SettingsAccount">Account</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsNotifications">
-                    Notifications
-                  </Link>
+                  <Link to="/dashboard/SettingsNotifications">Notifications</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsOperatingHours">
-                    Operation Hours
-                  </Link>
+                  <Link to="/dashboard/SettingsOperatingHours">Operation Hours</Link>
                 </li>
               </ul>
             </div>
@@ -93,16 +89,11 @@ function SettingsAccount() {
                   <label htmlFor="name">Your Picture</label>
                   <div className="file-wrapper">
                     <div className="icon-wrapper">
-                      <i class="fas fa-user-circle"></i>
+                      <i className="fas fa-user-circle"></i>
                     </div>
 
                     <label htmlFor="choose_file">Choose your file</label>
-                    <input
-                      type="file"
-                      name=""
-                      id="choose_file"
-                      style={{ display: "none" }}
-                    />
+                    <input type="file" name="" id="choose_file" style={{ display: "none" }} />
                   </div>
                 </div>{" "}
                 <div className="input-wrapper">

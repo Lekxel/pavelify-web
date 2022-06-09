@@ -3,7 +3,7 @@ import { LoginForm } from "../../../../../component/organisms/Auth/LoginForm/Log
 import { FrontPageLayout } from "../../../../../component/templates/FrontPageLayout/FrontPageLayout";
 import styles from "./Login.module.css";
 
-export const Login = () => {
+const Login = () => {
   return (
     <FrontPageLayout auth={true}>
       <div className={`${styles.LoginWrapper} w-1200`}>
@@ -15,3 +15,5 @@ export const Login = () => {
     </FrontPageLayout>
   );
 };
+
+export default Login;

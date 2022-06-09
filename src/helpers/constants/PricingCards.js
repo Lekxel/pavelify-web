@@ -5,14 +5,14 @@ export const PricingCardcontent = [
     time: "Month",
     duration: "Suitable for personal websites",
     buy_now_link: "",
-    free_trail_link: "",
+    free_trail_link: "/register?plan=basic",
     services: [
       "For 2 Agents",
       "Live Chat",
       "Appointment Scheduling",
       "Customizations",
-      "Free Forever",
-    ],
+      "Free Forever"
+    ]
   },
   {
     title: "Essential",
@@ -20,7 +20,7 @@ export const PricingCardcontent = [
     time: "Month",
     duration: "Suitable for early stage Startups ",
     buy_now_link: "",
-    free_trail_link: "",
+    free_trail_link: "/register?plan=essential",
     services: [
       "Up to 4 Agents",
       "Live Chat",
@@ -29,8 +29,8 @@ export const PricingCardcontent = [
       "Real Time Analytics",
       "Lead Management",
       "Customizations",
-      "14 days Trial",
-    ],
+      "14 days Trial"
+    ]
   },
   {
     title: "Pro",
@@ -38,7 +38,7 @@ export const PricingCardcontent = [
     time: "Month",
     duration: "Suitable for scaling Businesses who want more for less.",
     buy_now_link: "",
-    free_trail_link: "",
+    free_trail_link: "/register?plan=pro",
     services: [
       "Up to 10  Agents",
 
@@ -56,9 +56,9 @@ export const PricingCardcontent = [
 
       "Customizations",
 
-      "14 days trial",
-    ],
-  },
+      "14 days trial"
+    ]
+  }
 
   // {
   //   title: "All Paid Plans Comes with ",

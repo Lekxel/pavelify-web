@@ -69,14 +69,10 @@ function SettingsNotification() {
                   <Link to="/dashboard/SettingsAccount">Account</Link>
                 </li>
                 <li className="active">
-                  <Link to="/dashboard/SettingsNotifications">
-                    Notifications
-                  </Link>
+                  <Link to="/dashboard/SettingsNotifications">Notifications</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsOperatingHours">
-                    Operation Hours
-                  </Link>
+                  <Link to="/dashboard/SettingsOperatingHours">Operation Hours</Link>
                 </li>
               </ul>
             </div>
@@ -85,7 +81,7 @@ function SettingsNotification() {
             <div className="right-side account-right-side notification-right-side">
               <h2 className="special-h2">
                 {" "}
-                <i class="fas fa-bell"></i>Notifications
+                <i className="fas fa-bell"></i>Notifications
               </h2>
               <form action="">
                 <div className="input-wrapper">
@@ -107,15 +103,13 @@ function SettingsNotification() {
                   </select>
                 </div>
                 <h2>
-                  <i class="fas fa-envelope"></i> Send Email Notifications
+                  <i className="fas fa-envelope"></i> Send Email Notifications
                 </h2>
                 <div className="input-wrapper">
                   <label htmlFor="Email">Send For</label>
                   <input type="email" id="Email" />
                 </div>
-                <button className="add_email_address_button">
-                  Add new email address
-                </button>{" "}
+                <button className="add_email_address_button">Add new email address</button>{" "}
                 <button className="save-button">Save</button>
               </form>
             </div>

@@ -86,14 +86,10 @@ function SettingsEmailSetup() {
                   <Link to="/dashboard/SettingsAccount">Account</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsNotifications">
-                    Notifications
-                  </Link>
+                  <Link to="/dashboard/SettingsNotifications">Notifications</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsOperatingHours">
-                    Operation Hours
-                  </Link>
+                  <Link to="/dashboard/SettingsOperatingHours">Operation Hours</Link>
                 </li>
               </ul>
             </div>
@@ -102,9 +98,8 @@ function SettingsEmailSetup() {
             <div className="right-side Operating-right-side">
               <h2 className="special-h2">Setup Email Ticketing </h2>
               <p>
-                Receive all emails from your business support email on Pavelify.
-                No need to switch between different tabs/websites just to answer
-                customer queries.{" "}
+                Receive all emails from your business support email on Pavelify. No need to switch
+                between different tabs/websites just to answer customer queries.{" "}
               </p>
               <div className="step step1">
                 <h3>1. Copy the following email</h3>
@@ -113,15 +108,13 @@ function SettingsEmailSetup() {
               <div className="step">
                 <h3>2. Setup email Forwarding</h3>
                 <p>
-                  Setup email forwarding from your email provider dashboard to
-                  the provider Pavelify email above. Find instructions to your
-                  email provider below.{" "}
+                  Setup email forwarding from your email provider dashboard to the provider Pavelify
+                  email above. Find instructions to your email provider below.{" "}
                 </p>{" "}
                 <p>
-                  If you don’t find your email provider below, simple search for
-                  the instructions on Google by typing your email provider name
-                  alongside “email forwarding setup instructions” or contact
-                  your email provider.
+                  If you don’t find your email provider below, simple search for the instructions on
+                  Google by typing your email provider name alongside “email forwarding setup
+                  instructions” or contact your email provider.
                 </p>
               </div>
               <div className="email_provider_pure">
@@ -162,10 +155,7 @@ function SettingsEmailSetup() {
               </div>{" "}
               <div className="email_provider_pure">
                 <img src={pic5} alt="" />
-                <a
-                  href="https://www.zoho.com/mail/help/email-forwarding.html"
-                  target="_blank"
-                >
+                <a href="https://www.zoho.com/mail/help/email-forwarding.html" target="_blank">
                   Zoho Instructions
                 </a>
               </div>{" "}
@@ -180,10 +170,7 @@ function SettingsEmailSetup() {
               </div>{" "}
               <div className="email_provider_pure">
                 <img src={pic7} alt="" />
-                <a
-                  href="https://help.yahoo.com/kb/SLN29133.html"
-                  target="_blank"
-                >
+                <a href="https://help.yahoo.com/kb/SLN29133.html" target="_blank">
                   Yahoo Mail Instructions
                 </a>
               </div>{" "}
@@ -234,10 +221,7 @@ function SettingsEmailSetup() {
               </div>{" "}
               <div className="email_provider_pure">
                 <img src={pic13} alt="" />
-                <a
-                  href="https://my.bluehost.com/cgi/help/email-forwarders"
-                  target="_blank"
-                >
+                <a href="https://my.bluehost.com/cgi/help/email-forwarders" target="_blank">
                   BlueHost Instructions
                 </a>
               </div>{" "}

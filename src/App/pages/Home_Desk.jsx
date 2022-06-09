@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "../component/Sidebar";
 import SpainFlag from "../../Assets/img/flag-spain.png";
-import { Badge, Table } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Badge, Table, Button } from "react-bootstrap";
 import { NewArticleModal } from "./NewArticleModal";
 import { PublishArticleModal } from "./PublishArticleModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 function Home_Desk() {
   const [NewArticleshow, setNewArticleshow] = useState(false);
-  const [NewPublishArticleModalshow, setPublishArticleModalShow] =
-    useState(false);
+  const [NewPublishArticleModalshow, setPublishArticleModalShow] = useState(false);
 
   const handleNewArticleshowClose = () => setNewArticleshow(false);
   const handleNewArticleshowShow = () => setNewArticleshow(true);
@@ -46,10 +44,7 @@ function Home_Desk() {
             <img src={SpainFlag} alt="" />
             <p> English</p>
           </div>
-          <div
-            className="body_sidebar_box no_bg "
-            style={{ fontWeight: 700, marginTop: 20 }}
-          >
+          <div className="body_sidebar_box no_bg " style={{ fontWeight: 700, marginTop: 20 }}>
             <p> HELP DESK</p>
           </div>
           <ul style={{ paddingLeft: 0 }}>
@@ -61,7 +56,7 @@ function Home_Desk() {
               style={{
                 marginBottom: 0,
                 background: "transparent",
-                border: "none",
+                border: "none"
               }}
             >
               Categories
@@ -73,11 +68,10 @@ function Home_Desk() {
           <ul style={{ paddingLeft: 0 }}>
             <li
               className="body_sidebar_box"
-              style={{ marginBottom: 0 }}
               style={{
                 marginBottom: 0,
                 background: "transparent",
-                border: "none",
+                border: "none"
               }}
             >
               Punlished
@@ -87,7 +81,7 @@ function Home_Desk() {
               style={{
                 marginBottom: 0,
                 background: "transparent",
-                border: "none",
+                border: "none"
               }}
             >
               Draft
@@ -97,7 +91,7 @@ function Home_Desk() {
               style={{
                 marginBottom: 0,
                 background: "transparent",
-                border: "none",
+                border: "none"
               }}
             >
               Visible
@@ -107,7 +101,7 @@ function Home_Desk() {
               style={{
                 marginBottom: 0,
                 background: "transparent",
-                border: "none",
+                border: "none"
               }}
             >
               Draft
@@ -151,9 +145,7 @@ function Home_Desk() {
 
             <div
               className="burger-icon"
-              onClick={(e) =>
-                document.querySelector(".Sidebar").classList.toggle("active")
-              }
+              onClick={(e) => document.querySelector(".Sidebar").classList.toggle("active")}
             >
               <FontAwesomeIcon icon={faBars} />
             </div>
@@ -185,7 +177,7 @@ function Home_Desk() {
                 </td>
                 <td>
                   <Button variant="primary">
-                    <i class="fas fa-cog"></i>
+                    <i className="fas fa-cog"></i>
                   </Button>
                 </td>
               </tr>

@@ -10,19 +10,14 @@ export const HomeHero = () => {
           Customer Support and Conversion Platform For The Modern Business
         </h1>
         <p className={styles.para}>
-          Pavelify gives your business sales and customer satisfaction edge over
-          your competitors. Yes, Businesses love Pavelify, But Customers love it
-          too.
+          Pavelify gives your business sales and customer satisfaction edge over your competitors.
+          Yes, Businesses love Pavelify, But Customers love it too.
         </p>
         <small className={styles.small}>
-          Live chat, Email Ticketing, Appointment Scheduling, Help Center and
-          lots more all at once.
+          Live chat, Email Ticketing, Appointment Scheduling, Help Center and lots more all at once.
         </small>
 
-        <UsePavelifyLink
-          text="Use Pavelify for Free"
-          style={{ width: "50%" }}
-        />
+        <UsePavelifyLink link={"/register"} text="Use Pavelify for Free" style={{ width: "50%" }} />
 
         {/* <HomeEmaiSender widthInput="70%" /> */}
       </div>

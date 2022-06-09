@@ -23,11 +23,7 @@ export const CareersForm = () => {
             <label htmlFor="" className={styles.label}>
               Phone
             </label>
-            <input
-              type="text"
-              placeholder="Phone Number"
-              className={styles.input}
-            />
+            <input type="text" placeholder="Phone Number" className={styles.input} />
           </div>
 
           <div className={styles.inputWrapper}>

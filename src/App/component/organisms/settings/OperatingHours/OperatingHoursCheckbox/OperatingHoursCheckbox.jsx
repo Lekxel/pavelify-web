@@ -5,12 +5,7 @@ export const OperatingHoursCheckbox = ({ day }) => {
   return (
     <div className="input-wrapper">
       <p>{day}</p>
-      <input
-        type="checkbox"
-        name=""
-        id={day}
-        onChange={(e) => setShowTime(!showTime)}
-      />
+      <input type="checkbox" name="" id={day} onChange={(e) => setShowTime(!showTime)} />
       <label className="checkbox-custom-op" htmlFor={day}>
         <p className="Available">Available</p>
         <p className="Unavailable">Unavailable</p>

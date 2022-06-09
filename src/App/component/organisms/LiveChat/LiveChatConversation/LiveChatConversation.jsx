@@ -13,10 +13,7 @@ export const LiveChatConversation = () => {
     <div className={styles.LiveChatConversation}>
       <h2 className={styles.heading}>Your conversations</h2>
       <ConversationMembers members={LiveChatMembers} />
-      <SenderButton
-        text="Start New Conversation"
-        onClick={HandleCovertingScreen}
-      />
+      <SenderButton text="Start New Conversation" onClick={HandleCovertingScreen} />
     </div>
   );
 };

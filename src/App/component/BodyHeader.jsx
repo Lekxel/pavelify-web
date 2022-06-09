@@ -3,15 +3,23 @@ import Photo from "../../Assets/img/Photo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { privateRoutes } from "routes/routes";
+import { useQuery } from "react-query";
+import { currentUser } from "utilities/storage";
+import { BASIC } from "utilities/plans";
+import { httpGetUser } from "api/auth";
 function BodyHeader({ active }) {
+  const {
+    data: { user }
+  } = useQuery("user", httpGetUser, {
+    initialData: {}
+  });
+
   return (
     <div className="BodyHeader d-flex-align-center">
-      <ul
-        className="bottom-header d-flex-align-center"
-        style={{ marginBottom: 0 }}
-      >
-        <li className={`${active == "LiveChat" && "active"}`}>
-          <Link to="/dashboard/LiveChat">
+      <ul className="bottom-header d-flex-align-center" style={{ marginBottom: 0 }}>
+        <li className={`${active === "LiveChat" && "active"}`}>
+          <Link to={privateRoutes.liveChat}>
             <svg
               width="34"
               height="34"
@@ -30,8 +38,8 @@ function BodyHeader({ active }) {
             </svg>
           </Link>
         </li>
-        <li className={`${active == "EmailTickets" && "active"}`}>
-          <Link to="/dashboard/EmailTickets">
+        <li className={`${active === "EmailTickets" && "active"}`}>
+          <Link to={privateRoutes.emailTickets}>
             <svg
               width="34"
               height="34"
@@ -47,8 +55,8 @@ function BodyHeader({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "calender" && "active"}`}>
-          <Link to="/dashboard/CalenderBooking">
+        <li className={`${active === "calender" && "active"}`}>
+          <Link to={privateRoutes.calendarBooking}>
             <svg
               width="34"
               height="34"
@@ -71,8 +79,8 @@ function BodyHeader({ active }) {
             </svg>
           </Link>
         </li>
-        <li className={`${active == "settings" && "active"}`}>
-          <Link to="/dashboard/settings">
+        <li className={`${active === "settings" && "active"}`}>
+          <Link to={privateRoutes.settings}>
             <svg
               width="34"
               height="34"
@@ -115,7 +123,7 @@ function BodyHeader({ active }) {
       </form>
 
       <div className="right-area d-flex-align-center">
-        <button className="sm-btn">Upgrade</button>
+        {user?.company?.plan === BASIC ? <button className="sm-btn">Upgrade</button> : null}
         <div className="icon-wrapper">
           <svg
             width="24"
@@ -150,7 +158,7 @@ function BodyHeader({ active }) {
 
         <div className="profile-name-area d-flex-align-center">
           <img src={Photo} alt="" />
-          <p>Salung Prastyo</p>
+          <p>{user?.name}</p>
           <div className="icon-wrapper">
             <svg
               width="7"
@@ -159,10 +167,7 @@ function BodyHeader({ active }) {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M3.44513 3.37805L0 0.621948H6.89025L3.44513 3.37805Z"
-                fill="#282D4A"
-              />
+              <path d="M3.44513 3.37805L0 0.621948H6.89025L3.44513 3.37805Z" fill="#282D4A" />
             </svg>
           </div>
         </div>
@@ -170,9 +175,7 @@ function BodyHeader({ active }) {
 
       <div
         className="burger-icon"
-        onClick={(e) =>
-          document.querySelector(".Sidebar").classList.toggle("active")
-        }
+        onClick={(e) => document.querySelector(".Sidebar").classList.toggle("active")}
       >
         <FontAwesomeIcon icon={faBars} />
       </div>

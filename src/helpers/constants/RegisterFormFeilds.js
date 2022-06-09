@@ -5,8 +5,8 @@ export const Fields = [
       label: "Work email",
       id: "email",
       inputType: "email",
-      inputPlaceholder: "Enter Email Address",
-    },
+      inputPlaceholder: "Enter Email Address"
+    }
   ],
   [
     {
@@ -14,22 +14,22 @@ export const Fields = [
       label: "First name",
       id: "fname",
       inputType: "text",
-      inputPlaceholder: "Enter First Name",
+      inputPlaceholder: "Enter First Name"
     },
     {
       object: "GridInputWrapper",
       label: "Last name",
       id: "lname",
       inputType: "text",
-      inputPlaceholder: "Enter Last Name",
+      inputPlaceholder: "Enter Last Name"
     },
     {
       object: "InputWrapper",
       label: "Company Website",
       id: "cweb",
       inputType: "text",
-      inputPlaceholder: "Enter Your Website",
-    },
+      inputPlaceholder: "Enter Your Website"
+    }
   ],
   [
     {
@@ -37,7 +37,7 @@ export const Fields = [
       label: "Company name",
       id: "cname",
       inputType: "text",
-      inputPlaceholder: "Enter Company Name",
+      inputPlaceholder: "Enter Company Name"
     },
 
     {
@@ -45,7 +45,7 @@ export const Fields = [
       label: "Your Pavelify Subdomain",
       id: "subdomain",
       inputType: "slug",
-      inputPlaceholder: "Enter Subdomain Name",
+      inputPlaceholder: "Enter Subdomain Name"
     },
 
     {
@@ -53,18 +53,18 @@ export const Fields = [
       label: "Create a password",
       id: "password",
       inputType: "password",
-      inputPlaceholder: "Enter Password",
+      inputPlaceholder: "Enter Password"
     },
 
     {
       object: "button",
-      text: "Complete",
+      text: "Complete"
     },
     {
       object: "text",
       text: `By clicking "Complete" you acknowledge and accept `,
       linkterm: "Pavelify Terms",
-      linkprivacy: "Privacy Notice",
-    },
-  ],
+      linkprivacy: "Privacy Notice"
+    }
+  ]
 ];

@@ -7,7 +7,9 @@ export const LiveChatSearch = () => {
     <div className={styles.LiveChatSearch}>
       <div className={styles.top}>
         <h5 className={styles.heading}>Find an answer</h5>
-        <Link className={styles.link}>Open Help Center</Link>
+        <Link to={"#"} className={styles.link}>
+          Open Help Center
+        </Link>
       </div>
 
       <LiveChatSearchPure />

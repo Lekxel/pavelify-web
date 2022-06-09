@@ -9,6 +9,8 @@ export const InputWrapper = ({
   InputWidth,
   style,
   inputStyle = null,
+  value,
+  onChange
 }) => {
   return (
     <div className={styles.InputWrapper} style={style}>
@@ -16,10 +18,12 @@ export const InputWrapper = ({
         {labelText}
       </label>
       <Input
+        value={value}
         id={id}
         type={inputType}
         placeholder={inputPlaceholder}
         width={InputWidth}
+        onChange={onChange}
       />
     </div>
   );

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useEffect } from "react";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
+import { privateRoutes } from "routes/routes";
 
 function Settings() {
   useEffect(() => {
@@ -55,10 +56,10 @@ function Settings() {
                   <Link>Departements</Link>
                 </li>{" "}
                 <li>
-                  <Link to="/dashboard/SettingsIntegration">Integration</Link>
+                  <Link to={privateRoutes.settingsIntegration}>Integration</Link>
                 </li>{" "}
                 <li>
-                  <Link to="/dashboard/SettingsEmailSetup">Email Setup</Link>
+                  <Link to={privateRoutes.settingsEmailSetup}>Email Setup</Link>
                 </li>
               </ul>
 
@@ -66,17 +67,13 @@ function Settings() {
               <ul>
                 <li className="heading">Personal</li>
                 <li>
-                  <Link to="/dashboard/SettingsAccount">Account</Link>
+                  <Link to={privateRoutes.settingsAccount}>Account</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsNotifications">
-                    Notifications
-                  </Link>
+                  <Link to={privateRoutes.settingsNotifications}>Notifications</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsOperatingHours">
-                    Operation Hours
-                  </Link>
+                  <Link to={privateRoutes.settingsOperatingHours}>Operation Hours</Link>
                 </li>
               </ul>
             </div>
@@ -95,11 +92,7 @@ function Settings() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        d="M19 1.5L10 10.5L1 1.5"
-                        stroke="#282D4A"
-                        stroke-width="2"
-                      />
+                      <path d="M19 1.5L10 10.5L1 1.5" stroke="#282D4A" stroke-width="2" />
                     </svg>
                   </div>
 
@@ -109,21 +102,14 @@ function Settings() {
                       <h5>Display</h5>
                       <div className="selection-wrapper d-flex-align-center">
                         <div className="left-side d-flex-align-center">
-                          <input
-                            type="checkbox"
-                            name=""
-                            id="display-checkbox"
-                          />
+                          <input type="checkbox" name="" id="display-checkbox" />
                           <label htmlFor="display-checkbox">
                             <span className="ball"></span>
                           </label>
                           <p>Message</p>
                         </div>
                         <div className="right-side">
-                          <input
-                            type="text"
-                            placeholder="Please introduce yourself:"
-                          />
+                          <input type="text" placeholder="Please introduce yourself:" />
                         </div>
                       </div>
                     </div>
@@ -154,10 +140,7 @@ function Settings() {
                           <p>Email</p>
                         </div>
                         <div className="right-side">
-                          <input
-                            type="text"
-                            placeholder="Enter your email..."
-                          />
+                          <input type="text" placeholder="Enter your email..." />
                         </div>
                       </div>
 
@@ -170,10 +153,7 @@ function Settings() {
                           <p>Phone Number</p>
                         </div>
                         <div className="right-side">
-                          <input
-                            type="text"
-                            placeholder="Enter your phone number..."
-                          />
+                          <input type="text" placeholder="Enter your phone number..." />
                         </div>
                       </div>
                     </div>
@@ -191,11 +171,7 @@ function Settings() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        d="M19 1.5L10 10.5L1 1.5"
-                        stroke="#282D4A"
-                        stroke-width="2"
-                      />
+                      <path d="M19 1.5L10 10.5L1 1.5" stroke="#282D4A" stroke-width="2" />
                     </svg>
                   </div>
                   <form action="" className="body"></form>
@@ -211,11 +187,7 @@ function Settings() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        d="M19 1.5L10 10.5L1 1.5"
-                        stroke="#282D4A"
-                        stroke-width="2"
-                      />
+                      <path d="M19 1.5L10 10.5L1 1.5" stroke="#282D4A" stroke-width="2" />
                     </svg>
                   </div>
                   <form action="" className="body"></form>
@@ -231,11 +203,7 @@ function Settings() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        d="M19 1.5L10 10.5L1 1.5"
-                        stroke="#282D4A"
-                        stroke-width="2"
-                      />
+                      <path d="M19 1.5L10 10.5L1 1.5" stroke="#282D4A" stroke-width="2" />
                     </svg>
                   </div>
                   <form action="" className="body"></form>
@@ -251,11 +219,7 @@ function Settings() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path
-                        d="M19 1.5L10 10.5L1 1.5"
-                        stroke="#282D4A"
-                        stroke-width="2"
-                      />
+                      <path d="M19 1.5L10 10.5L1 1.5" stroke="#282D4A" stroke-width="2" />
                     </svg>
                   </div>
                   <form action="" className="body"></form>

@@ -4,7 +4,8 @@ import { FrontPageLayout } from "../../../../component/templates/FrontPageLayout
 import { CommonHero } from "../../../../component/templates/Common/CommonHero/CommonHero";
 
 import { TermsNotes } from "../../../../component/templates/Terms/TermsNotes";
-export const Terms = () => {
+
+const Terms = () => {
   return (
     <FrontPageLayout>
       <CommonHero
@@ -18,3 +19,5 @@ export const Terms = () => {
     </FrontPageLayout>
   );
 };
+
+export default Terms;

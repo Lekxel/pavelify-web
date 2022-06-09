@@ -12,6 +12,7 @@ export const FeaturesCompany = () => {
             <FeatureCard
               img={Each.img}
               title={Each.value}
+              key={Each.value}
               largeImg={Each.largeImg}
               desc={Each.desc}
             />

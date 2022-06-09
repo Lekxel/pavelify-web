@@ -5,7 +5,8 @@ import { ComingSoon } from "../../../../component/templates/ComingSoon/ComingSoo
 import { FeaturesCompany } from "../../../../component/templates/Features/FeaturesCompany";
 import { CommonHero } from "../../../../component/templates/Common/CommonHero/CommonHero";
 import { HomeContactBanner } from "../../../../component/organisms/Home/HomeContactBanner/HomeContactBanner";
-export const Features = () => {
+
+const Features = () => {
   return (
     <FrontPageLayout>
       <CommonHero
@@ -23,3 +24,5 @@ The Right Tools to Help Your Business Grow and Succeed.
     </FrontPageLayout>
   );
 };
+
+export default Features;

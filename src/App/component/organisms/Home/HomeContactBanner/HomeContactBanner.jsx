@@ -6,11 +6,10 @@ export const HomeContactBanner = () => {
   return (
     <div className={styles.HomeContactBanner}>
       <div className={`w-1200 ${styles.HomeContactBannerContent}`}>
-        <h1 className={styles.heading}>
-          Start Converting Your Website Traffic Now
-        </h1>
+        <h1 className={styles.heading}>Start Converting Your Website Traffic Now</h1>
         <p>No Credit Card Required. Pavelify is Completely Free.</p>
         <UsePavelifyLink
+          link={"/register"}
           text="Use Pavelify for Free"
           style={{ width: "30%", backgroundColor: "#0F295C", color: "#fff" }}
         />

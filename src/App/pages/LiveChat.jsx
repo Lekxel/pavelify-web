@@ -11,15 +11,9 @@ import SpainFlag from "../../Assets/img/flag-spain.png";
 function LiveChat() {
   useEffect(() => {
     if (window.innerWidth < 1201) {
-      let Users = document.querySelectorAll(
-        ".LiveChat .messages-box-area > .left-side .users"
-      );
-      let ChatArea = document.querySelector(
-        ".LiveChat .messages-box-area > .middle-side"
-      );
-      let LeftArea = document.querySelector(
-        ".LiveChat .messages-box-area > .left-side"
-      );
+      let Users = document.querySelectorAll(".LiveChat .messages-box-area > .left-side .users");
+      let ChatArea = document.querySelector(".LiveChat .messages-box-area > .middle-side");
+      let LeftArea = document.querySelector(".LiveChat .messages-box-area > .left-side");
       Users.forEach((EachUser) => {
         EachUser.addEventListener("click", () => {
           LeftArea.style.display = "none";
@@ -36,10 +30,7 @@ function LiveChat() {
         {/* header */}
         <BodyHeader active="LiveChat" />
 
-        <div
-          className="body-main-area"
-          style={{ paddingTop: 0, paddingBottom: 0 }}
-        >
+        <div className="body-main-area" style={{ paddingTop: 0, paddingBottom: 0 }}>
           <div className="messages-box-area">
             {/* left side */}
             <div className="left-side">
@@ -142,19 +133,9 @@ function LiveChat() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <circle
-                        cx="2.0625"
-                        cy="2.0625"
-                        r="2.0625"
-                        fill="#282D4A"
-                      />
+                      <circle cx="2.0625" cy="2.0625" r="2.0625" fill="#282D4A" />
                       <circle cx="11" cy="2.0625" r="2.0625" fill="#282D4A" />
-                      <circle
-                        cx="19.9375"
-                        cy="2.0625"
-                        r="2.0625"
-                        fill="#282D4A"
-                      />
+                      <circle cx="19.9375" cy="2.0625" r="2.0625" fill="#282D4A" />
                     </svg>
                   </div>
                 </div>
@@ -174,13 +155,7 @@ function LiveChat() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <circle
-                        cx="18"
-                        cy="18"
-                        r="17.5"
-                        stroke="#7822E6"
-                        stroke-opacity="0.12"
-                      />
+                      <circle cx="18" cy="18" r="17.5" stroke="#7822E6" stroke-opacity="0.12" />
                       <path
                         d="M17.75 11V24.5"
                         stroke="#7822E6"
@@ -202,9 +177,8 @@ function LiveChat() {
                 <div className="message-container">
                   <div className="message">
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Sem amet, metus fermentum fermentum, sed. Nec eu
-                      elementum, non lacinia.
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sem amet, metus
+                      fermentum fermentum, sed. Nec eu elementum, non lacinia.
                     </p>
                     <div className="date-area d-flex-align-center">
                       <p className="name">Jhon</p>
@@ -285,17 +259,14 @@ function LiveChat() {
                 </div>
 
                 <form action="" className="message-sender-form">
-                  <ul
-                    className="message_sender_list"
-                    style={{ marginBottom: 0 }}
-                  >
+                  <ul className="message_sender_list" style={{ marginBottom: 0 }}>
                     <li>Quick Response</li>
                   </ul>
                   <div className="input-wrapper d-flex-align-center">
                     <input type="text" placeholder="Write a message" />
                     <input type="submit" value="" id="message-submit" />
-                    <i class="fas fa-paperclip"></i>
-                    <i class="far fa-smile-beam"></i>
+                    <i className="fas fa-paperclip"></i>
+                    <i className="far fa-smile-beam"></i>
                     <label
                       htmlFor="message-submit"
                       className="icon-wrapper"
@@ -447,12 +418,7 @@ function LiveChat() {
                 </div>
                 <div className="tags-area">
                   <label htmlFor="add-tags">Add Tags</label>
-                  <textarea
-                    name=""
-                    id="add-tags"
-                    cols="30"
-                    rows="10"
-                  ></textarea>
+                  <textarea name="" id="add-tags" cols="30" rows="10"></textarea>
                 </div>
                 <div className="last-view-page">
                   <p>Last Viewed Pages</p>

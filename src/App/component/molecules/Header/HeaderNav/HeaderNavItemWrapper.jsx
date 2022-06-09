@@ -6,25 +6,20 @@ import "./HeaderNavItemWrapper.css";
 export const HeaderNavItemWrapper = ({ headerOptions, activeLink }) => {
   return (
     <div className={`${styles.HeaderNavItemWrapper} headerNav`}>
-      {headerOptions.map((EachOption) =>
-        EachOption.type == null ? (
-          EachOption.name == activeLink ? (
-            <HeaderItem
-              text={EachOption.name}
-              url={EachOption.url}
-              className="active"
-            />
-          ) : (
-            <HeaderItem text={EachOption.name} url={EachOption.url} />
-          )
-        ) : (
-          <HeaderButton
-            buttonType={EachOption.buttonType}
-            text={EachOption.name}
-            url={EachOption.url}
-          />
-        )
-      )}
+      {headerOptions.map((EachOption, index) => (
+        <EachNav key={String(index)} EachOption={EachOption} activeLink={activeLink} />
+      ))}
     </div>
   );
 };
+
+const EachNav = ({ EachOption, activeLink }) =>
+  EachOption.type === null ? (
+    EachOption.name === activeLink ? (
+      <HeaderItem text={EachOption.name} url={EachOption.url} className="active" />
+    ) : (
+      <HeaderItem text={EachOption.name} url={EachOption.url} />
+    )
+  ) : (
+    <HeaderButton buttonType={EachOption.buttonType} text={EachOption.name} url={EachOption.url} />
+  );

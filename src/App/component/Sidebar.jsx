@@ -3,13 +3,14 @@ import "../../Assets/styles/css/layout.css";
 import SideBarLogo from "../../Assets/img/Pavelify.png";
 import Home from "../../Assets/img/svg/home.svg";
 import { Link } from "react-router-dom";
+import { privateRoutes } from "routes/routes";
 function Sidebar({ active }) {
   return (
     <div className="Sidebar">
       <img src={SideBarLogo} alt="" />
       <nav>
-        <li className={`${active == "home" && "active"}`}>
-          <Link to="/">
+        <li className={`${active === "home" && "active"}`}>
+          <Link to={privateRoutes.dashboard}>
             <svg
               width="34"
               height="34"
@@ -25,8 +26,8 @@ function Sidebar({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "LiveChat" && "active"}`}>
-          <Link to="/dashboard/LiveChat">
+        <li className={`${active === "LiveChat" && "active"}`}>
+          <Link to={privateRoutes.liveChat}>
             <svg
               width="34"
               height="34"
@@ -46,8 +47,8 @@ function Sidebar({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "EmailTickets" && "active"}`}>
-          <Link to="/dashboard/EmailTickets">
+        <li className={`${active === "EmailTickets" && "active"}`}>
+          <Link to={privateRoutes.emailTickets}>
             <svg
               width="34"
               height="34"
@@ -63,8 +64,8 @@ function Sidebar({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "calender" && "active"}`}>
-          <Link to="/dashboard/CalenderBooking">
+        <li className={`${active === "calender" && "active"}`}>
+          <Link to={privateRoutes.calendarBooking}>
             <svg
               width="34"
               height="34"
@@ -88,8 +89,8 @@ function Sidebar({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "LiveVisitor" && "active"}`}>
-          <Link to="/dashboard/LiveVisitors">
+        <li className={`${active === "LiveVisitor" && "active"}`}>
+          <Link to={privateRoutes.liveVisitors}>
             <svg
               width="34"
               height="34"
@@ -125,8 +126,8 @@ function Sidebar({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "contact" && "active"}`}>
-          <Link to="/dashboard/contact">
+        <li className={`${active === "contact" && "active"}`}>
+          <Link to={privateRoutes.contacts}>
             <svg
               width="30"
               height="30"
@@ -146,8 +147,8 @@ function Sidebar({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "help_desk" && "active"}`}>
-          <Link to="/dashboard/help_desk">
+        <li className={`${active === "help_desk" && "active"}`}>
+          <Link to={privateRoutes.helpDesk}>
             <svg
               width="34"
               height="34"
@@ -179,8 +180,8 @@ function Sidebar({ active }) {
           </Link>
         </li>
 
-        <li className={`${active == "Analytics" && "active"}`}>
-          <Link to="/dashboard/Analytics">
+        <li className={`${active === "Analytics" && "active"}`}>
+          <Link to={privateRoutes.analytics}>
             <svg
               width="34"
               height="34"
@@ -195,8 +196,8 @@ function Sidebar({ active }) {
             </svg>
           </Link>
         </li>
-        <li className={`${active == "operators" && "active"}`}>
-          <Link to="/dashboard/operators">
+        <li className={`${active === "operators" && "active"}`}>
+          <Link to={privateRoutes.operators}>
             <svg
               width="35"
               height="34"
@@ -211,8 +212,8 @@ function Sidebar({ active }) {
             </svg>
           </Link>
         </li>
-        <li className={`${active == "settings" && "active"}`}>
-          <Link to="/dashboard/settings">
+        <li className={`${active === "settings" && "active"}`}>
+          <Link to={privateRoutes.settings}>
             <svg
               width="34"
               height="34"
@@ -230,7 +231,7 @@ function Sidebar({ active }) {
       </nav>
 
       <div className="logout-area">
-        <Link to="">
+        <Link to={privateRoutes.logout}>
           <svg
             width="34"
             height="34"

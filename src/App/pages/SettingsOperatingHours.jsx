@@ -70,14 +70,10 @@ function SettingsOperatingHours() {
                   <Link to="/dashboard/SettingsAccount">Account</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsNotifications">
-                    Notifications
-                  </Link>
+                  <Link to="/dashboard/SettingsNotifications">Notifications</Link>
                 </li>
                 <li className="active">
-                  <Link to="/dashboard/SettingsOperatingHours">
-                    Operation Hours
-                  </Link>
+                  <Link to="/dashboard/SettingsOperatingHours">Operation Hours</Link>
                 </li>
               </ul>
             </div>

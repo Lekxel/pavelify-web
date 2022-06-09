@@ -1,3 +1,5 @@
+import { publicRoutes } from "routes/routes";
+
 export const FooterOptions = [
   // [
   //   {
@@ -9,81 +11,82 @@ export const FooterOptions = [
     {
       text: "Logo",
       type: "heading",
+      image: "/images/logo.png"
     },
     {
-      text: "Privacy Policy,",
+      text: "Privacy Policy",
       type: "listItems",
-      url: "/plus/PrivacyPolicy",
+      url: publicRoutes.privacyPolicy
     },
     {
       text: "Terms and conditions",
       type: "listItems",
-      url: "/plus/Terms",
+      url: publicRoutes.terms
     },
     {
       text: "Careers",
       type: "listItems",
-      url: "/",
+      url: publicRoutes.terms
     },
     {
       text: " Affiliates",
       type: "listItems",
-      url: "/",
-    },
+      url: "/"
+    }
   ],
   [
     {
       text: "Product",
-      type: "heading",
+      type: "heading"
     },
     {
       text: "Features",
       type: "listItems",
-      url: "/",
+      url: publicRoutes.features
     },
     {
       text: "Pricing",
       type: "listItems",
-      url: "/",
+      url: publicRoutes.pricing
     },
     {
       text: "Product",
       type: "listItems",
-      url: "/",
+      url: "/"
     },
     {
       text: "Support",
       type: "listItems",
-      url: "/",
-    },
+      url: "/"
+    }
   ],
   [
     {
       text: "Integration",
-      type: "heading",
+      type: "heading"
     },
     {
       text: "About Us",
       type: "listItems",
-      url: "/",
+      url: "/"
     },
     {
       text: "Blog",
       type: "listItems",
-      url: "/",
+      url: "/"
     },
     {
       text: "Media",
       type: "listItems",
-      url: "/",
+      url: "/"
     },
     {
       text: "contact Us",
       type: "listItems",
-      url: "/",
-    },
+      url: "/"
+    }
   ],
-  [],
+  []
   // [
   //   {
   //     text: "Subscribe",

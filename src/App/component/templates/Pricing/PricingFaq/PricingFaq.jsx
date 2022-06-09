@@ -19,6 +19,7 @@ export const PricingFaq = ({ PricingQuestion }) => {
         <div className={styles.right_side}>
           {PricingQuestion.map((EachQuestsion) => (
             <PricingFaqRow
+              key={EachQuestsion.question}
               question={EachQuestsion.question}
               answer={EachQuestsion.answer}
             />

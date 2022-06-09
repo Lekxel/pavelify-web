@@ -80,23 +80,16 @@ function SettingsIntegrations() {
                   <Link to="/dashboard/SettingsAccount">Account</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsNotifications">
-                    Notifications
-                  </Link>
+                  <Link to="/dashboard/SettingsNotifications">Notifications</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard/SettingsOperatingHours">
-                    Operation Hours
-                  </Link>
+                  <Link to="/dashboard/SettingsOperatingHours">Operation Hours</Link>
                 </li>
               </ul>
             </div>
 
             {/* right side */}
-            <div
-              className="right-side account-right-side"
-              style={{ paddingRight: "2rem" }}
-            >
+            <div className="right-side account-right-side" style={{ paddingRight: "2rem" }}>
               <h2 className="special-h2">Integration</h2>
 
               <h3 className="channel_name">Communication Channels</h3>
@@ -109,8 +102,7 @@ function SettingsIntegrations() {
                     </p>
                   </div>
                   <p>
-                    Reply to Facebook Messenger messages through Pavelify
-                    omnichannel live chat.{" "}
+                    Reply to Facebook Messenger messages through Pavelify omnichannel live chat.{" "}
                   </p>
                 </div>{" "}
                 <div className="box">
@@ -118,10 +110,7 @@ function SettingsIntegrations() {
                     <img src={Insta} alt="" />
                     <p>Instagram</p>
                   </div>
-                  <p>
-                    Reply to Instagram messages through Pavelify omnichannel
-                    live chat.
-                  </p>
+                  <p>Reply to Instagram messages through Pavelify omnichannel live chat.</p>
                 </div>{" "}
                 <div className="box">
                   <div className="head">
@@ -135,9 +124,7 @@ function SettingsIntegrations() {
                     <img src={telegram} alt="" />
                     <p>Telegram</p>
                   </div>
-                  <p>
-                    Get and reply to your Telegram messages through Pavelify
-                  </p>
+                  <p>Get and reply to your Telegram messages through Pavelify</p>
                 </div>{" "}
                 <div className="box">
                   <div className="head">

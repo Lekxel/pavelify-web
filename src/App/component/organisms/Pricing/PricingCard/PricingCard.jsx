@@ -10,23 +10,21 @@ export const PricingCard = ({
   free_trail_link,
   services,
   time,
-  type = null,
+  type = null
 }) => {
   return (
     <div className={styles.PricingCard}>
       <h1 className={styles.mainheading}>{title}</h1>
-      {type == null && (
+      {type === null && (
         <>
           <p className={styles.price}>
             {price} <span>/{time}</span>
           </p>
           <small className={styles.duration}>{duration}</small>
-          <button className={styles.button}>Get Started for Free</button>
-          {title != "Basic" && (
-            <Link className={styles.freeTrailLink} to={free_trail_link}>
-              14 days Free Trial
-            </Link>
-          )}
+          <Link className={styles.button} to={free_trail_link}>
+            <button className={styles.button}>Get Started for Free</button>
+          </Link>
+          {title !== "Basic" && <span className={styles.freeTrailLink}>14 days Free Trial</span>}
         </>
       )}
 

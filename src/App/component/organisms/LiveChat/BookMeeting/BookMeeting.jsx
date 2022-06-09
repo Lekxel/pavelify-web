@@ -9,7 +9,7 @@ export const BookMeeting = () => {
       <SenderButton
         to="/plus/Calender"
         text="Book a meeting"
-        img={<i class="fas fa-calendar-week"></i>}
+        img={<i className="fas fa-calendar-week"></i>}
       />
     </div>
   );

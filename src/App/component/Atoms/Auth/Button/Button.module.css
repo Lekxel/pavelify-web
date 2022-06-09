@@ -24,3 +24,7 @@
 .outline.link {
   color: #13225f;
 }
+
+.disabled {
+  opacity: 70%;
+}

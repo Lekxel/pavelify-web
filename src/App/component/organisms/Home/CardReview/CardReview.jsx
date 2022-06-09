@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./CardReview.module.css";
+
 const CardReview = ({ review, img, name, belowName }) => {
   return (
     <div className={styles.CardReviewWrapper}>

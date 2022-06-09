@@ -9,6 +9,7 @@ export const PricingCardWrapper = () => {
       <div className={`${styles.Content} w-1200`}>
         {PricingCardcontent.map((EachCard) => (
           <PricingCard
+            key={EachCard.title}
             title={EachCard.title}
             price={EachCard.price}
             time={EachCard.time}

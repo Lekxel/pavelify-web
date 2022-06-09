@@ -5,7 +5,8 @@ import { ComingSoon } from "../../../../component/templates/ComingSoon/ComingSoo
 import { CommonHero } from "../../../../component/templates/Common/CommonHero/CommonHero";
 import { HomeContactBanner } from "../../../../component/organisms/Home/HomeContactBanner/HomeContactBanner";
 import { CareersForm } from "../../../../component/templates/Careers/CareersForm/CareersForm";
-export const Careers = () => {
+
+const Careers = () => {
   return (
     <FrontPageLayout activeLink="Careers">
       <CommonHero
@@ -28,3 +29,5 @@ We are a team that believe in always improving and serving our community exceedi
     </FrontPageLayout>
   );
 };
+
+export default Careers;

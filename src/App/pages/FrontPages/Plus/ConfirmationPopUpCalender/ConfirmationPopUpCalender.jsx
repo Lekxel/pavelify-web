@@ -8,9 +8,7 @@ export const ConfirmationPopUpCalender = () => {
     history.push("/plus/Calender");
   };
   return (
-    <div
-      className={`${styles.ConfirmationPopUpCalenderWrapper} popup-calender`}
-    >
+    <div className={`${styles.ConfirmationPopUpCalenderWrapper} popup-calender`}>
       <div className={`${styles.ConfirmationPopUpCalender} `}>
         <h2 className={styles.heading}>Confirm booking:</h2>
 
@@ -19,7 +17,7 @@ export const ConfirmationPopUpCalender = () => {
         </p>
         <div>
           <div className={styles.Close} onClick={RemovePopUp}>
-            <i class="fas fa-arrow-left"></i>
+            <i className="fas fa-arrow-left"></i>
           </div>
         </div>
         <ul className={styles.Ul}>
@@ -44,8 +42,8 @@ export const ConfirmationPopUpCalender = () => {
           </div>
           <div className={styles.textareawrapper}>
             <label htmlFor="text_area" className={styles.label}>
-              This is a test booking! Here's an example question: Have you told
-              a friend about Pavelify yet?
+              This is a test booking! Here's an example question: Have you told a friend about
+              Pavelify yet?
             </label>
             <textarea
               name=""

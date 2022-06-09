@@ -11,7 +11,7 @@ export const CommonHero = ({
   fourthpara = null,
   imageSrc,
   style = null,
-  width_full = null,
+  width_full = null
 }) => {
   return (
     <div className={`${styles.hero} w-1200`} style={style}>
@@ -25,6 +25,7 @@ export const CommonHero = ({
 
         {form !== null && (
           <UsePavelifyLink
+            link={"/register"}
             text="Use Pavelify for Free"
             style={{ width: "50%" }}
           />
@@ -34,9 +35,7 @@ export const CommonHero = ({
       <img
         src={imageSrc}
         alt=""
-        className={`${styles.pureImage} ${
-          width_full != null && styles.full_width
-        }`}
+        className={`${styles.pureImage} ${width_full != null && styles.full_width}`}
       />
     </div>
   );

@@ -11,10 +11,10 @@ const TrustedBrands = () => {
     <div className="TrustedBrands">
       <div className="content_wrapper w-1200">
         <h1>
-          Over 6,000 brands are using Pavelify to grow their business by
-          improving their customer experience.{" "}
+          Over 6,000 brands are using Pavelify to grow their business by improving their customer
+          experience.{" "}
         </h1>
-        <div class="logos_wrapper">
+        <div className="logos_wrapper">
           <img src={logo1} />
           <img src={logo2} />
           <img src={logo3} />

@@ -1,45 +1,47 @@
+import { publicRoutes } from "routes/routes";
+
 export const HeaderOptions = [
   {
     name: "home",
-    url: "/",
-    type: null,
+    url: publicRoutes.home,
+    type: null
   },
   {
     name: "Pricing",
-    url: "/plus/pricing",
-    type: null,
+    url: publicRoutes.pricing,
+    type: null
   },
   {
     name: "Features",
-    url: "/plus/features",
-    type: null,
+    url: publicRoutes.features,
+    type: null
   },
   {
     name: "Careers",
-    url: "/plus/careers",
-    type: null,
+    url: publicRoutes.careers,
+    type: null
   },
   {
     name: "Privacy Policy",
-    url: "/plus/PrivacyPolicy",
-    type: null,
+    url: publicRoutes.privacyPolicy,
+    type: null
   },
   {
     name: "Try Pavelify for Free",
-    url: "/plus/auth/register",
+    url: publicRoutes.register,
     type: "button",
-    buttonType: "solid",
+    buttonType: "solid"
   },
   {
     name: "Login",
-    url: "/plus/auth/login",
+    url: publicRoutes.login,
     type: "button",
-    buttonType: "solid",
+    buttonType: "solid"
   },
   {
     name: "Register",
-    url: "/plus/auth/register",
+    url: publicRoutes.register,
     type: "button",
-    buttonType: "outline",
-  },
+    buttonType: "outline"
+  }
 ];

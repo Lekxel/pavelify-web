@@ -10,8 +10,8 @@ export const TermsNotes = () => {
         <p className={styles.para}>Last updated November 16, 2021</p>
 
         <div className={styles.policyListWrapper}>
-          {TermsList.map((EachPolicy) => (
-            <PolicyList EachPolicy={EachPolicy} />
+          {TermsList.map((EachPolicy, index) => (
+            <PolicyList key={String(index)} EachPolicy={EachPolicy} />
           ))}
         </div>
       </div>

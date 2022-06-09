@@ -11,16 +11,11 @@ export const HomeWebsiteService = () => {
               Convert More Website Visitors into Paying Customers in Record Time
             </h1>
             <p className={styles.para}>
-              Hit your Sales and revenue goals faster with the all in one
-              conversational and conversion platform. Built for customer
-              service, Sales and Marketing
+              Hit your Sales and revenue goals faster with the all in one conversational and
+              conversion platform. Built for customer service, Sales and Marketing
             </p>
           </div>
-          <img
-            src="./images/person.png"
-            alt=""
-            className={styles.personImage}
-          />
+          <img src="./images/person.png" alt="" className={styles.personImage} />
         </div>
 
         <div className={styles.CardsWrapper}>

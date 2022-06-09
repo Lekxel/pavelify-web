@@ -1,7 +1,7 @@
 export const CalenderJs = () => {
-  let CurrentDate = new Date();
+  const CurrentDate = new Date();
   let CurrentMonth = CurrentDate.getMonth();
-  let CurrentYear = CurrentDate.getFullYear();
+  const CurrentYear = CurrentDate.getFullYear();
   let TotalDays = 31;
 
   let CalenderDays = document.querySelectorAll(".calender-days div");
@@ -9,11 +9,11 @@ export const CalenderJs = () => {
   const CalenderDaysWrapper = document.querySelector(".calender-days");
   const CalenderNavigateButtons = {
     BackIcon: document.querySelector("#calender-back-icon-wrapper"),
-    FrontIcon: document.querySelector("#calender-towards-icon-wrapper"),
+    FrontIcon: document.querySelector("#calender-towards-icon-wrapper")
   };
 
   const CovertIntoMonthString = (CurrentNumericMonth) => {
-    let Months = [
+    const Months = [
       "Jan",
       "Feb",
       "Mar",
@@ -25,15 +25,13 @@ export const CalenderJs = () => {
       "Sep",
       "Oct",
       "Nov",
-      "Dec",
+      "Dec"
     ];
     return Months[CurrentNumericMonth];
   };
 
   const DisplayDate = () => {
-    CalenderDateTime.textContent = `${CovertIntoMonthString(
-      CurrentMonth
-    )} , ${CurrentYear}`;
+    CalenderDateTime.textContent = `${CovertIntoMonthString(CurrentMonth)} , ${CurrentYear}`;
   };
 
   const ActivateThisDay = (e) => {
@@ -46,9 +44,9 @@ export const CalenderJs = () => {
 
   // Helping function to get total daus
   const GetTotalDays = (Month) => {
-    if (Month == 3 || Month == 5 || Month == 8 || Month == 10) {
+    if (Month === 3 || Month === 5 || Month === 8 || Month === 10) {
       Month = 30;
-    } else if (Month == 1) {
+    } else if (Month === 1) {
       Month = 28;
     } else {
       Month = 31;
@@ -58,34 +56,30 @@ export const CalenderJs = () => {
 
   // Helping function
   const StartDateWithRespectToDay = (year, month) => {
-    let LocalDate = new Date(year, month, 1);
-    let LocalDay = LocalDate.getDay();
+    const LocalDate = new Date(year, month, 1);
+    const LocalDay = LocalDate.getDay();
     return LocalDay;
   };
 
   // Event Function
 
   const NavigateBack = (e) => {
-    if (CurrentMonth == 0) {
+    if (CurrentMonth === 0) {
       CurrentMonth = 11;
     } else {
       CurrentMonth--;
     }
-    CalenderDateTime.textContent = `${CovertIntoMonthString(
-      CurrentMonth
-    )} , ${CurrentYear}`;
+    CalenderDateTime.textContent = `${CovertIntoMonthString(CurrentMonth)} , ${CurrentYear}`;
     DisplayDays();
   };
 
   const NavigateFront = (e) => {
-    if (CurrentMonth == 11) {
+    if (CurrentMonth === 11) {
       CurrentMonth = 0;
     } else {
       CurrentMonth++;
     }
-    CalenderDateTime.textContent = `${CovertIntoMonthString(
-      CurrentMonth
-    )} , ${CurrentYear}`;
+    CalenderDateTime.textContent = `${CovertIntoMonthString(CurrentMonth)} , ${CurrentYear}`;
     DisplayDays();
   };
 
@@ -101,10 +95,7 @@ export const CalenderJs = () => {
     TotalDays = GetTotalDays(CurrentMonth);
 
     //   frist date Start in which day Monday Tuesday etc
-    let FirstElementInCalender = StartDateWithRespectToDay(
-      CurrentYear,
-      CurrentMonth
-    );
+    const FirstElementInCalender = StartDateWithRespectToDay(CurrentYear, CurrentMonth);
 
     //   first Loop to add . dots
     for (let CurrentDay = 0; CurrentDay < TotalDays; CurrentDay++) {
@@ -117,17 +108,13 @@ export const CalenderJs = () => {
 
     //   Second loop to display date
     for (let CurrentDay = 0; CurrentDay < TotalDays; CurrentDay++) {
-      CalenderDaysWrapper.innerHTML += ` <div id="calender-day-${
-        CurrentDay + 1
-      }">
+      CalenderDaysWrapper.innerHTML += ` <div id="calender-day-${CurrentDay + 1}">
             <span>${CurrentDay + 1}</span>
           </div>`;
     }
 
     if (CurrentDate.getMonth() === CurrentMonth) {
-      document
-        .querySelector(`#calender-day-${CurrentDate.getDate()}`)
-        .classList.add("active-day");
+      document.querySelector(`#calender-day-${CurrentDate.getDate()}`).classList.add("active-day");
     }
     //   Add Event Listeners In New Divs
     CalenderDays = document.querySelectorAll(".calender-days div");
