@@ -1,5 +1,5 @@
 export const publicRoutes = {
-  app: process.env.REACT_APP_GUEST_SUBDOMAIN ? `/${process.env.REACT_APP_GUEST_SUBDOMAIN}` : "",
+  app: process.env.REACT_APP_GUEST_SUBDOMAIN ? `${process.env.REACT_APP_GUEST_SUBDOMAIN}` : "",
   home: "/",
   login: "/login",
   register: "/register",
@@ -12,7 +12,7 @@ export const publicRoutes = {
 
 export const privateRoutes = {
   app: process.env.REACT_APP_DASHBOARD_SUBDOMAIN
-    ? `/${process.env.REACT_APP_DASHBOARD_SUBDOMAIN}`
+    ? `${process.env.REACT_APP_DASHBOARD_SUBDOMAIN}`
     : "app",
   dashboard: "/",
   liveChat: "/live-chat",
