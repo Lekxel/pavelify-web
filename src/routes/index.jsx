@@ -55,7 +55,7 @@ const Switch = () => {
   const { subdomain, domain } = useGetSubdomain();
 
   switch (subdomain) {
-    case null || "":
+    case publicRoutes.app:
       return (
         <>
           <Route path={publicRoutes.home} element={<HomePage />} />
@@ -82,7 +82,7 @@ const Switch = () => {
           />
         </>
       );
-    case "app":
+    case privateRoutes.app:
       return (
         <>
           <Route path={publicRoutes.login} element={<Login />} />
