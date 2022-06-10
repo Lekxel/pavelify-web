@@ -4,7 +4,7 @@ import Sidebar from "../component/Sidebar";
 
 import DocumentText from "../../Assets/img/document-text.png";
 import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
+import Checkmark from "../../Assets/img/checkmark.png";
 import Person1 from "../../Assets/img/Frame 1.png";
 import Person2 from "../../Assets/img/Frame 2.png";
 import Person3 from "../../Assets/img/Frame 3.png";
@@ -24,6 +24,8 @@ import { useQuery } from "react-query";
 import { httpGetUser } from "api/auth";
 import { httpFetchStats } from "api/dashboard";
 import { moneyFormat } from "utilities/misc";
+import { Link } from "react-router-dom";
+import { privateRoutes } from "routes/routes";
 
 function Home() {
   const mapData = {
@@ -110,21 +112,37 @@ function Home() {
             <div className="todo-list">
               <div className="top d-flex-align-center">
                 <h3>Todo Lists</h3>
-                <a href="#">See All</a>
+                <Link to={privateRoutes.settings}>
+                  <a>See All</a>
+                </Link>
               </div>
               <ul className="bottom">
                 <li className="d-flex-align-center">
                   <img src={LiveChat} alt="" />
                   <p>Configure Live chat </p>
                   <a href="#">
-                    <img src={ArrowRight} alt="" />
+                    <img
+                      src={
+                        user?.company?.configuration?.todolist?.livechatConfigured
+                          ? Checkmark
+                          : ArrowRight
+                      }
+                      alt=""
+                    />
                   </a>
                 </li>
                 <li className="d-flex-align-center">
                   <img src={GreenMessage} alt="" />
                   <p>Configure Email Ticketing</p>
                   <a href="#">
-                    <img src={ArrowRight} alt="" />
+                    <img
+                      src={
+                        user?.company?.configuration?.todolist?.emailTicketConfigured
+                          ? Checkmark
+                          : ArrowRight
+                      }
+                      alt=""
+                    />
                   </a>
                 </li>
                 <li className="d-flex-align-center">
@@ -133,25 +151,31 @@ function Home() {
                   </div>
                   <p>Configure Calendar Meeting</p>
                   <a href="#">
-                    <img src={ArrowRight} alt="" />
+                    <img
+                      src={
+                        user?.company?.configuration?.todolist?.calendarConfigured
+                          ? Checkmark
+                          : ArrowRight
+                      }
+                      alt=""
+                    />
                   </a>
                 </li>
-                <li className="d-flex-align-center">
-                  <div className="icon-wrapper whatsapp">
-                    <i className="fab fa-whatsapp"></i>
-                  </div>
-                  <p>Integrate WhatsApp</p>
-                  <a href="#">
-                    <img src={ArrowRight} alt="" />
-                  </a>
-                </li>
+
                 <li className="d-flex-align-center ">
                   <div className="icon-wrapper messenger">
                     <i className="fab fa-facebook-messenger"></i>
                   </div>
                   <p>Integrate Messenger</p>
                   <a href="#">
-                    <img src={ArrowRight} alt="" />
+                    <img
+                      src={
+                        user?.company?.configuration?.todolist?.messengerConfigured
+                          ? Checkmark
+                          : ArrowRight
+                      }
+                      alt=""
+                    />
                   </a>
                 </li>
                 <li className="d-flex-align-center">
@@ -160,7 +184,14 @@ function Home() {
                   </div>
                   <p>Set Operating Hours</p>
                   <a href="#">
-                    <img src={ArrowRight} alt="" />
+                    <img
+                      src={
+                        user?.company?.configuration?.todolist?.operatingHoursConfigured
+                          ? Checkmark
+                          : ArrowRight
+                      }
+                      alt=""
+                    />
                   </a>
                 </li>
                 <li className="d-flex-align-center">
@@ -169,7 +200,14 @@ function Home() {
                   </div>
                   <p>Import Contacts</p>
                   <a href="#">
-                    <img src={ArrowRight} alt="" />
+                    <img
+                      src={
+                        user?.company?.configuration?.todolist?.contactsConfigured
+                          ? Checkmark
+                          : ArrowRight
+                      }
+                      alt=""
+                    />
                   </a>
                 </li>
               </ul>

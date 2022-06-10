@@ -4,6 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import { privateRoutes, publicRoutes } from "routes/routes";
 import { showSuccess } from "utilities/alerts";
+import { sleep } from "utilities/misc";
 import { setCurrentUser, setCurrentUserAuthToken } from "utilities/storage";
 import { Button } from "../../../Atoms/Auth/Button/Button";
 import { InputWrapper } from "../../../molecules/Auth/InputWrapper/InputWrapper";
@@ -18,14 +19,14 @@ export const LoginForm = () => {
     setIsLoading(true);
 
     httpLogin(email, password)
-      .then((data) => {
-        setIsLoading(false);
+      .then(async (data) => {
         if (data.user) {
           showSuccess(data.message);
           setCurrentUserAuthToken(data.accessToken);
           setCurrentUser(data.user);
-          console.log({ data });
+          await sleep(3000);
           navigate(privateRoutes.dashboard);
+          setIsLoading(false);
         }
       })
       .catch((err) => {

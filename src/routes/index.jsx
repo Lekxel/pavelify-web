@@ -34,14 +34,16 @@ import { privateRoutes, publicRoutes } from "routes/routes";
 import useGetSubdomain from "hooks/useGetSubdomain";
 import Redirect from "helpers/Redirect";
 import { httpGetUser } from "api/auth";
+import Logout from "helpers/Logout";
 
 export function RequireAuth({ children }) {
   const {
     data: { user }
   } = useQuery("user", httpGetUser, {
-    initialData: currentUser()
+    initialData: { user: currentUser() }
   });
   const location = useLocation();
+
   if (!user?._id) {
     return <Navigate to={publicRoutes.login} state={{ from: location }} />;
   }
@@ -85,6 +87,9 @@ const Switch = () => {
         <>
           <Route path={publicRoutes.login} element={<Login />} />
           <Route path={publicRoutes.register} element={<Register />} />
+
+          <Route path={privateRoutes.logout} element={<Logout />} />
+
           <Route
             path={privateRoutes.dashboard}
             element={

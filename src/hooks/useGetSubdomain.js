@@ -14,6 +14,7 @@ const useGetSubdomain = () => {
     });
     return () => {};
   }, [window.location.host, window.location.protocol]);
+  console.log(subdomain);
   return subdomain;
 };
 
