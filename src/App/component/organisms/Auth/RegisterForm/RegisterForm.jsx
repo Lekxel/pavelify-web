@@ -48,7 +48,8 @@ export const RegisterForm = () => {
     /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(url);
   const validatePassword = (password) => password.length >= 6;
   const validateName = (name) => name.length >= 3;
-  const validateSubdomain = (subdomain) => /^[a-z]+[a-z0-9-]+[a-z]+$/.test(subdomain);
+  const validateSubdomain = (subdomain) =>
+    /^[a-z]+[a-z0-9-]+[a-z]+$/.test(subdomain?.toLowerCase());
 
   const HandleNextStep = (setStep, Fields, stepIndex, setStepIndex) => {
     if (stepIndex === 0 && !validateEmail(registrationData.email)) {
@@ -95,7 +96,7 @@ export const RegisterForm = () => {
       name: `${registrationData.fname} ${registrationData.lname}`,
       companyName: registrationData.cname,
       companyWebsite: registrationData.cweb,
-      slug: registrationData.subdomain,
+      slug: registrationData.subdomain?.toLowerCase(),
       password: registrationData.password,
       plan: plan || BASIC
     };

@@ -54,8 +54,6 @@ export function RequireAuth({ children }) {
 const Switch = () => {
   const { subdomain, domain } = useGetSubdomain();
 
-  console.log({ subdomain, domain, dd: publicRoutes.app });
-
   switch (subdomain) {
     case publicRoutes.app:
       return (
