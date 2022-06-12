@@ -29,5 +29,13 @@ export const privateRoutes = {
   settingsEmailSetup: "/settings/email-setup",
   settingsOperatingHours: "/settings/operating-hours",
   settingsNotifications: "/settings/notifications",
+  settingsLiveChat: "/settings/live-chat",
+  settingsEmailTickets: "/settings/email-tickets",
+  settingsCalendar: "/settings/calendar",
+  settingsMessengers: "/settings/messengers",
+  settingsQuickResponse: "/settings/quick-response",
+  settingsOperators: "/settings/operators",
+  settingsDepartments: "/settings/departments",
+
   logout: "/logout"
 };

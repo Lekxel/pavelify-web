@@ -2,7 +2,6 @@
   background: #13225f;
   color: #fff;
   font-size: 18px;
-  width: 100%;
   border-radius: 5px;
   height: 60px;
   font-family: "Poppins", sans-serif;
@@ -27,4 +26,11 @@
 
 .disabled {
   opacity: 70%;
+}
+.block {
+  width: 100%;
+}
+.normal {
+  padding: 0 4rem;
+  /* margin: 0 auto; */
 }

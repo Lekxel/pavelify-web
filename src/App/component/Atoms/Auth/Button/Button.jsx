@@ -9,13 +9,14 @@ export const Button = ({
   onClick = null,
   ext_class = null,
   to = "#",
-  disabled = false
+  disabled = false,
+  block = true
 }) => {
   return onClick === null ? (
     <button
       disabled={disabled}
       className={`${styles.button} ${outline === true && styles.outline} 
-      ${disabled && styles.disabled}`}
+      ${disabled && styles.disabled} ${block ? styles.block : styles.normal}`}
       style={style}
     >
       {type !== null ? (
@@ -36,7 +37,7 @@ export const Button = ({
       disabled={disabled}
       className={`${styles.button} ${outline === true && styles.outline} ${
         ext_class !== null && "next_button"
-      } ${disabled && styles.disabled}`}
+      } ${disabled && styles.disabled} ${block ? styles.block : styles.normal}`}
       style={style}
       onClick={onClick}
     >

@@ -156,8 +156,24 @@ function BodyHeader({ active }) {
           </svg>
         </div>
 
-        <div className="profile-name-area d-flex-align-center">
-          <img src={Photo} alt="" />
+        <div className="profile-name-area d-flex-align-center d-flex-justify-center">
+          <p>
+            {user?.picture ? (
+              <img
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  objectFit: "contain",
+                  backgroundColor: "transparent"
+                }}
+                src={user?.picture}
+                alt="user"
+              />
+            ) : (
+              <i style={{ fontSize: "30px" }} className="fas fa-user-circle"></i>
+            )}
+          </p>
           <p>{user?.name}</p>
           <div className="icon-wrapper">
             <svg

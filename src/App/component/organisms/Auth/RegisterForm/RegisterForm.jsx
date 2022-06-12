@@ -6,7 +6,14 @@ import { HandleStep } from "./events/HandleStep";
 import styles from "./Register.module.css";
 import { Link } from "react-router-dom";
 import { publicRoutes } from "routes/routes";
-import { parseQueryParams } from "utilities/misc";
+import {
+  parseQueryParams,
+  validateEmail,
+  validateName,
+  validatePassword,
+  validateSubdomain,
+  validateUrl
+} from "utilities/misc";
 import { useLocation, useNavigate } from "react-router";
 import { BASIC, ESSENTIAL, PRO } from "utilities/plans";
 import { showError, showSuccess } from "utilities/alerts";
@@ -42,14 +49,6 @@ export const RegisterForm = () => {
       [e.target.id]: e.target.value
     });
   };
-
-  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const validateUrl = (url) =>
-    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/.test(url);
-  const validatePassword = (password) => password.length >= 6;
-  const validateName = (name) => name.length >= 3;
-  const validateSubdomain = (subdomain) =>
-    /^[a-z]+[a-z0-9-]+[a-z]+$/.test(subdomain?.toLowerCase());
 
   const HandleNextStep = (setStep, Fields, stepIndex, setStepIndex) => {
     if (stepIndex === 0 && !validateEmail(registrationData.email)) {

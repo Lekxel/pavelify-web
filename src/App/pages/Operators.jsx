@@ -63,7 +63,7 @@ function Operators() {
                 <div className="table">
                   <div className="table-head">
                     <div className="col col1">
-                      <input type="checkbox" name="" id="" id="all-check-checkbox" />
+                      <input type="checkbox" name="" id="all-check-checkbox" />
                     </div>
                     <div className="col col2">
                       <h5>Profile</h5>
@@ -85,12 +85,14 @@ function Operators() {
                     </div>
                   </div>
                   <div className="table-body">
-                    <div className="row">
+                    <div className="table-head">
                       <div className="col col1">
                         <input type="checkbox" name="" id="" />
                       </div>
                       <div className="col col2 d-flex-align-center">
-                        <img src={Person1} alt="" />
+                        <p>
+                          <img src={Person1} alt="" />
+                        </p>
                         <p>Jhon Lenon</p>
                       </div>
                       <div className="col col3">
@@ -98,118 +100,6 @@ function Operators() {
                       </div>
                       <div className="col col4">
                         <button className="Online">Online</button>
-                      </div>
-                      <div className="col col5">
-                        <p>Sun 12 June 2021</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>Support, Billing</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                          <img src={Settings} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person2} alt="" />
-                        <p>Phillip Lipshutz</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <button className="offline">Offline</button>
-                      </div>
-                      <div className="col col5">
-                        <p>Sun 12 June 2021</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>Support, Billing</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                          <img src={Settings} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person3} alt="" />
-                        <p>Davis Vetrovs</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <button className="Online">Online</button>
-                      </div>
-                      <div className="col col5">
-                        <p>Sun 12 June 2021</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>Support, Billing</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                          <img src={Settings} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person1} alt="" />
-                        <p>James Ekstrom</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <button className="offline">Offline</button>
-                      </div>
-                      <div className="col col5">
-                        <p>Sun 12 June 2021</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>Support, Billing</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                          <img src={Settings} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person1} alt="" />
-                        <p>Craig Saris</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <button className="offline">Offline</button>
                       </div>
                       <div className="col col5">
                         <p>Sun 12 June 2021</p>

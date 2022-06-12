@@ -3,10 +3,6 @@ import { currentUser } from "utilities/storage";
 import { useQuery } from "react-query";
 
 import Settings from "App/pages/Settings";
-import SettingsAccount from "App/pages/SettingsAccount";
-import SettingsOperatingHours from "App/pages/SettingsOperatingHours";
-import SettingsIntegrations from "App/pages/SettingsIntegrations";
-import SettingsNotification from "App/pages/SettingsNotification";
 import Contact from "App/pages/Contact";
 import EmailTickets from "App/pages/EmailTickets";
 import Operators from "App/pages/Operators";
@@ -28,7 +24,6 @@ import Register from "App/pages/FrontPages/Plus/Auth/Register/Register";
 // import { Calender } from "App/pages/FrontPages/Plus/Calender/Calender";
 // import { ConfirmationPopUpCalender } from "App/pages/FrontPages/Plus/ConfirmationPopUpCalender/ConfirmationPopUpCalender";
 import Home_Desk from "App/pages/Home_Desk";
-import SettingsEmailSetup from "App/pages/SettingsEmailSetup";
 
 import { privateRoutes, publicRoutes } from "routes/routes";
 import useGetSubdomain from "hooks/useGetSubdomain";
@@ -169,59 +164,25 @@ const Switch = () => {
             }
           />
 
-          <Route
-            path={privateRoutes.settings}
-            element={
-              <RequireAuth>
-                <Settings />
-              </RequireAuth>
-            }
-          />
+          <Route path={privateRoutes.settings}>
+            <Route
+              path=""
+              element={
+                <RequireAuth>
+                  <Settings />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path=":page"
+              element={
+                <RequireAuth>
+                  <Settings />
+                </RequireAuth>
+              }
+            />
+          </Route>
 
-          <Route
-            path={privateRoutes.settingsAccount}
-            element={
-              <RequireAuth>
-                <SettingsAccount />
-              </RequireAuth>
-            }
-          />
-
-          <Route
-            path={privateRoutes.settingsEmailSetup}
-            element={
-              <RequireAuth>
-                <SettingsEmailSetup />
-              </RequireAuth>
-            }
-          />
-
-          <Route
-            path={privateRoutes.settingsIntegration}
-            element={
-              <RequireAuth>
-                <SettingsIntegrations />
-              </RequireAuth>
-            }
-          />
-
-          <Route
-            path={privateRoutes.settingsNotifications}
-            element={
-              <RequireAuth>
-                <SettingsNotification />
-              </RequireAuth>
-            }
-          />
-
-          <Route
-            path={privateRoutes.settingsOperatingHours}
-            element={
-              <RequireAuth>
-                <SettingsOperatingHours />
-              </RequireAuth>
-            }
-          />
           <Route path={"*"} element={<Navigate to={privateRoutes.dashboard} />} />
         </>
       );
