@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 import PlusIcon from "../../Assets/img/purple-plus.png";
@@ -14,7 +14,25 @@ import Person3 from "../../Assets/img/Frame 3.png";
 import Edit from "../../Assets/img/edit-2.png";
 import Trash from "../../Assets/img/trash.png";
 import Settings from "../../Assets/img/settings-table.svg";
+import { Button, Modal } from "react-bootstrap";
+import { Button as Btn } from "App/component/Atoms/Auth/Button/Button";
+import { showError, showSuccess } from "utilities/alerts";
+import { capitalize, validateEmail, validateName } from "utilities/misc";
+import Spinner from "App/component/Atoms/Spinner";
+import { httpDeleteOperator, httpFetchOperators, httpSaveOperator } from "api/operator";
+import { useQuery } from "react-query";
+import { DateTime } from "luxon";
+
 function Operators() {
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isAdd, setIsAdd] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [department, setDepartment] = useState([]);
+  const [operator, setOperator] = useState();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   useEffect(() => {
     let Checkbox = document.querySelector("#all-check-checkbox");
     let CheckboxTbody = document.querySelectorAll(".table-body .row .col1 input");
@@ -32,6 +50,101 @@ function Operators() {
       }
     });
   }, []);
+
+  const {
+    data: { operators, limit, page, total },
+    refetch
+  } = useQuery("stats", httpFetchOperators, {
+    initialData: {
+      limit: 10,
+      page: 1,
+      total: 0
+    }
+  });
+
+  const toggleDepartment = (d) => {
+    if (department.indexOf(d) === -1) {
+      setDepartment((dep) => [...dep, d]);
+    } else {
+      setDepartment((dep) => dep.filter((a) => a !== d));
+    }
+  };
+
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setDepartment([]);
+  };
+
+  const handleSubmit = () => {
+    if (!validateName(name)) {
+      return showError("Name is required");
+    }
+    if (!validateEmail(email)) {
+      return showError("Email is required");
+    }
+    setLoading(true);
+
+    const data = {
+      name,
+      email,
+      department
+    };
+
+    httpSaveOperator(data, operator?._id, isAdd)
+      .then((data) => {
+        setLoading(false);
+        if (data.success) {
+          refetch();
+          showSuccess(data.message);
+          clearForm();
+          setShowModal(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
+  const handleAdd = () => {
+    clearForm();
+    setIsAdd(true);
+    setShowModal(true);
+  };
+
+  const handleEdit = (operator) => {
+    setIsAdd(false);
+    setOperator(operator);
+    setName(operator.name);
+    setEmail(operator.email);
+    setDepartment(operator.department);
+    setShowModal(true);
+  };
+
+  const handleDelete = () => {
+    if (!operator._id) return showError("Please select an operator");
+
+    setLoading(true);
+    httpDeleteOperator(operator._id)
+      .then((data) => {
+        setLoading(false);
+        if (data.success) {
+          refetch();
+          showSuccess(data.message);
+          setShowDeleteModal(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
+  const handleSelectForDelete = (operator) => {
+    setOperator(operator);
+    setShowDeleteModal(true);
+  };
+
+  const departments = ["support", "sales", "marketing", "finance"];
   return (
     <div className="Contact Operators main-wrapper d-flex">
       {/* sidebar */}
@@ -40,6 +153,89 @@ function Operators() {
         {/* header */}
         <BodyHeader />
 
+        <Modal show={showModal} centered onHide={() => setShowModal(false)}>
+          <Modal.Header>
+            <Modal.Title>Add New Operator</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <div className="mb-3">
+                <label style={{ fontWeight: "bold" }} className="mb-1">
+                  Department
+                </label>
+                <select
+                  style={{ height: "100px" }}
+                  value={department}
+                  onChange={(e) => toggleDepartment(e.target.value)}
+                  multiple
+                  name="departments"
+                  id=""
+                  className="form-control"
+                >
+                  {departments &&
+                    departments.map((depart, index) => (
+                      <option key={String(index)}>{depart}</option>
+                    ))}
+                </select>
+              </div>
+              <div className="mb-3">
+                <label style={{ fontWeight: "bold" }} className="mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g John Steven"
+                  className="form-control mb-3"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <label style={{ fontWeight: "bold" }} className="mb-1">
+                  Email
+                </label>
+                <input
+                  disabled={!isAdd}
+                  type="email"
+                  placeholder="e.g xxx@mail.com"
+                  className="form-control"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="me-5" variant="secondary" onClick={() => setShowModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={handleSubmit}>
+              {loading ? <Spinner /> : "Continue"}
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* Delete Modal */}
+
+        <Modal show={showDeleteModal} centered onHide={() => setShowDeleteModal(false)}>
+          <Modal.Header>
+            <Modal.Title>Delete Operator</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              Are you sure you want to delete <b>{operator?.name}</b>?
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="me-5" variant="secondary" onClick={() => setShowDeleteModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              {loading ? <Spinner /> : "Delete"}
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         <div className="body-main-area">
           <h2>Operators</h2>
           <div className="body-box" style={{ display: "block" }}>
@@ -47,11 +243,13 @@ function Operators() {
             <div className="right-area">
               <div className="top-area d-flex-align-center">
                 <h3>Operators</h3>
-                <button>Add New Operator</button>
+                <button onClick={handleAdd}>Add New Operator</button>
 
                 <div className="slider-area  d-flex-align-center">
                   <p>
-                    <span>1</span> - <span>3</span> of <span>3</span>
+                    <span>{(page - 1) * limit + 1}</span> -{" "}
+                    <span>{total > page * limit ? page * limit : total}</span> of{" "}
+                    <span>{total}</span>
                   </p>
                   <div className="slider-images d-flex-align-center">
                     <img src={LeftArrow} alt="" />
@@ -78,43 +276,65 @@ function Operators() {
                       <h5>Last Login</h5>
                     </div>
                     <div className="col col6">
-                      <h5>Departement</h5>
+                      <h5>Department</h5>
                     </div>
                     <div className="col col7">
                       <h5>Actions</h5>
                     </div>
                   </div>
                   <div className="table-body">
-                    <div className="table-head">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <p>
-                          <img src={Person1} alt="" />
-                        </p>
-                        <p>Jhon Lenon</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <button className="Online">Online</button>
-                      </div>
-                      <div className="col col5">
-                        <p>Sun 12 June 2021</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>Support, Billing</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                          <img src={Settings} alt="" />
+                    {operators &&
+                      operators.map((operator, index) => (
+                        <div key={operator?._id} className="table-head">
+                          <div className="col col1">
+                            <input type="checkbox" name="" id="" />
+                          </div>
+                          <div className="col col2 d-flex-align-center">
+                            <p>
+                              {operator?.picture ? (
+                                <img src={Person1} alt="" />
+                              ) : (
+                                <i style={{ fontSize: "30px" }} className="fas fa-user-circle"></i>
+                              )}
+                            </p>
+                            <p>{operator?.name}</p>
+                          </div>
+                          <div className="col col3">
+                            <p>{operator?.email}</p>
+                          </div>
+                          <div className="col col4">
+                            {operator?.online ? (
+                              <button className="Online">Online</button>
+                            ) : (
+                              <button className="offline">Offline</button>
+                            )}
+                          </div>
+                          <div className="col col5">
+                            <p>
+                              {operator?.lastLogin
+                                ? DateTime.fromISO(operator?.lastLogin).toFormat("DDDD")
+                                : "Never"}
+                            </p>
+                          </div>
+                          <div className="col col6">
+                            <h5>{operator?.department?.map((d) => capitalize(d))?.join(", ")}</h5>
+                          </div>
+                          <div className="col col7">
+                            <div className="images-wrapper d-flex-align-center">
+                              <span onClick={() => handleEdit(operator)}>
+                                <img src={Edit} alt="" />
+                              </span>
+                              <span
+                                className="mx-2"
+                                onClick={() => handleSelectForDelete(operator)}
+                              >
+                                <img src={Trash} alt="" />
+                              </span>
+                              {/* <img src={Settings} alt="" /> */}
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      ))}
                   </div>
                 </div>
               </div>

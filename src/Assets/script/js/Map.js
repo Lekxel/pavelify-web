@@ -1,3 +1,1 @@
-export const Map = () => {
-  console.log("working");
-};
+export const Map = () => {};
