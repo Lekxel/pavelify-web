@@ -5,6 +5,8 @@ import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import { Calender } from "../../Assets/script/js/Calender";
 import { events } from "../Utils/CalenderEvents";
+import { privateRoutes } from "routes/routes";
+import { Link } from "react-router-dom";
 function CalenderBooking() {
   useEffect(() => {
     document.querySelector(".fc-prev-button").setAttribute("id", "calender-prev-button");
@@ -44,7 +46,9 @@ function CalenderBooking() {
               <span>0</span>
             </li>
             <li className="button-wrapper">
-              <button className="schedule-btn">Add Schedule</button>
+              <Link to={privateRoutes.calendarEvents}>
+                <button className="schedule-btn">Manage Events</button>
+              </Link>
             </li>
           </ul>
 
@@ -64,7 +68,7 @@ function CalenderBooking() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M9 1.5L2 8.5L9 15.5" stroke="#282D4A" stroke-width="1.6" />
+                      <path d="M9 1.5L2 8.5L9 15.5" stroke="#282D4A" strokeWidth="1.6" />
                     </svg>
                   </label>
                   <strong className="Calender-DateTime">Dec, 2021</strong>
@@ -80,7 +84,7 @@ function CalenderBooking() {
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M1 1.5L8 8.5L1 15.5" stroke="#282D4A" stroke-width="1.6" />
+                      <path d="M1 1.5L8 8.5L1 15.5" stroke="#282D4A" strokeWidth="1.6" />
                     </svg>
                   </label>
                 </div>

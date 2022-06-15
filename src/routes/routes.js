@@ -22,6 +22,7 @@ export const privateRoutes = {
   helpDesk: "/help-desk",
   analytics: "/analytics",
   calendarBooking: "/calendar-booking",
+  calendarEvents: "/calendar-booking/events",
   contacts: "/contacts",
   settings: "/settings",
   settingsAccount: "/settings/account",

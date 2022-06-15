@@ -11,6 +11,7 @@ import LiveVisitors from "App/pages/LiveVisitors";
 import Home from "App/pages/Home";
 import Analytics from "App/pages/Analytics";
 import CalenderBooking from "App/pages/CalenderBooking";
+import CalendarEvents from "App/pages/CalendarEvents";
 
 // front page
 import HomePage from "App/pages/FrontPages/HomePage/HomePage";
@@ -124,6 +125,15 @@ const Switch = () => {
             element={
               <RequireAuth>
                 <CalenderBooking />
+              </RequireAuth>
+            }
+          />
+
+          <Route
+            path={privateRoutes.calendarEvents}
+            element={
+              <RequireAuth>
+                <CalendarEvents />
               </RequireAuth>
             }
           />

@@ -49,3 +49,5 @@ export const removeFalsyValues = (obj) => {
   });
   return newObj;
 };
+
+export const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];

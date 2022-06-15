@@ -22,6 +22,7 @@ import Spinner from "App/component/Atoms/Spinner";
 import { httpDeleteOperator, httpFetchOperators, httpSaveOperator } from "api/operator";
 import { useQuery } from "react-query";
 import { DateTime } from "luxon";
+import { httpGetUser } from "api/auth";
 
 function Operators() {
   const [showModal, setShowModal] = useState(false);
@@ -32,6 +33,12 @@ function Operators() {
   const [department, setDepartment] = useState([]);
   const [operator, setOperator] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const {
+    data: { user }
+  } = useQuery("user", httpGetUser, {
+    initialData: {}
+  });
 
   useEffect(() => {
     let Checkbox = document.querySelector("#all-check-checkbox");
@@ -54,7 +61,7 @@ function Operators() {
   const {
     data: { operators, limit, page, total },
     refetch
-  } = useQuery("stats", httpFetchOperators, {
+  } = useQuery("operators", httpFetchOperators, {
     initialData: {
       limit: 10,
       page: 1,
@@ -144,7 +151,6 @@ function Operators() {
     setShowDeleteModal(true);
   };
 
-  const departments = ["support", "sales", "marketing", "finance"];
   return (
     <div className="Contact Operators main-wrapper d-flex">
       {/* sidebar */}
@@ -172,8 +178,8 @@ function Operators() {
                   id=""
                   className="form-control"
                 >
-                  {departments &&
-                    departments.map((depart, index) => (
+                  {user?.company?.departments &&
+                    user?.company?.departments.map((depart, index) => (
                       <option key={String(index)}>{depart}</option>
                     ))}
                 </select>
