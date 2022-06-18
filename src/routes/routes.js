@@ -1,5 +1,8 @@
 export const publicRoutes = {
   app: process.env.REACT_APP_GUEST_SUBDOMAIN ? `${process.env.REACT_APP_GUEST_SUBDOMAIN}` : "",
+  meeting: process.env.REACT_APP_MEETING_SUBDOMAIN
+    ? `${process.env.REACT_APP_MEETING_SUBDOMAIN}`
+    : "meeting",
   home: "/",
   login: "/login",
   register: "/register",
@@ -7,7 +10,9 @@ export const publicRoutes = {
   pricing: "/pricing",
   careers: "/careers",
   privacyPolicy: "/privacy-policy",
-  terms: "/terms"
+  terms: "/terms",
+  bookCalendar: "/:company/:calendarEvent",
+  livechatWidget: "/widget/:company"
 };
 
 export const privateRoutes = {
@@ -37,6 +42,5 @@ export const privateRoutes = {
   settingsQuickResponse: "/settings/quick-response",
   settingsOperators: "/settings/operators",
   settingsDepartments: "/settings/departments",
-
   logout: "/logout"
 };

@@ -65,6 +65,9 @@
         "react/no-array-index-key": "off",
         "no-useless-escape": "off",
         "consistent-return": "off",
-        "no-promise-executor-return": "off"
+        "no-promise-executor-return": "off",
+        "radix": "off",
+        "no-unused-expressions": "off",
+        "jsx-a11y/no-noninteractive-element-interactions": "off"
     }
 }

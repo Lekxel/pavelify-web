@@ -1,63 +1,91 @@
+import { Button } from "App/component/Atoms/Auth/Button/Button";
+import Spinner from "App/component/Atoms/Spinner";
+import { DateTime } from "luxon";
 import React from "react";
-import { useHistory } from "react-router";
 import styles from "./ConfirmationPopUpCalender.module.css";
-export const ConfirmationPopUpCalender = () => {
-  const history = useHistory();
-  const RemovePopUp = (e) => {
-    e.preventDefault();
-    history.push("/plus/Calender");
-  };
+export const ConfirmationPopUpCalender = ({
+  data: {
+    company,
+    timezone,
+    name,
+    setName,
+    email,
+    setEmail,
+    phone,
+    setPhone,
+    onSubmit,
+    prevStep,
+    event,
+    formattedDate,
+    isLoading
+  }
+}) => {
   return (
     <div className={`${styles.ConfirmationPopUpCalenderWrapper} popup-calender`}>
       <div className={`${styles.ConfirmationPopUpCalender} `}>
         <h2 className={styles.heading}>Confirm booking:</h2>
 
         <p>
-          <b>15 Minute Meeting</b> with <b>David Kelly</b>
+          <b>{event?.duration} Minute Meeting</b> with <b>{company?.companyName}</b>
         </p>
         <div>
-          <div className={styles.Close} onClick={RemovePopUp}>
+          <div className={styles.Close} onClick={prevStep}>
             <i className="fas fa-arrow-left"></i>
           </div>
         </div>
         <ul className={styles.Ul}>
-          <li className={styles.Li}>Friday, October 15th, at 9:15 am </li>
-          <li className={styles.Li}> America/Los_Angeles</li>
+          <li className={styles.Li}>{DateTime.fromISO(formattedDate).toFormat("DDDD, 'at' t")} </li>
+          <li className={styles.Li}> {timezone}</li>
 
           <li className={styles.Li}>15 minutes</li>
         </ul>
 
-        <form action="" className={styles.form}>
+        <div className={styles.form}>
           <div>
             <label htmlFor="Name" className={styles.label}>
               Your Name:
             </label>
-            <input type="text" id="Name" className={styles.input} />
+            <input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              id="Name"
+              className={styles.input}
+            />
           </div>
           <div>
             <label htmlFor="Email" className={styles.label}>
               Your Email:
             </label>
-            <input type="email" id="Email" className={styles.input} />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              id="Email"
+              className={styles.input}
+            />
           </div>
           <div className={styles.textareawrapper}>
-            <label htmlFor="text_area" className={styles.label}>
-              This is a test booking! Here's an example question: Have you told a friend about
-              Pavelify yet?
+            <label htmlFor="Email" className={styles.label}>
+              Your Phone Number:
             </label>
-            <textarea
-              name=""
-              id="text_area"
-              cols="30"
-              rows="10"
-              className={styles.textarea}
-            ></textarea>
+            <input
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              type="tel"
+              id="Phone"
+              className={styles.input}
+            />
           </div>
 
           <div className={styles.buttonWrapper}>
-            <button className={styles.button}>Schedule Meeting</button>
+            <Button
+              onClick={onSubmit}
+              block={false}
+              text={isLoading ? <Spinner /> : "Schedule Meeting"}
+            />
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

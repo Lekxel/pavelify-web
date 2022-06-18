@@ -1,20 +1,56 @@
 import React, { useEffect } from "react";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
-import FullCalendar from "@fullcalendar/react"; // must go before plugins
-import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
-import { Calender } from "../../Assets/script/js/Calender";
-import { events } from "../Utils/CalenderEvents";
+import LeftArrow from "Assets/img/left-contact.png";
+import RightArrow from "Assets/img/right-contact.png";
 import { privateRoutes } from "routes/routes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import CalendarSchedules from "App/component/templates/CalendarBooking/CalendarSchedules";
+import { useQuery } from "react-query";
+import BookingList from "App/component/templates/CalendarBooking/BookingList";
+import { httpFetchBookings } from "api/calendar";
+
+const statuses = ["all", "upcoming", "past"];
+
 function CalenderBooking() {
+  const { status } = useParams();
+  const navigate = useNavigate();
+  const [isValidStatus, setIsValidStatus] = React.useState(false);
+
+  const {
+    data: { bookings, limit, page, total, totalEvents, totalBookings, totalPast, totalUpcoming },
+    refetch
+  } = useQuery(["bookings", status], () => httpFetchBookings(status), {
+    initialData: {
+      limit: 10,
+      page: 1,
+      total: 0,
+      totalEvents: 0,
+      totalBookings: 0,
+      totalPast: 0,
+      totalUpcoming: 0
+    }
+  });
+
   useEffect(() => {
-    document.querySelector(".fc-prev-button").setAttribute("id", "calender-prev-button");
-    document.querySelector(".fc-next-button").setAttribute("id", "calender-next-button");
-    Calender();
-  }, []);
+    if (statuses.includes(status)) {
+      setIsValidStatus(true);
+    } else {
+      setIsValidStatus(false);
+    }
+  }, [status]);
+
+  const handleSelectForDelete = async (booking) => {};
+
+  const renderComponent = () => {
+    if (isValidStatus) {
+      return <BookingList bookings={bookings} handleSelectForDelete={handleSelectForDelete} />;
+    }
+    return <CalendarSchedules />;
+  };
+
   return (
-    <div className="EmailTickets CalenderBooking main-wrapper d-flex">
+    <div className="Contact EmailTickets CalenderBooking main-wrapper d-flex">
       {/* sidebar */}
       <Sidebar active="calender" />
       <div className="body-area">
@@ -23,100 +59,54 @@ function CalenderBooking() {
 
         <div className="body-main-area">
           <h2>Calendar Booking</h2>
-
-          <ul className="navigation-bar d-flex-align-center">
-            <li className="active d-flex-align-center">
-              <p>Schduled Meetings</p>
-              <span>3</span>
-            </li>
-            <li className="d-flex-align-center">
-              <p>Upcoming Meetings</p>
-              <span>1</span>
-            </li>
-            <li className="d-flex-align-center">
-              <p>Past Meetings</p>
-              <span>3</span>
-            </li>
-            <li className="d-flex-align-center">
-              <p>Pending</p>
-              <span>0</span>
-            </li>
-            <li className="d-flex-align-center">
-              <p>Meeting Categories</p>
-              <span>0</span>
-            </li>
-            <li className="button-wrapper">
-              <Link to={privateRoutes.calendarEvents}>
-                <button className="schedule-btn">Manage Events</button>
-              </Link>
-            </li>
-          </ul>
-
-          <div className="bottom-calender-area grid-col-4" style={{ marginTop: 40 }}>
-            <div style={{ background: "#fff" }}>
-              <div className="box calender stagger">
-                <div className="calender-top">
-                  <label
-                    htmlFor="calender-prev-button"
-                    className="icon-wrapper"
-                    id="calender-back-icon-wrapper"
-                  >
-                    <svg
-                      width="10"
-                      height="17"
-                      viewBox="0 0 10 17"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M9 1.5L2 8.5L9 15.5" stroke="#282D4A" strokeWidth="1.6" />
-                    </svg>
-                  </label>
-                  <strong className="Calender-DateTime">Dec, 2021</strong>
-                  <label
-                    htmlFor="calender-next-button"
-                    className="icon-wrapper"
-                    id="calender-towards-icon-wrapper"
-                  >
-                    <svg
-                      width="10"
-                      height="17"
-                      viewBox="0 0 10 17"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M1 1.5L8 8.5L1 15.5" stroke="#282D4A" strokeWidth="1.6" />
-                    </svg>
-                  </label>
+          <div className="body-box" style={{ display: "block" }}>
+            <div className="right-area">
+              <ul className="navigation-bar d-flex-align-center">
+                <li
+                  onClick={() => navigate(`${privateRoutes.calendarBooking}/all`)}
+                  className={`d-flex-align-center ${status === "all" ? "active" : ""}`}
+                >
+                  <p>Scheduled Meetings</p>
+                  <span>{totalBookings}</span>
+                </li>
+                <li
+                  onClick={() => navigate(`${privateRoutes.calendarBooking}/upcoming`)}
+                  className={`d-flex-align-center ${status === "upcoming" ? "active" : ""}`}
+                >
+                  <p>Upcoming Meetings</p>
+                  <span>{totalUpcoming}</span>
+                </li>
+                <li
+                  onClick={() => navigate(`${privateRoutes.calendarBooking}/past`)}
+                  className={`d-flex-align-center ${status === "past" ? "active" : ""}`}
+                >
+                  <p>Past Meetings</p>
+                  <span>{totalPast}</span>
+                </li>
+                <li className="button-wrapper">
+                  <Link to={privateRoutes.calendarEvents}>
+                    <button className="schedule-btn">Manage Events ({totalEvents})</button>
+                  </Link>
+                </li>
+              </ul>
+              {isValidStatus && (
+                <div className="top-area d-flex-align-center">
+                  <div></div>
+                  <div className="slider-area d-flex-align-center">
+                    <p className="me-3">
+                      <span>{(page - 1) * limit + 1}</span> -{" "}
+                      <span>{total > page * limit ? page * limit : total}</span> of{" "}
+                      <span>{total}</span>
+                    </p>
+                    <div className="slider-images d-flex-align-center mb-3">
+                      <img src={LeftArrow} alt="" />
+                      <img src={RightArrow} alt="" />
+                    </div>
+                  </div>
                 </div>
-                <div className="calender-days-name">
-                  <span>M</span>
-                  <span>T</span>
-                  <span>W</span>
-                  <span>T</span>
-                  <span>F</span>
-                  <span>S</span>
-                  <span>S</span>
-                </div>
-                <div className="calender-days"></div>
-              </div>
+              )}
 
-              <div className="bottom-after-calender">
-                <h3>Scheduled Lists</h3>
-                <ul>
-                  <li>Create a management dash...</li>
-                  <li>Unlock all payment in one</li>
-                  <li>Learn How to UI design figma</li>
-                </ul>
-              </div>
-            </div>
-
-            <div id="calender">
-              <FullCalendar
-                plugins={[dayGridPlugin]}
-                initialView="dayGridMonth"
-                events={events}
-                eventColor="#7822e624"
-              />
+              {renderComponent()}
             </div>
           </div>
         </div>

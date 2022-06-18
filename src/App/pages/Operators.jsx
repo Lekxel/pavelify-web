@@ -251,7 +251,7 @@ function Operators() {
                 <h3>Operators</h3>
                 <button onClick={handleAdd}>Add New Operator</button>
 
-                <div className="slider-area  d-flex-align-center">
+                <div className="slider-area d-flex-align-center">
                   <p>
                     <span>{(page - 1) * limit + 1}</span> -{" "}
                     <span>{total > page * limit ? page * limit : total}</span> of{" "}

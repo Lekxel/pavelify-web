@@ -22,7 +22,7 @@ import PrivacyPolicy from "App/pages/FrontPages/Plus/Privacy Policy/PrivacyPolic
 import Terms from "App/pages/FrontPages/Plus/Terms/Terms";
 import Login from "App/pages/FrontPages/Plus/Auth/Login/Login";
 import Register from "App/pages/FrontPages/Plus/Auth/Register/Register";
-// import { Calender } from "App/pages/FrontPages/Plus/Calender/Calender";
+import { Calender } from "App/pages/FrontPages/Plus/Calender/Calender";
 // import { ConfirmationPopUpCalender } from "App/pages/FrontPages/Plus/ConfirmationPopUpCalender/ConfirmationPopUpCalender";
 import Home_Desk from "App/pages/Home_Desk";
 
@@ -31,6 +31,7 @@ import useGetSubdomain from "hooks/useGetSubdomain";
 import Redirect from "helpers/Redirect";
 import { httpGetUser } from "api/auth";
 import Logout from "helpers/Logout";
+import LiveChatWidget from "App/component/templates/LiveChat/LiveChat";
 
 export function RequireAuth({ children }) {
   const {
@@ -76,8 +77,12 @@ const Switch = () => {
               />
             }
           />
+          <Route path={publicRoutes.livechatWidget} element={<LiveChatWidget />} />
         </>
       );
+
+    case publicRoutes.meeting:
+      return <Route path={publicRoutes.bookCalendar} element={<Calender />} />;
     case privateRoutes.app:
       return (
         <>
@@ -120,14 +125,24 @@ const Switch = () => {
             }
           />
 
-          <Route
-            path={privateRoutes.calendarBooking}
-            element={
-              <RequireAuth>
-                <CalenderBooking />
-              </RequireAuth>
-            }
-          />
+          <Route path={privateRoutes.calendarBooking}>
+            <Route
+              path={""}
+              element={
+                <RequireAuth>
+                  <CalenderBooking />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path={":status"}
+              element={
+                <RequireAuth>
+                  <CalenderBooking />
+                </RequireAuth>
+              }
+            />
+          </Route>
 
           <Route
             path={privateRoutes.calendarEvents}

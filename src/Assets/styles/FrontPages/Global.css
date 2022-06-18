@@ -79,6 +79,13 @@
   background-color: #13215e;
   color: #fff;
 }
+.calender-days > div:not(.disabled):not(.active-day):hover {
+  background-color: #a3addc;
+  color: #fff;
+}
+.calender-days > div.disabled {
+  color: #ccc;
+}
 .calender-days span {
   text-align: center;
   display: inline-block;

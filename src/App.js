@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <React.StrictMode>
-      <div className="App">
+      <div style={{ position: "relative" }} className="App">
         <QueryClientProvider client={queryClient}>
           <Router>
             <ScrollToTop />

@@ -12,11 +12,12 @@ import { showError, showSuccess } from "utilities/alerts";
 import { capitalize, validateName, days as daysOfTheWeek } from "utilities/misc";
 import Spinner from "App/component/Atoms/Spinner";
 import { useQuery } from "react-query";
-import { DateTime } from "luxon";
+import TimePicker from "react-time-picker";
 import { httpDeleteEvent, httpFetchEvents, httpSaveEvent } from "api/calendar";
 import useGetSubdomain from "hooks/useGetSubdomain";
 import TimezoneOptions from "helpers/TimezoneOptions";
 import { httpGetUser } from "api/auth";
+// import TimePicker from "react-time-picker/dist/entry.nostyle";
 
 const locations = ["zoom", "google meet", "phone"];
 
@@ -215,29 +216,29 @@ function CalendarEvents() {
                     className="row mt-1"
                     style={{
                       display: "flex",
-                      justifyContent: "space-between",
+                      justifyContent: "space-evenly",
                       alignItems: "center"
                     }}
                   >
                     <div className="col">
-                      <input
-                        type="time"
-                        placeholder="From"
-                        className="form-control me-2"
+                      <TimePicker
+                        hourPlaceholder="hh"
+                        minutePlaceholder="mm"
+                        required
                         value={from}
-                        onChange={(e) => setFrom(e.target.value)}
+                        onChange={setFrom}
                       />
                     </div>
-                    <div className="mx-2">
-                      <b>-</b>
+                    <div className="col text-center">
+                      <b className="text-center">-</b>
                     </div>
                     <div className="col">
-                      <input
-                        type="time"
-                        placeholder="To"
-                        className="form-control"
+                      <TimePicker
+                        hourPlaceholder="hh"
+                        minutePlaceholder="mm"
+                        required
                         value={to}
-                        onChange={(e) => setTo(e.target.value)}
+                        onChange={setTo}
                       />
                     </div>
                   </div>
@@ -297,7 +298,7 @@ function CalendarEvents() {
                       {daysOfTheWeek.map((day, index) => (
                         <div key={String(index)} className="col-4 col-md-3 my-2">
                           <input
-                            className="fodrm-control d-inline"
+                            className="form-control d-inline"
                             id={day}
                             checked={days.indexOf(day) >= 0}
                             type="checkbox"
@@ -496,14 +497,14 @@ function CalendarEvents() {
                               <span
                                 onClick={() =>
                                   copyLink(
-                                    `${window.location.protocol}//meeting.${domain}/${user?.company?.companyName}/${eachEevnt.slug}`
+                                    `${window.location.protocol}//meeting.${domain}/${user?.company?.slug}/${eachEevnt.slug}`
                                   )
                                 }
                               >
                                 <i
                                   style={{
                                     color: "rgb(45, 150, 214)",
-                                    fontSize: "30px",
+                                    fontSize: "32px",
                                     cursor: "pointer"
                                   }}
                                   className="fa fa-copy me-2"

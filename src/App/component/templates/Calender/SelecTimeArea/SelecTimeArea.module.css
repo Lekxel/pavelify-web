@@ -5,8 +5,15 @@
 }
 .day {
   padding: 1rem 1rem;
+  padding-bottom: 0;
   border: 1px solid #ddd;
   border-radius: 10px;
   margin-bottom: 1rem;
   cursor: pointer;
+  text-align: center;
+}
+
+.selectedTime {
+  background-color: #12225d;
+  color: #fff;
 }

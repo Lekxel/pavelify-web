@@ -1,11 +1,12 @@
 import React from "react";
 import { CollapseAbleLiveChat } from "../../organisms/LiveChat/CollapseAbleLiveChat";
+import "./default.module.css";
 import styles from "./LiveChat.module.css";
 import burger from "../../../../Assets/img/burger.png";
 import { HandleBotDisplay } from "./events/HandleBotDisplay";
 import { LiveChatMessageArea } from "../../organisms/LiveChat/LiveChatMessageArea";
 
-export const LiveChat = () => {
+const LiveChatWidget = () => {
   return (
     <div className={styles.LiveChat}>
       {" "}
@@ -22,3 +23,4 @@ export const LiveChat = () => {
     </div>
   );
 };
+export default LiveChatWidget;

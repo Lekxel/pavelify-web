@@ -1,21 +1,19 @@
 import React from "react";
 import styles from "./SelecTimeArea.module.css";
-import { days } from "./event/days";
-import { useHistory } from "react-router";
-export const SelecTimeArea = () => {
-  const history = useHistory();
-  const RemovePopUp = (e) => {
-    history.push("/plus/Calender/Confirm");
-  };
 
+export const SelecTimeArea = ({ data: { event, company, time, setTime, times } }) => {
   return (
     <div className={styles.SelecTimeArea}>
       <h2>Select time:</h2>
 
       <div className={styles.days}>
-        {days.map((day) => (
-          <div key={day} className={`${styles.day} days`} onClick={RemovePopUp}>
-            <p style={{ pointerEvents: "none" }}>{day}</p>
+        {times.map((t) => (
+          <div
+            key={t}
+            className={`${styles.day} days ${time === t ? styles.selectedTime : ""}`}
+            onClick={() => setTime(t)}
+          >
+            <p style={{ pointerEvents: "none", cursor: "pointer" }}>{t}</p>
           </div>
         ))}
       </div>

@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: 0.4fr 1fr 0.4fr;
   grid-gap: 2rem;
-
-  margin: 6rem auto !important;
+  margin: 3rem auto !important;
+  margin-bottom: 1rem;
 }
 @media screen and (max-width: 1100px) {
   .calender {

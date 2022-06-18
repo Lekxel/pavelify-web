@@ -12,3 +12,15 @@ export const httpFetchEvents = () => {
 export const httpDeleteEvent = (id) => {
   return deleteRequest(`/calendar/removeEvent/${id}`);
 };
+
+export const httpGetEvent = (companySlug, eventSlug) => {
+  return get(`/calendar/getEvent/${companySlug}/${eventSlug}`);
+};
+
+export const httpBookEvent = (payload, eventID) => {
+  return post(`/calendar/bookEvent/${eventID}`, payload);
+};
+
+export const httpFetchBookings = (status) => {
+  return get(`/calendar/fetchBookings?status=${status}`);
+};

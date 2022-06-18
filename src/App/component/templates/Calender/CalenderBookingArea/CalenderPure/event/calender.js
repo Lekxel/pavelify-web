@@ -1,7 +1,9 @@
-export const CalenderJs = () => {
-  const CurrentDate = new Date();
+import { days } from "utilities/misc";
+
+export const CalenderJs = (date, setDate, event, calendarClicked) => {
+  let CurrentDate = date || new Date();
   let CurrentMonth = CurrentDate.getMonth();
-  const CurrentYear = CurrentDate.getFullYear();
+  let CurrentYear = CurrentDate.getFullYear();
   let TotalDays = 31;
 
   let CalenderDays = document.querySelectorAll(".calender-days div");
@@ -12,8 +14,10 @@ export const CalenderJs = () => {
     FrontIcon: document.querySelector("#calender-towards-icon-wrapper")
   };
 
+  const isAvailable = (day) => event?.availableDays?.includes(days[day]);
+
   const CovertIntoMonthString = (CurrentNumericMonth) => {
-    const Months = [
+    let Months = [
       "Jan",
       "Feb",
       "Mar",
@@ -35,11 +39,19 @@ export const CalenderJs = () => {
   };
 
   const ActivateThisDay = (e) => {
-    const Element = document.querySelector(`#${e.target.id}`);
-    document.querySelectorAll(".calender-days  > *").forEach((EachDay) => {
-      EachDay.classList.remove("active-day");
-    });
-    Element.classList.toggle("active-day");
+    if (e.target.id) {
+      const Element = document.querySelector(`#${e.target.id}`);
+      if (Element.classList.contains("disabled")) {
+        return;
+      }
+      document.querySelectorAll(".calender-days  > *").forEach((EachDay) => {
+        EachDay.classList.remove("active-day");
+      });
+      let day = Element.childNodes[1].innerText;
+      setDate(new Date(`${CurrentMonth + 1} ${day} ${CurrentYear}`));
+      Element.classList.toggle("active-day");
+      calendarClicked();
+    }
   };
 
   // Helping function to get total daus
@@ -56,13 +68,69 @@ export const CalenderJs = () => {
 
   // Helping function
   const StartDateWithRespectToDay = (year, month) => {
-    const LocalDate = new Date(year, month, 1);
-    const LocalDay = LocalDate.getDay();
+    let LocalDate = new Date(year, month, 1);
+    let LocalDay = LocalDate.getDay();
     return LocalDay;
   };
 
-  // Event Function
+  const DisplayDays = () => {
+    // Remove Event Listeners from Old Divs
+    CalenderDays.forEach((CalenderDay) => {
+      CalenderDay.removeEventListener("click", ActivateThisDay);
+    });
 
+    CalenderDaysWrapper.innerHTML = "";
+
+    //   Calculate total Days
+    TotalDays = GetTotalDays(CurrentMonth);
+
+    //   frist date Start in which day Monday Tuesday etc
+    let FirstElementInCalender = StartDateWithRespectToDay(CurrentYear, CurrentMonth);
+
+    let addedDots = 0;
+    //   first Loop to add . dots
+    for (let CurrentDay = 0; CurrentDay < TotalDays; CurrentDay++) {
+      if (FirstElementInCalender - 1 > CurrentDay) {
+        addedDots++;
+        CalenderDaysWrapper.innerHTML += ` <div>
+                <span>.</span>
+              </div>`;
+      }
+    }
+
+    //   Second loop to display date
+    for (let CurrentDay = 0; CurrentDay < TotalDays; CurrentDay++) {
+      let d = new Date(CurrentDate);
+      d.setDate(CurrentDay + 2);
+      d.setMonth(CurrentMonth);
+      d.setFullYear(CurrentYear);
+
+      CalenderDaysWrapper.innerHTML +=
+        d.getTime() < new Date().getTime() ||
+        (event?.availableDays && !isAvailable((d.getDate() + addedDots - 1) % 7))
+          ? ` <div class='disabled' id="calender-day-${CurrentDay + 1}">
+            <span>${CurrentDay + 1}</span>
+          </div>`
+          : ` <div id="calender-day-${CurrentDay + 1}">
+            <span>${CurrentDay + 1}</span>
+          </div>`;
+    }
+
+    // Select current day
+    if (CurrentDate.getMonth() === CurrentMonth && date) {
+      document.querySelector(`#calender-day-${CurrentDate.getDate()}`).classList.add("active-day");
+      setDate(new Date(`${CurrentMonth + 1} ${CurrentDate.getDate()} ${CurrentYear}`));
+    }
+
+    //   Add Event Listeners In New Divs
+    CalenderDays = document.querySelectorAll(".calender-days div");
+
+    CalenderDays.forEach((CalenderDay) => {
+      CalenderDay.addEventListener("click", ActivateThisDay);
+    });
+  };
+
+  // Event Function
   const NavigateBack = (e) => {
     if (CurrentMonth === 0) {
       CurrentMonth = 11;
@@ -81,47 +149,6 @@ export const CalenderJs = () => {
     }
     CalenderDateTime.textContent = `${CovertIntoMonthString(CurrentMonth)} , ${CurrentYear}`;
     DisplayDays();
-  };
-
-  const DisplayDays = () => {
-    // Remove Event Listeners from Old Divs
-    CalenderDays.forEach((CalenderDay) => {
-      CalenderDay.removeEventListener("click", ActivateThisDay);
-    });
-
-    CalenderDaysWrapper.innerHTML = "";
-
-    //   Calculate total Days
-    TotalDays = GetTotalDays(CurrentMonth);
-
-    //   frist date Start in which day Monday Tuesday etc
-    const FirstElementInCalender = StartDateWithRespectToDay(CurrentYear, CurrentMonth);
-
-    //   first Loop to add . dots
-    for (let CurrentDay = 0; CurrentDay < TotalDays; CurrentDay++) {
-      if (FirstElementInCalender - 1 > CurrentDay) {
-        CalenderDaysWrapper.innerHTML += ` <div>
-                <span>.</span>
-              </div>`;
-      }
-    }
-
-    //   Second loop to display date
-    for (let CurrentDay = 0; CurrentDay < TotalDays; CurrentDay++) {
-      CalenderDaysWrapper.innerHTML += ` <div id="calender-day-${CurrentDay + 1}">
-            <span>${CurrentDay + 1}</span>
-          </div>`;
-    }
-
-    if (CurrentDate.getMonth() === CurrentMonth) {
-      document.querySelector(`#calender-day-${CurrentDate.getDate()}`).classList.add("active-day");
-    }
-    //   Add Event Listeners In New Divs
-    CalenderDays = document.querySelectorAll(".calender-days div");
-
-    CalenderDays.forEach((CalenderDay) => {
-      CalenderDay.addEventListener("click", ActivateThisDay);
-    });
   };
 
   // display date

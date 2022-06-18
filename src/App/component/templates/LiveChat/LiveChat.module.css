@@ -1,3 +1,6 @@
+body {
+  background: transparent;
+}
 .LiveChat {
   position: fixed;
   bottom: 20px;

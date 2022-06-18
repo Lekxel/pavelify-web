@@ -31,6 +31,7 @@ export const validatePassword = (password) => password.length >= 6;
 export const validateName = (name) => name.length >= 3;
 export const validateSubdomain = (subdomain) =>
   /^[a-z]+[a-z0-9-]+[a-z]+$/.test(subdomain?.toLowerCase());
+export const validatePhone = (phone) => /^\d{11}$/.test(phone);
 
 export const fileToBase64 = async (file) =>
   new Promise((resolve, reject) => {
