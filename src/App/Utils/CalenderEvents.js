@@ -14,8 +14,9 @@ export const events = [
   {
     title: "Make something better",
     description: "first description",
-    start: getDate("YEAR-MONTH-02"),
-    end: getDate("YEAR-MONTH-07")
+    date: getDate("YEAR-MONTH-02"),
+    // end: getDate("YEAR-MONTH-07")
+    url: "dd"
   },
 
   {

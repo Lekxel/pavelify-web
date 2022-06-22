@@ -1,16 +1,12 @@
-import React from "react";
+import { httpFetchVisitors } from "api/visitor";
+import { VectorMap } from "react-jvectormap";
+import { useQuery } from "react-query";
+import GermanyFlag from "../../Assets/img/flag-germany.png";
+import LeftArrow from "../../Assets/img/left-contact.png";
+import FireFox from "../../Assets/img/logos_firefox.png";
+import RightArrow from "../../Assets/img/right-contact.png";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
-import GermanyFlag from "../../Assets/img/flag-germany.png";
-import FireFox from "../../Assets/img/logos_firefox.png";
-import SpainFlag from "../../Assets/img/flag-spain.png";
-import JapanFlag from "../../Assets/img/flag-japan.png";
-import Chrome from "../../Assets/img/logos_chrome.png";
-import { Doughnut } from "react-chartjs-2";
-import { Map } from "../../Assets/script/js/Map";
-import { VectorMap } from "react-jvectormap";
 function LiveVisitors() {
   const mapData = {
     CN: 100000,
@@ -23,40 +19,22 @@ function LiveVisitors() {
     US: 20,
     pk: 20
   };
-  const data = {
-    labels: ["Data One", "Data Two", "Data Three"],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [25, 25, 25, 25],
-        backgroundColor: ["#9953B7", "#18AB8F", "#2D96D6", "#EEF0F6"],
-        hoverOffset: 5,
-        borderColor: ["#9953B7", "#18AB8F", "#2D96D6", "#EEF0F6"],
-        borderWidth: 1,
-        cutout: 80
-      }
-    ]
-  };
 
-  const options = {
-    maintainAspectRatio: false,
-    responsive: true,
+  const status = "online";
 
-    plugins: {
-      legend: {
-        labels: {
-          boxWidth: 15,
-          boxHeight: 15,
-          padding: 20
-        },
-        position: "bottom",
-        reverse: true
-        //   boxHeight:20,
-      }
+  const {
+    data: { visitors, limit, page, total },
+    refetch
+  } = useQuery(["visitors", status], () => httpFetchVisitors(status), {
+    initialData: {
+      limit: 10,
+      page: 1,
+      total: 0
     }
+  });
 
-    // cutoutPercentage: 120,
-  };
+  console.log(visitors);
+
   return (
     <div className="LiveVisitors main-wrapper  d-flex">
       {/* sidebar */}
@@ -67,12 +45,14 @@ function LiveVisitors() {
         <div className="body-main-area">
           <h2>Live Visitors</h2>
           <div className="grid-box-area visitor-grid grid-col-3">
-            <div className="visitors-in-site ">
+            <div className="visitors-in-site">
               <div className="top-area d-flex-align-center">
-                <h4>Visitors on yours site at the moment</h4>
+                <h4>Visitors on your site at the moment</h4>
                 <div className="slider-area  d-flex-align-center">
                   <p>
-                    <span>1</span> - <span>3</span> of <span>3</span>
+                    <span>{(page - 1) * limit + 1}</span> -{" "}
+                    <span>{total > page * limit ? page * limit : total}</span> of{" "}
+                    <span>{total}</span>
                   </p>
                   <div className="slider-images d-flex-align-center">
                     <img src={LeftArrow} alt="" />
@@ -80,7 +60,7 @@ function LiveVisitors() {
                   </div>
                 </div>
               </div>
-              <div className="table">
+              <div className="table" style={{ overflowY: "scroll" }}>
                 <ul className="table-head">
                   <li>No</li>
                   <li>Name</li>
@@ -90,275 +70,39 @@ function LiveVisitors() {
                 </ul>
 
                 <ul className="table-body">
-                  <div className="row">
-                    <li>1.</li>
-                    <li>
-                      <div className="tag">A</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={GermanyFlag} alt="" />
-                            <img src={FireFox} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
+                  {visitors?.map((visitor, index) => (
+                    <div key={visitor?.uuid} className="row">
+                      <li>{index + 1}.</li>
+                      <li>
+                        <div className="tag" style={{ background: visitor?.color || "red" }}>
+                          A
+                        </div>
+                        <div className="presentation">
+                          <h5>
+                            #e897dhj
+                            <div className="icons-wrapper">
+                              <img src={GermanyFlag} alt="" />
+                              <img src={FireFox} alt="" />
+                            </div>
+                          </h5>
+                          <p>New</p>
+                          <a href="http://palevay.com">http://palevay.com</a>
+                        </div>
+                      </li>
+                      <li>12 June 2021</li>
+                      <li>
                         <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>12 June 2021</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={GermanyFlag} alt="" />
-                        <img src={FireFox} alt="" />
-                      </div>
+                      </li>
+                      <li>
+                        <div className="icons-wrapper">
+                          <img src={GermanyFlag} alt="" />
+                          <img src={FireFox} alt="" />
+                        </div>
 
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row">
-                    <li>2.</li>
-                    <li>
-                      <div className="tag blue">C</div>
-                      <div className="presentation">
-                        <h5>
-                          #f56hjk8{" "}
-                          <div className="icons-wrapper">
-                            <img src={GermanyFlag} alt="" />
-                            <img src={FireFox} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>8 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={SpainFlag} alt="" />
-                        <img src={FireFox} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row">
-                    <li>3.</li>
-                    <li>
-                      <div className="tag yellow">B</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={JapanFlag} alt="" />
-                            <img src={Chrome} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>2 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={JapanFlag} alt="" />
-                        <img src={Chrome} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row">
-                    <li>4.</li>
-                    <li>
-                      <div className="tag purple">D</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={JapanFlag} alt="" />
-                            <img src={Chrome} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>2 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={JapanFlag} alt="" />
-                        <img src={Chrome} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row">
-                    <li>5.</li>
-                    <li>
-                      <div className="tag green">E</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={JapanFlag} alt="" />
-                            <img src={Chrome} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>2 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={JapanFlag} alt="" />
-                        <img src={Chrome} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row">
-                    <li>6.</li>
-                    <li>
-                      <div className="tag">F</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={JapanFlag} alt="" />
-                            <img src={Chrome} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>2 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={JapanFlag} alt="" />
-                        <img src={Chrome} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row ">
-                    <li>7.</li>
-                    <li>
-                      <div className="tag blue">H</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={JapanFlag} alt="" />
-                            <img src={Chrome} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>2 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={JapanFlag} alt="" />
-                        <img src={Chrome} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row ">
-                    <li>8.</li>
-                    <li>
-                      <div className="tag blue">I</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={JapanFlag} alt="" />
-                            <img src={Chrome} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>2 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={JapanFlag} alt="" />
-                        <img src={Chrome} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
-
-                  <div className="row ">
-                    <li>9.</li>
-                    <li>
-                      <div className="tag yellow">U</div>
-                      <div className="presentation">
-                        <h5>
-                          #e897dhj
-                          <div className="icons-wrapper">
-                            <img src={JapanFlag} alt="" />
-                            <img src={Chrome} alt="" />
-                          </div>
-                        </h5>
-                        <p>New</p>
-                        <a href="http://palevay.com">http://palevay.com</a>
-                      </div>
-                    </li>
-                    <li>2 days ago</li>
-                    <li>
-                      <a href="http://palevay.com">http://palevay.com</a>
-                    </li>
-                    <li>
-                      <div className="icons-wrapper">
-                        <img src={JapanFlag} alt="" />
-                        <img src={Chrome} alt="" />
-                      </div>
-
-                      <button>Start Chat</button>
-                    </li>
-                  </div>
+                        <button>Start Chat</button>
+                      </li>
+                    </div>
+                  ))}
                 </ul>
               </div>
             </div>

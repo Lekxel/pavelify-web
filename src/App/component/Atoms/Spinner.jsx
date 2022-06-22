@@ -1,3 +1,3 @@
-const Spinner = () => <i className="fas fa-spin fa-spinner"></i>;
+const Spinner = ({ className = "" }) => <i className={`fas fa-spin fa-spinner ${className}`}></i>;
 
 export default Spinner;

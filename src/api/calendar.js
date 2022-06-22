@@ -24,3 +24,7 @@ export const httpBookEvent = (payload, eventID) => {
 export const httpFetchBookings = (status) => {
   return get(`/calendar/fetchBookings?status=${status}`);
 };
+
+export const httpFetchEventsForLivechat = (companyID) => {
+  return get(`/calendar/fetchEventsForLivechat/${companyID}`);
+};

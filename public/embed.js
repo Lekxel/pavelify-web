@@ -1,5 +1,6 @@
-const url = "http://vcap.me:3000";
+// const url = "http://vcap.me:3000";
 // const url = "https://pavelify.com";
+const url = "https://pavelify-web.vercel.app";
 
 (function () {
   const PAVELIFY_WRAPPER_ID = "pavelify-container";
@@ -15,11 +16,23 @@ const url = "http://vcap.me:3000";
           data = JSON.parse(e.data);
         } catch (e) {}
 
-        if (data.type && data.type === "CLOSE_IFRAME") {
-          this.iframe.classList.remove("mobile");
-          this.iframe.classList.remove("desktop");
-        } else if (data.type && data.type === "OPEN_IFRAME") {
-          handleScreenSize();
+        if (data.type && data.type === "TOGGLE_IFRAME") {
+          if (
+            this.iframe.classList.contains("mobile") ||
+            this.iframe.classList.contains("desktop")
+          ) {
+            this.iframe.classList.remove("mobile");
+            this.iframe.classList.remove("desktop");
+          } else {
+            handleScreenSize();
+          }
+        } else if (data.type && data.type === "HANDLE_SCREEN_SIZE_CHANGE") {
+          if (
+            this.iframe.classList.contains("mobile") ||
+            this.iframe.classList.contains("desktop")
+          ) {
+            handleScreenSize();
+          }
         }
       },
       false
@@ -59,24 +72,20 @@ const url = "http://vcap.me:3000";
 
       this.iframe.classList.add(TAKEOVER_CLASSNAME);
       this.iframe.onload = () => {
-        this.iframe.contentWindow.postMessage(
-          JSON.stringify({
-            type: "SCREEN_SIZE",
-            value: { width: window.innerWidth, height: window.innerHeight }
-          }),
-          "*"
-        );
+        handleResize();
         const { href, origin } = window.location;
         this.iframe.contentWindow.postMessage(
           JSON.stringify({
             type: "PAGE_VIEW",
-            value: { href, origin }
+            value: { url: href, host: origin }
           }),
           "*"
         );
       };
     } else {
     }
+
+    window.addEventListener("resize", handleResize);
   };
 
   const handleScreenSize = () => {
@@ -97,6 +106,16 @@ const url = "http://vcap.me:3000";
           break;
       }
     }
+  };
+
+  const handleResize = () => {
+    this.iframe.contentWindow.postMessage(
+      JSON.stringify({
+        type: "SCREEN_SIZE",
+        value: { width: window.innerWidth, height: window.innerHeight }
+      }),
+      "*"
+    );
   };
 
   init();

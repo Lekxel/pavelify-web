@@ -1,15 +1,31 @@
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
+// vs-code-organize-imports-disable-next-line
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import { Calender } from "Assets/script/js/Calender";
-import { events } from "App/Utils/CalenderEvents";
-import { useEffect } from "react";
+import { DateTime } from "luxon";
+import { useEffect, useState } from "react";
+// import { events } from "App/Utils/CalenderEvents";
 
-const CaledarSchedules = () => {
+const CaledarSchedules = ({ bookings }) => {
+  const [events, setEvents] = useState([]);
+  console.log(bookings);
   useEffect(() => {
     document.querySelector(".fc-prev-button").setAttribute("id", "calender-prev-button");
     document.querySelector(".fc-next-button").setAttribute("id", "calender-next-button");
     Calender();
   }, []);
+
+  useEffect(() => {
+    bookings &&
+      setEvents(
+        bookings.map((booking) => ({
+          title: booking?.calendarEvent?.title,
+          date: DateTime.fromISO(booking?.time).toFormat("yyyy-MM-dd HH:mm"),
+          // end: getDate("YEAR-MONTH-07")
+          url: "#"
+        }))
+      );
+  }, [bookings?.length]);
 
   return (
     <div className="bottom-calender-area grid-col-4" style={{ marginTop: 40 }}>
@@ -63,9 +79,9 @@ const CaledarSchedules = () => {
         <div className="bottom-after-calender">
           <h3>Scheduled Lists</h3>
           <ul>
-            <li>Create a management dash...</li>
-            <li>Unlock all payment in one</li>
-            <li>Learn How to UI design figma</li>
+            {events.map((event, index) => (
+              <li key={String(index)}>{event.title}</li>
+            ))}
           </ul>
         </div>
       </div>
@@ -76,6 +92,9 @@ const CaledarSchedules = () => {
           initialView="dayGridMonth"
           events={events}
           eventColor="#7822e624"
+          eventMouseEnter={({ event, el }) => {
+            // console.log({ event: event.toJSON(), el });
+          }}
         />
       </div>
     </div>

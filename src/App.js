@@ -1,12 +1,13 @@
-import React from "react";
 import "App.css";
 import "Assets/styles/css/dashboard.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import Routes from "routes";
 import ScrollToTop from "helpers/ScrollToTop";
+import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Routes from "routes";
+import { socket, SocketContext } from "socket";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -23,10 +24,12 @@ function App() {
     <React.StrictMode>
       <div style={{ position: "relative" }} className="App">
         <QueryClientProvider client={queryClient}>
-          <Router>
-            <ScrollToTop />
-            <Routes />
-          </Router>
+          <SocketContext.Provider value={socket}>
+            <Router>
+              <ScrollToTop />
+              <Routes />
+            </Router>
+          </SocketContext.Provider>
         </QueryClientProvider>
         <ToastContainer />
       </div>

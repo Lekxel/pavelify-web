@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 
+import BlueLow from "../../Assets/img/blue-low.png";
 import DocumentText from "../../Assets/img/document-text.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
 import Person1 from "../../Assets/img/Frame 1.png";
 import Person2 from "../../Assets/img/Frame 2.png";
 import Person3 from "../../Assets/img/Frame 3.png";
+import LeftArrow from "../../Assets/img/left-contact.png";
+import RightArrow from "../../Assets/img/right-contact.png";
 import user from "../../Assets/img/user.png";
-import BlueLow from "../../Assets/img/blue-low.png";
 
 function EmailTickets() {
   useEffect(() => {
@@ -66,7 +66,7 @@ function EmailTickets() {
             <div className="top-area d-flex-align-center">
               <div className="left-side d-flex-align-center">
                 <div className="checkbox-wrapper">
-                  <input type="checkbox" name="" id="" id="all-check-checkbox" />
+                  <input type="checkbox" name="" id="all-check-checkbox" />
                 </div>
 
                 <div className="drop-down-wrapper d-flex-align-center">
@@ -78,7 +78,8 @@ function EmailTickets() {
                       height="3"
                       viewBox="0 0 7 3"
                       fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path d="M3.5 3L6.53109 0H0.468911L3.5 3Z" fill="#282D4A" />
                     </svg>
                   </div>
@@ -93,7 +94,8 @@ function EmailTickets() {
                       height="3"
                       viewBox="0 0 7 3"
                       fill="none"
-                      xmlns="http://www.w3.org/2000/svg">
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <path d="M3.5 3L6.53109 0H0.468911L3.5 3Z" fill="#282D4A" />
                     </svg>
                   </div>

@@ -1,16 +1,14 @@
-import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import { VectorMap } from "react-jvectormap";
+import GermanyFlag from "../../Assets/img/flag-germany.png";
+import JapanFlag from "../../Assets/img/flag-japan.png";
+import SpainFlag from "../../Assets/img/flag-spain.png";
+import LeftArrow from "../../Assets/img/left-contact.png";
+import Chrome from "../../Assets/img/logos_chrome.png";
+import FireFox from "../../Assets/img/logos_firefox.png";
+import RightArrow from "../../Assets/img/right-contact.png";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
-import GermanyFlag from "../../Assets/img/flag-germany.png";
-import FireFox from "../../Assets/img/logos_firefox.png";
-import SpainFlag from "../../Assets/img/flag-spain.png";
-import JapanFlag from "../../Assets/img/flag-japan.png";
-import Chrome from "../../Assets/img/logos_chrome.png";
-import { Doughnut } from "react-chartjs-2";
-import { Map } from "../../Assets/script/js/Map";
-import { VectorMap } from "react-jvectormap";
 function LiveVisitors() {
   const mapData = {
     CN: 100000,

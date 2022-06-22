@@ -35,8 +35,8 @@ export const Calender = () => {
   };
 
   const ActivateThisDay = (e) => {
-    const Element = document.querySelector(`#${e.target.id}`);
-    Element.classList.toggle("active-day");
+    // const Element = document.querySelector(`#${e.target.id}`);
+    // Element.classList.toggle("active-day");
   };
 
   // Helping function to get total daus

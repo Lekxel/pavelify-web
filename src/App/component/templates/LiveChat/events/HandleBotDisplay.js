@@ -1,7 +1,9 @@
-export const HandleBotDisplay = (e) => {
+export const HandleBotDisplay = (e, innerSize) => {
+  window.parent.postMessage(JSON.stringify({ type: "TOGGLE_IFRAME" }), "*");
   const Bot = document.querySelector(".collapse-bot");
 
-  if (window.innerWidth > 600) {
+  if (innerSize.width > 600) {
+    // if (window.innerWidth > 600) {
     if (Bot.classList.contains("active")) {
       document.querySelector("#MessageArea").style.display = "none";
       document.querySelector(".collapse-bot").style.opacity = 0;

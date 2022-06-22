@@ -1,15 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
-import React, { useEffect } from "react";
-import BodyHeader from "../component/BodyHeader";
-import Sidebar from "../component/Sidebar";
-import { privateRoutes } from "routes/routes";
-import SettingsSidebar from "App/component/organisms/settings/SettingsSidebar";
-import SettingsLiveChat from "App/component/organisms/settings/pages/SettingsLiveChat";
 import SettingsAccount from "App/component/organisms/settings/pages/SettingsAccount";
 import SettingsEmailSetup from "App/component/organisms/settings/pages/SettingsEmailSetup";
 import SettingsIntegrations from "App/component/organisms/settings/pages/SettingsIntegrations";
-import SettingsOperatingHours from "App/component/organisms/settings/pages/SettingsOperatingHours";
+import SettingsLiveChat from "App/component/organisms/settings/pages/SettingsLiveChat";
 import SettingsNotification from "App/component/organisms/settings/pages/SettingsNotification";
+import SettingsOperatingHours from "App/component/organisms/settings/pages/SettingsOperatingHours";
+import SettingsSidebar from "App/component/organisms/settings/SettingsSidebar";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { privateRoutes } from "routes/routes";
+import BodyHeader from "../component/BodyHeader";
+import Sidebar from "../component/Sidebar";
 
 function Settings() {
   const path = useLocation()?.pathname;
@@ -22,7 +22,7 @@ function Settings() {
         ParentElement.classList.toggle("active");
       });
     });
-  }, []);
+  }, [path]);
 
   const currentPage = () => {
     switch (path) {

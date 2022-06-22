@@ -1,16 +1,15 @@
-import React from "react";
 import styles from "./TextMessage.module.css";
-export const TextMessage = ({ text, my_message = null }) => {
+export const TextMessage = ({ message, isMe = false }) => {
   return (
     <p
       className={styles.TextMessage}
       style={{
-        alignSelf: my_message && "flex-end",
-        background: my_message && "#13215E",
-        color: my_message && "#fff"
+        alignSelf: isMe && "flex-end",
+        background: isMe && "#13215E",
+        color: isMe && "#fff"
       }}
     >
-      {text}
+      {message}
     </p>
   );
 };

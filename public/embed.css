@@ -1,6 +1,6 @@
 #pavelify-container > iframe.pavelify-iframe-takeover {
-  width: 100px;
-  height: 70px;
+  width: 75px;
+  height: 75px;
   display: block;
   bottom: 0;
   right: 0;
@@ -12,8 +12,8 @@
 }
 
 #pavelify-container > iframe.desktop {
-  width: 400px;
-  height: 640px;
+  width: 380px;
+  height: 580px;
 }
 
 #pavelify-container > iframe.pavelify-iframe-info-msg {

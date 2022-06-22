@@ -13,7 +13,7 @@ import { httpFetchBookings } from "api/calendar";
 const statuses = ["all", "upcoming", "past"];
 
 function CalenderBooking() {
-  const { status } = useParams();
+  const { status } = useParams() || { status: "all" };
   const navigate = useNavigate();
   const [isValidStatus, setIsValidStatus] = React.useState(false);
 
@@ -46,7 +46,7 @@ function CalenderBooking() {
     if (isValidStatus) {
       return <BookingList bookings={bookings} handleSelectForDelete={handleSelectForDelete} />;
     }
-    return <CalendarSchedules />;
+    return <CalendarSchedules bookings={bookings} />;
   };
 
   return (

@@ -1,37 +1,37 @@
-import { Routes as ReactRoutes, Route, Navigate, useLocation, R } from "react-router-dom";
-import { currentUser } from "utilities/storage";
 import { useQuery } from "react-query";
+import { Navigate, Route, Routes as ReactRoutes, useLocation } from "react-router-dom";
+import { currentUser } from "utilities/storage";
 
-import Settings from "App/pages/Settings";
+import Analytics from "App/pages/Analytics";
+import CalendarEvents from "App/pages/CalendarEvents";
+import CalenderBooking from "App/pages/CalenderBooking";
 import Contact from "App/pages/Contact";
 import EmailTickets from "App/pages/EmailTickets";
-import Operators from "App/pages/Operators";
+import Home from "App/pages/Home";
 import LiveChat from "App/pages/LiveChat";
 import LiveVisitors from "App/pages/LiveVisitors";
-import Home from "App/pages/Home";
-import Analytics from "App/pages/Analytics";
-import CalenderBooking from "App/pages/CalenderBooking";
-import CalendarEvents from "App/pages/CalendarEvents";
+import Operators from "App/pages/Operators";
+import Settings from "App/pages/Settings";
 
 // front page
 import HomePage from "App/pages/FrontPages/HomePage/HomePage";
-import Pricing from "App/pages/FrontPages/Plus/Pricing/Pricing";
-import Features from "App/pages/FrontPages/Plus/Features/Features";
-import Careers from "App/pages/FrontPages/Plus/Careers/Careers";
-import PrivacyPolicy from "App/pages/FrontPages/Plus/Privacy Policy/PrivacyPolicy";
-import Terms from "App/pages/FrontPages/Plus/Terms/Terms";
 import Login from "App/pages/FrontPages/Plus/Auth/Login/Login";
 import Register from "App/pages/FrontPages/Plus/Auth/Register/Register";
 import { Calender } from "App/pages/FrontPages/Plus/Calender/Calender";
+import Careers from "App/pages/FrontPages/Plus/Careers/Careers";
+import Features from "App/pages/FrontPages/Plus/Features/Features";
+import Pricing from "App/pages/FrontPages/Plus/Pricing/Pricing";
+import PrivacyPolicy from "App/pages/FrontPages/Plus/Privacy Policy/PrivacyPolicy";
+import Terms from "App/pages/FrontPages/Plus/Terms/Terms";
 // import { ConfirmationPopUpCalender } from "App/pages/FrontPages/Plus/ConfirmationPopUpCalender/ConfirmationPopUpCalender";
 import Home_Desk from "App/pages/Home_Desk";
 
-import { privateRoutes, publicRoutes } from "routes/routes";
-import useGetSubdomain from "hooks/useGetSubdomain";
-import Redirect from "helpers/Redirect";
 import { httpGetUser } from "api/auth";
-import Logout from "helpers/Logout";
 import LiveChatWidget from "App/component/templates/LiveChat/LiveChat";
+import Logout from "helpers/Logout";
+import Redirect from "helpers/Redirect";
+import useGetSubdomain from "hooks/useGetSubdomain";
+import { privateRoutes, publicRoutes } from "routes/routes";
 
 export function RequireAuth({ children }) {
   const {

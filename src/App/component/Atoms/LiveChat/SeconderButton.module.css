@@ -10,10 +10,12 @@
   font-family: "DM Sans", sans-serif;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
+  margin-top: 5px;
 }
 .text {
   margin-left: 1rem;
+  padding-top: 14px;
 }
 @media screen and (max-width: 400px) {
   .SeconderButton {

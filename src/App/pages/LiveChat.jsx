@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import BodyHeader from "../component/BodyHeader";
-import Sidebar from "../component/Sidebar";
-import PlusIcon from "../../Assets/img/purple-plus.png";
+import { useEffect } from "react";
+import SpainFlag from "../../Assets/img/flag-spain.png";
 import Person1 from "../../Assets/img/Frame 1.png";
 import Person2 from "../../Assets/img/Frame 2.png";
 import Person3 from "../../Assets/img/Frame 3.png";
 import PersonBig from "../../Assets/img/PersonBig.png";
+import PlusIcon from "../../Assets/img/purple-plus.png";
 import time from "../../Assets/img/svg/time.svg";
-import SpainFlag from "../../Assets/img/flag-spain.png";
+import BodyHeader from "../component/BodyHeader";
+import Sidebar from "../component/Sidebar";
 function LiveChat() {
   useEffect(() => {
     if (window.innerWidth < 1201) {

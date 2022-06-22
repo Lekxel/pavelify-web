@@ -1,31 +1,26 @@
-import React, { useEffect } from "react";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 
-import DocumentText from "../../Assets/img/document-text.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
+import { httpGetUser } from "api/auth";
+import { httpFetchStats } from "api/dashboard";
+import { Doughnut, Line } from "react-chartjs-2";
+import { VectorMap } from "react-jvectormap";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
+import { privateRoutes } from "routes/routes";
+import { moneyFormat } from "utilities/misc";
+import ArrowRight from "../../Assets/img/arrow-right.png";
+import CalenderPurple from "../../Assets/img/calender-purple.png";
+import ChatGreen from "../../Assets/img/chat-green.png";
 import Checkmark from "../../Assets/img/checkmark.png";
 import Person1 from "../../Assets/img/Frame 1.png";
 import Person2 from "../../Assets/img/Frame 2.png";
 import Person3 from "../../Assets/img/Frame 3.png";
-import user from "../../Assets/img/user.png";
-import BlueLow from "../../Assets/img/blue-low.png";
-import ChatGreen from "../../Assets/img/chat-green.png";
-import OrangeCalender from "../../Assets/img/orangecalender.svg";
-import CalenderPurple from "../../Assets/img/calender-purple.png";
-import MessageBlue from "../../Assets/img/message-blue.png";
-import ArrowRight from "../../Assets/img/arrow-right.png";
 import GreenMessage from "../../Assets/img/green-message.png";
 import LiveChat from "../../Assets/img/live-chat.png";
-import { Doughnut, Line } from "react-chartjs-2";
-import { VectorMap } from "react-jvectormap";
-import { data, options, Lineoptions, Linedata } from "../Utils/DashboardChart";
-import { useQuery } from "react-query";
-import { httpGetUser } from "api/auth";
-import { httpFetchStats } from "api/dashboard";
-import { moneyFormat } from "utilities/misc";
-import { Link } from "react-router-dom";
-import { privateRoutes } from "routes/routes";
+import MessageBlue from "../../Assets/img/message-blue.png";
+import OrangeCalender from "../../Assets/img/orangecalender.svg";
+import { data, Linedata, Lineoptions, options } from "../Utils/DashboardChart";
 
 function Home() {
   const mapData = {
