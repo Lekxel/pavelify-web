@@ -1,14 +1,11 @@
-import React from "react";
-import Photo from "../../Assets/img/Photo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { httpGetUser } from "api/auth";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { privateRoutes } from "routes/routes";
-import { useQuery } from "react-query";
-import { currentUser } from "utilities/storage";
 import { BASIC } from "utilities/plans";
-import { httpGetUser } from "api/auth";
-function BodyHeader({ active }) {
+function BodyHeader({ active, page = "" }) {
   const {
     data: { user }
   } = useQuery("user", httpGetUser, {
@@ -96,6 +93,7 @@ function BodyHeader({ active }) {
           </Link>
         </li>
       </ul>
+      <h3>{page}</h3>
       <form className="left-area d-flex-align-center">
         <svg
           width="24"

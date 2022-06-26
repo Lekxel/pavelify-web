@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import BodyHeader from "../component/BodyHeader";
-import Sidebar from "../component/Sidebar";
+import { httpFetchBookings } from "api/calendar";
+import BookingList from "App/component/templates/CalendarBooking/BookingList";
+import CalendarSchedules from "App/component/templates/CalendarBooking/CalendarSchedules";
 import LeftArrow from "Assets/img/left-contact.png";
 import RightArrow from "Assets/img/right-contact.png";
-import { privateRoutes } from "routes/routes";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import CalendarSchedules from "App/component/templates/CalendarBooking/CalendarSchedules";
+import React, { useEffect } from "react";
 import { useQuery } from "react-query";
-import BookingList from "App/component/templates/CalendarBooking/BookingList";
-import { httpFetchBookings } from "api/calendar";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { privateRoutes } from "routes/routes";
+import BodyHeader from "../component/BodyHeader";
+import Sidebar from "../component/Sidebar";
 
 const statuses = ["all", "upcoming", "past"];
 
@@ -55,10 +55,9 @@ function CalenderBooking() {
       <Sidebar active="calender" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader active="calender" />
+        <BodyHeader active="calender" page="Calendar Booking" />
 
         <div className="body-main-area">
-          <h2>Calendar Booking</h2>
           <div className="body-box" style={{ display: "block" }}>
             <div className="right-area">
               <ul className="navigation-bar d-flex-align-center">

@@ -1,13 +1,17 @@
 import InitialsImage from "helpers/InitialsImage";
 import { SenderButton } from "../../../Atoms/LiveChat/SeconderButton";
 import styles from "./LiveChatConversation.module.css";
-export const LiveChatConversation = ({ companyName, visitor }) => {
+export const LiveChatConversation = ({ companyName, visitor, scrollDown }) => {
   const HandleCovertingScreen = (e) => {
     e.preventDefault();
     document.querySelector("#collpase-area").style.display = "none";
     document.querySelector(
       visitor?.hasIntroduced ? "#MessageArea" : "#Introduction"
     ).style.display = "block";
+
+    if (visitor?.hasIntroduced) {
+      scrollDown();
+    }
   };
 
   return (

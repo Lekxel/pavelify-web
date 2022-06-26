@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Sidebar from "../component/Sidebar";
+import { Badge, Button, Table } from "react-bootstrap";
 import SpainFlag from "../../Assets/img/flag-spain.png";
-import { Badge, Table, Button } from "react-bootstrap";
+import Sidebar from "../component/Sidebar";
 import { NewArticleModal } from "./NewArticleModal";
 import { PublishArticleModal } from "./PublishArticleModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
 function Home_Desk() {
   const [NewArticleshow, setNewArticleshow] = useState(false);
   const [NewPublishArticleModalshow, setPublishArticleModalShow] = useState(false);
@@ -38,7 +38,30 @@ function Home_Desk() {
 
       {/* sidebar */}
       <Sidebar active="help_desk" />
-      <div className="body-area">
+      <div
+        className="body-area"
+        style={{
+          position: "relative"
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: "0",
+            right: 0,
+            bottom: 0,
+            left: 0,
+            width: "100%",
+            backgroundColor: "#ccc",
+            opacity: "60%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 40
+          }}
+        >
+          <h3>Coming Soon</h3>
+        </div>
         <div className="body_sidebar">
           <div className="body_sidebar_box">
             <img src={SpainFlag} alt="" />

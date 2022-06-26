@@ -21,6 +21,7 @@ export const privateRoutes = {
     : "app",
   dashboard: "/",
   liveChat: "/live-chat",
+  liveChatUUID: "/live-chat/:uuid",
   liveVisitors: "/live-visitors",
   emailTickets: "/email-tickets",
   operators: "/operators",

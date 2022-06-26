@@ -57,11 +57,9 @@ function Home() {
       <Sidebar active="home" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader />
+        <BodyHeader page="Dashboard" />
 
         <div className="body-main-area">
-          <h2>Dashboard</h2>
-
           <div className="top-banner-results">
             <div className="box">
               <h4 className="heading">Company Name</h4>

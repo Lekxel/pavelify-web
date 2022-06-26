@@ -1,24 +1,15 @@
-import React, { useEffect } from "react";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 
-import DocumentText from "../../Assets/img/document-text.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
+import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { VectorMap } from "react-jvectormap";
+import CalenderPurple from "../../Assets/img/calender-purple.png";
+import ChatGreen from "../../Assets/img/chat-green.png";
 import Person1 from "../../Assets/img/Frame 1.png";
 import Person2 from "../../Assets/img/Frame 2.png";
 import Person3 from "../../Assets/img/Frame 3.png";
-import user from "../../Assets/img/user.png";
-import BlueLow from "../../Assets/img/blue-low.png";
-import ChatGreen from "../../Assets/img/chat-green.png";
-import CalenderPurple from "../../Assets/img/calender-purple.png";
 import MessageBlue from "../../Assets/img/message-blue.png";
-import ArrowRight from "../../Assets/img/arrow-right.png";
-import GreenMessage from "../../Assets/img/green-message.png";
-import LiveChat from "../../Assets/img/live-chat.png";
-import { Bar, Doughnut, Line } from "react-chartjs-2";
-import { VectorMap } from "react-jvectormap";
-import { data, options, Lineoptions, Linedata, BarData, BarOptions } from "../Utils/AnalyticsChart";
+import { BarData, BarOptions, data, Linedata, Lineoptions, options } from "../Utils/AnalyticsChart";
 function Analytics() {
   const mapData = {
     CN: 100000,
@@ -38,11 +29,9 @@ function Analytics() {
       <Sidebar active="Analytics" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader />
+        <BodyHeader page="Analytics" />
 
         <div className="body-main-area">
-          <h2>Analytics</h2>
-
           <div className="top-banner-results">
             <div className="box">
               <h4 className="heading">Current Pavelify</h4>

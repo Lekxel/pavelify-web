@@ -99,14 +99,24 @@ const Switch = () => {
               </RequireAuth>
             }
           />
-          <Route
-            path={privateRoutes.liveChat}
-            element={
-              <RequireAuth>
-                <LiveChat />
-              </RequireAuth>
-            }
-          />
+          <Route path={privateRoutes.liveChat}>
+            <Route
+              path={""}
+              element={
+                <RequireAuth>
+                  <LiveChat />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path={":uuid"}
+              element={
+                <RequireAuth>
+                  <LiveChat />
+                </RequireAuth>
+              }
+            />
+          </Route>
 
           <Route
             path={privateRoutes.liveVisitors}

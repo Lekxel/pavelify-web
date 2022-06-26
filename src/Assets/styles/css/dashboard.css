@@ -1098,12 +1098,11 @@
 .EmailTickets .top-area,
 .EmailTickets .table-body-area {
   padding: 1.2rem 1.5rem;
-  display: flex;
   justify-content: space-between;
 }
 .EmailTickets .top-area .checkbox-wrapper,
 .EmailTickets .table-body-area .checkbox-wrapper {
-  min-width: 50px;
+  width: 50px;
 }
 .EmailTickets .top-area .drop-down-wrapper > p {
   color: #9ca2c9;
@@ -1137,13 +1136,21 @@
 .EmailTickets .table-body-area .row {
   width: 100%;
   padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .EmailTickets .table-body-area .row:hover {
   background-color: #f2f3f8;
 }
-.EmailTickets .table-body-area .profile-area {
+.EmailTickets .table-body-area .right-side {
+  display: flex;
+  align-items: center;
   flex: 1;
+}
+.EmailTickets .table-body-area .profile-area {
+  flex: 4;
 
   /* min-width: 400px; */
 }
@@ -1164,14 +1171,17 @@
   margin-top: 2px;
   font-weight: 400;
 }
+
 .EmailTickets .table-body-area .right-side > * + * {
   margin-left: 1.5rem;
 }
+
 .EmailTickets .table-body-area .right-side .icon-wrapper p {
   font-size: 15px;
   margin-left: 10px;
   font-weight: 400;
   color: #282d4a;
+  padding-top: 14px;
 }
 .EmailTickets .table-body-area .right-side .open-btn {
   background: #e3f4f0;
@@ -1384,7 +1394,7 @@
   flex-direction: column;
   height: 750px;
   overflow: auto;
-  padding: 2rem 3rem;
+  padding: 2rem 2rem;
   background: #eff3f6;
   padding-bottom: 6rem;
 }
@@ -1414,7 +1424,6 @@
 .messages-box-area .middle-side .message-container .message .person_img_user,
 .messages-box-area .middle-side .message-container .message .person_img {
   position: absolute;
-
   width: 34px;
   top: 20%;
 }
@@ -1426,8 +1435,7 @@
   background: #fff;
   border-radius: 99px;
   color: #333;
-  padding: 1rem 1.5rem;
-
+  padding: 0.6rem 1.5rem;
   font-size: 15px;
 }
 .messages-box-area .middle-side .message-container .message .date-area {
@@ -1439,6 +1447,9 @@
 }
 .messages-box-area .middle-side .message-container .message .date-area p {
   font-size: 12px;
+}
+.messages-box-area .middle-side .message-container .message .date-area img {
+  padding-bottom: 15px;
 }
 .messages-box-area .middle-side .message-container .message .date-area p:last-child {
   color: #9ca2c9;
@@ -1473,7 +1484,6 @@
   padding-top: 0.5rem;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-
   align-items: center;
 }
 .message_sender_list li {

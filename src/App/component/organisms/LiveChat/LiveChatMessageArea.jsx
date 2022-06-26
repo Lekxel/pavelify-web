@@ -10,7 +10,8 @@ export const LiveChatMessageArea = ({
   message,
   setMessage,
   handleSendMessage,
-  chats
+  chats,
+  messagesEndRef
 }) => {
   const HandleCovertingScreen = (e) => {
     e.preventDefault();
@@ -52,6 +53,7 @@ export const LiveChatMessageArea = ({
               isMe={Boolean(chat.sender === "visitor")}
             />
           ))}
+          <div ref={messagesEndRef} />
         </div>
         <div className={`${styles.form} ${width <= 600 ? styles.form_600 : ""}`}>
           <div className={styles.inputWrapper}>

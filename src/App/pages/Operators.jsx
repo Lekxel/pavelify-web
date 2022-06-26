@@ -148,7 +148,7 @@ function Operators() {
       <Sidebar active="operators" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader />
+        <BodyHeader page="Operators" />
 
         <Modal show={showModal} centered onHide={() => setShowModal(false)}>
           <Modal.Header>
@@ -234,7 +234,6 @@ function Operators() {
         </Modal>
 
         <div className="body-main-area">
-          <h2>Operators</h2>
           <div className="body-box" style={{ display: "block" }}>
             {/* right area */}
             <div className="right-area">

@@ -7,7 +7,8 @@ export const CollapseAbleLiveChat = ({
   appearance,
   companyName,
   visitor,
-  companyID
+  companyID,
+  scrollDown
 }) => {
   // console.log(appearance);
   return (
@@ -34,7 +35,7 @@ export const CollapseAbleLiveChat = ({
           {appearance?.gettingStartedStatus}
         </p>
       </div>
-      <LiveChatConversation companyName={companyName} visitor={visitor} />
+      <LiveChatConversation scrollDown={scrollDown} companyName={companyName} visitor={visitor} />
       {/* <LiveChatSearch /> */}
       <BookMeeting companyID={companyID} />
     </div>

@@ -1,6 +1,6 @@
-// const url = "http://vcap.me:3000";
+const url = "http://vcap.me:3000";
 // const url = "https://pavelify.com";
-const url = "https://pavelify-web-home.vercel.app";
+// const url = "https://pavelify-web-home.vercel.app";
 
 (function () {
   const PAVELIFY_WRAPPER_ID = "pavelify-container";

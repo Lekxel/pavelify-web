@@ -1,9 +1,7 @@
-import React from "react";
-import "../../Assets/styles/css/layout.css";
-import SideBarLogo from "../../Assets/img/Pavelify.png";
-import Home from "../../Assets/img/svg/home.svg";
 import { Link } from "react-router-dom";
 import { privateRoutes } from "routes/routes";
+import SideBarLogo from "../../Assets/img/Pavelify.png";
+import "../../Assets/styles/css/layout.css";
 function Sidebar({ active }) {
   return (
     <div className="Sidebar">

@@ -12,3 +12,6 @@ export const httpFetchOperators = () => {
 export const httpDeleteOperator = (id) => {
   return deleteRequest(`/operators/remove/${id}`);
 };
+export const httpGetConversation = (uuid) => {
+  return get(`/operators/getConversation/${uuid}`);
+};

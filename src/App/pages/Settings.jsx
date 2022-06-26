@@ -6,13 +6,21 @@ import SettingsNotification from "App/component/organisms/settings/pages/Setting
 import SettingsOperatingHours from "App/component/organisms/settings/pages/SettingsOperatingHours";
 import SettingsSidebar from "App/component/organisms/settings/SettingsSidebar";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { privateRoutes } from "routes/routes";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 
 function Settings() {
   const path = useLocation()?.pathname;
+  const params = useParams();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!params.page) {
+      navigate(`${privateRoutes.settingsLiveChat}`);
+    }
+  }, []);
+
   useEffect(() => {
     let Head = document.querySelectorAll(".right-side .head");
     Head.forEach((EachHead) => {
@@ -60,10 +68,9 @@ function Settings() {
       <Sidebar active="settings" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader active="settings" />
+        <BodyHeader page="Settings" active="settings" />
 
         <div className="body-main-area">
-          <h2>Settings</h2>
           <div className="body-box">
             <SettingsSidebar />
             {/* right side */}

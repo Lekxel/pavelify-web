@@ -7,3 +7,7 @@ export const updateProfile = (payload) => {
 export const uploadPhoto = (payload) => {
   return post("/profile/uploadPhoto", payload);
 };
+
+export const changePassword = (payload) => {
+  return patch("/profile/changePassword", payload);
+};

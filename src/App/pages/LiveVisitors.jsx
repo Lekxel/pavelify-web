@@ -1,13 +1,20 @@
 import { httpFetchVisitors } from "api/visitor";
+import flags from "App/Utils/countryFlags";
+import { DateTime } from "luxon";
 import { VectorMap } from "react-jvectormap";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router";
+import { privateRoutes } from "routes/routes";
 import GermanyFlag from "../../Assets/img/flag-germany.png";
 import LeftArrow from "../../Assets/img/left-contact.png";
 import FireFox from "../../Assets/img/logos_firefox.png";
 import RightArrow from "../../Assets/img/right-contact.png";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
+
 function LiveVisitors() {
+  const navigate = useNavigate();
+
   const mapData = {
     CN: 100000,
     IN: 9900,
@@ -41,9 +48,8 @@ function LiveVisitors() {
       <Sidebar active="LiveVisitor" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader active="LiveVisitor" />
+        <BodyHeader active="LiveVisitor" page="Live Visitors" />
         <div className="body-main-area">
-          <h2>Live Visitors</h2>
           <div className="grid-box-area visitor-grid grid-col-3">
             <div className="visitors-in-site">
               <div className="top-area d-flex-align-center">
@@ -60,7 +66,7 @@ function LiveVisitors() {
                   </div>
                 </div>
               </div>
-              <div className="table" style={{ overflowY: "scroll" }}>
+              <div className="table" style={{ overflowY: "auto" }}>
                 <ul className="table-head">
                   <li>No</li>
                   <li>Name</li>
@@ -75,31 +81,35 @@ function LiveVisitors() {
                       <li>{index + 1}.</li>
                       <li>
                         <div className="tag" style={{ background: visitor?.color || "red" }}>
-                          A
+                          {visitor?.name?.replace("#", "").charAt(0).toUpperCase()}
                         </div>
                         <div className="presentation">
-                          <h5>
-                            #e897dhj
-                            <div className="icons-wrapper">
-                              <img src={GermanyFlag} alt="" />
-                              <img src={FireFox} alt="" />
-                            </div>
-                          </h5>
-                          <p>New</p>
-                          <a href="http://palevay.com">http://palevay.com</a>
+                          <h5 className="pt-2">{visitor?.name}</h5>
+                          {/* <p>New</p> */}
                         </div>
                       </li>
-                      <li>12 June 2021</li>
+                      <li>{DateTime.fromISO(visitor?.timestamp).toFormat("DD")}</li>
                       <li>
                         <a href="http://palevay.com">http://palevay.com</a>
                       </li>
                       <li>
                         <div className="icons-wrapper">
-                          <img src={GermanyFlag} alt="" />
+                          <img
+                            src={
+                              visitor?.country
+                                ? flags?.filter((f) => f.CountryName === visitor?.country)[0].Flag
+                                : GermanyFlag
+                            }
+                            alt=""
+                          />
                           <img src={FireFox} alt="" />
                         </div>
 
-                        <button>Start Chat</button>
+                        <button
+                          onClick={() => navigate(`${privateRoutes.liveChat}/${visitor?.uuid}`)}
+                        >
+                          Start Chat
+                        </button>
                       </li>
                     </div>
                   ))}

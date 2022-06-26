@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
-import BodyHeader from "../component/BodyHeader";
-import Sidebar from "../component/Sidebar";
-import PlusIcon from "../../Assets/img/purple-plus.png";
-import Message from "../../Assets/img/message.png";
-import Tickets from "../../Assets/img/sms-tracking.png";
+import { useEffect } from "react";
 import Calenders from "../../Assets/img/calendar.png";
 import DocumentText from "../../Assets/img/document-text.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
+import Edit from "../../Assets/img/edit-2.png";
 import Person1 from "../../Assets/img/Frame 1.png";
 import Person2 from "../../Assets/img/Frame 2.png";
 import Person3 from "../../Assets/img/Frame 3.png";
-import Edit from "../../Assets/img/edit-2.png";
+import LeftArrow from "../../Assets/img/left-contact.png";
+import Message from "../../Assets/img/message.png";
+import PlusIcon from "../../Assets/img/purple-plus.png";
+import RightArrow from "../../Assets/img/right-contact.png";
+import Tickets from "../../Assets/img/sms-tracking.png";
 import Trash from "../../Assets/img/trash.png";
+import BodyHeader from "../component/BodyHeader";
+import Sidebar from "../component/Sidebar";
 function Contact() {
   useEffect(() => {
     let Checkbox = document.querySelector("#all-check-checkbox");
@@ -37,10 +37,9 @@ function Contact() {
       <Sidebar active="contact" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader />
+        <BodyHeader page="Contacts" />
 
         <div className="body-main-area">
-          <h2>Contacts</h2>
           <div className="body-box">
             <div className="left-side">
               <div className="top-area d-flex-align-center">
@@ -92,7 +91,7 @@ function Contact() {
                 <div className="table">
                   <div className="table-head">
                     <div className="col col1">
-                      <input type="checkbox" name="" id="" id="all-check-checkbox" />
+                      <input type="checkbox" name="" id="all-check-checkbox" />
                     </div>
                     <div className="col col2">
                       <h5>Profile</h5>

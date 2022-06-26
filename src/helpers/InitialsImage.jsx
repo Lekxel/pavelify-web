@@ -1,10 +1,10 @@
-const InitialsImage = ({ name }) => (
+const InitialsImage = ({ name, color, height, width }) => (
   <span
     style={{
-      width: "45px",
-      height: "45px",
+      width: width || "45px",
+      height: height || "45px",
       borderRadius: "50%",
-      backgroundColor: "rgb(45, 150, 214)",
+      backgroundColor: color || "rgb(45, 150, 214)",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",

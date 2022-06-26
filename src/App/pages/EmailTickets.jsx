@@ -35,11 +35,9 @@ function EmailTickets() {
       <Sidebar active="EmailTickets" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader active="EmailTickets" />
+        <BodyHeader active="EmailTickets" page="Email Tickets" />
 
         <div className="body-main-area">
-          <h2>Email Tickets</h2>
-
           <ul className="navigation-bar d-flex-align-center">
             <li className="active d-flex-align-center">
               <p>All Tickets</p>

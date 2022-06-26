@@ -1,7 +1,7 @@
 import { httpCompanyInfo } from "api/company";
 import { httpPreviousConversations } from "api/visitor";
 import { Introduction } from "App/component/organisms/LiveChat/Introduction";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
 import { SocketContext } from "socket";
@@ -18,6 +18,7 @@ import styles from "./LiveChat.module.css";
 const LiveChatWidget = () => {
   const socket = useContext(SocketContext);
   const params = useParams();
+  const messagesEndRef = useRef(null);
   const [appearance, setAppearance] = useState({});
   const [preChat, setPreChat] = useState({});
   const [name, setName] = useState("");
@@ -26,6 +27,14 @@ const LiveChatWidget = () => {
   const [visitor, setVisitor] = useState(currentVisitorProfile());
   const [message, setMessage] = useState("");
   const [chats, setChats] = useState([]);
+
+  const scrollDown = () => {
+    chats?.length && messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollDown();
+  }, [chats]);
 
   const refetchVisitor = () => {
     setVisitor(currentVisitorProfile());
@@ -78,13 +87,27 @@ const LiveChatWidget = () => {
     [socket]
   );
 
+  const handleIncomingMessage = useCallback((data) => {
+    setChats((c) => [
+      ...c,
+      {
+        message: data.message,
+        isAttachment: false,
+        sender: "operator",
+        _id: Math.random() * 1000000
+      }
+    ]);
+  }, []);
+
   useEffect(() => {
     if (company && company?._id) {
       socket.connect();
       fetchPreviousConversations();
+      socket.on("incomingMessage", handleIncomingMessage);
     }
     return () => {
       // socket.off("connect", joinRoom);
+      socket.off("incomingMessage", handleIncomingMessage);
     };
   }, [company, socket]);
 
@@ -160,6 +183,7 @@ const LiveChatWidget = () => {
         innerSize={innerSize}
         visitor={visitor}
         companyID={company?._id}
+        scrollDown={scrollDown}
       />
       <LiveChatMessageArea
         innerSize={innerSize}
@@ -169,6 +193,7 @@ const LiveChatWidget = () => {
         handleSendMessage={handleSendMessage}
         setMessage={setMessage}
         chats={chats}
+        messagesEndRef={messagesEndRef}
       />
       <Introduction
         innerSize={innerSize}

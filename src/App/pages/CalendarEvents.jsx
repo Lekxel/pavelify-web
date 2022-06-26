@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from "react";
-import BodyHeader from "../component/BodyHeader";
-import Sidebar from "../component/Sidebar";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
-import Edit from "../../Assets/img/edit-2.png";
-import Trash from "../../Assets/img/trash.png";
-import Settings from "../../Assets/img/settings-table.svg";
-import { Button, Modal } from "react-bootstrap";
-import copy from "clipboard-copy";
-import { showError, showSuccess } from "utilities/alerts";
-import { capitalize, validateName, days as daysOfTheWeek } from "utilities/misc";
+import { httpGetUser } from "api/auth";
+import { httpDeleteEvent, httpFetchEvents, httpSaveEvent } from "api/calendar";
 import Spinner from "App/component/Atoms/Spinner";
+import copy from "clipboard-copy";
+import TimezoneOptions from "helpers/TimezoneOptions";
+import useGetSubdomain from "hooks/useGetSubdomain";
+import { useEffect, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import { useQuery } from "react-query";
 import TimePicker from "react-time-picker";
-import { httpDeleteEvent, httpFetchEvents, httpSaveEvent } from "api/calendar";
-import useGetSubdomain from "hooks/useGetSubdomain";
-import TimezoneOptions from "helpers/TimezoneOptions";
-import { httpGetUser } from "api/auth";
+import { showError, showSuccess } from "utilities/alerts";
+import { capitalize, days as daysOfTheWeek, validateName } from "utilities/misc";
+import Edit from "../../Assets/img/edit-2.png";
+import LeftArrow from "../../Assets/img/left-contact.png";
+import RightArrow from "../../Assets/img/right-contact.png";
+import Trash from "../../Assets/img/trash.png";
+import BodyHeader from "../component/BodyHeader";
+import Sidebar from "../component/Sidebar";
 // import TimePicker from "react-time-picker/dist/entry.nostyle";
 
 const locations = ["zoom", "google meet", "phone"];
@@ -167,7 +166,7 @@ function CalendarEvents() {
       <Sidebar active="calender" />
       <div className="body-area">
         {/* header */}
-        <BodyHeader />
+        <BodyHeader page="Calendar Events" />
 
         <Modal show={showModal} centered onHide={() => setShowModal(false)}>
           <Modal.Header>
@@ -421,7 +420,6 @@ function CalendarEvents() {
         </Modal>
 
         <div className="body-main-area">
-          <h2>Events</h2>
           <div className="body-box" style={{ display: "block" }}>
             {/* right area */}
             <div className="right-area">
