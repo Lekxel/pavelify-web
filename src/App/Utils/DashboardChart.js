@@ -100,3 +100,12 @@ export const Linedata = (canvas) => {
     ]
   };
 };
+
+export const filterOptions = [
+  "Last 7 Days",
+  "This Week",
+  "This Month",
+  "Last 3 Months",
+  "Last 6 Months",
+  "This Year"
+];

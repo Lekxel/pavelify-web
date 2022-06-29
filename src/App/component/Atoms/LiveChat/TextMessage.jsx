@@ -1,5 +1,8 @@
+import ReactHtmlParser from "react-html-parser";
+import { loadAttachment } from "utilities/misc";
 import styles from "./TextMessage.module.css";
-export const TextMessage = ({ message, isMe = false }) => {
+
+export const TextMessage = ({ chat, isMe = false }) => {
   return (
     <p
       className={styles.TextMessage}
@@ -9,7 +12,11 @@ export const TextMessage = ({ message, isMe = false }) => {
         color: isMe && "#fff"
       }}
     >
-      {message}
+      {ReactHtmlParser(
+        chat?.isAttachment
+          ? loadAttachment(chat.attachment, chat.attachmentType, true)
+          : chat.message
+      )}
     </p>
   );
 };

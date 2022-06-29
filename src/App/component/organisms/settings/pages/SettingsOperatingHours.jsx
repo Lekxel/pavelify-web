@@ -1,9 +1,4 @@
-import { Link } from "react-router-dom";
-import React, { useEffect } from "react";
-import BodyHeader from "App/component/BodyHeader";
-import Sidebar from "App/component/Sidebar";
 import { OperatingHoursCheckbox } from "App/component/organisms/settings/OperatingHours/OperatingHoursCheckbox/OperatingHoursCheckbox";
-import SettingsSidebar from "App/component/organisms/settings/SettingsSidebar";
 
 const SettingsOperatingHours = () => (
   <div className="right-side Operating-right-side">

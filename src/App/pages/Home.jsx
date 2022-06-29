@@ -2,37 +2,102 @@ import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 
 import { httpGetUser } from "api/auth";
-import { httpFetchStats } from "api/dashboard";
+import { httpFetchStats, httpGetChartStats } from "api/dashboard";
+import { httpFetchVisitors } from "api/visitor";
+import InitialsImage from "helpers/InitialsImage";
+import { useEffect, useState } from "react";
 import { Doughnut, Line } from "react-chartjs-2";
-import { VectorMap } from "react-jvectormap";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { privateRoutes } from "routes/routes";
 import { moneyFormat } from "utilities/misc";
 import ArrowRight from "../../Assets/img/arrow-right.png";
 import CalenderPurple from "../../Assets/img/calender-purple.png";
 import ChatGreen from "../../Assets/img/chat-green.png";
 import Checkmark from "../../Assets/img/checkmark.png";
-import Person1 from "../../Assets/img/Frame 1.png";
-import Person2 from "../../Assets/img/Frame 2.png";
-import Person3 from "../../Assets/img/Frame 3.png";
 import GreenMessage from "../../Assets/img/green-message.png";
 import LiveChat from "../../Assets/img/live-chat.png";
 import MessageBlue from "../../Assets/img/message-blue.png";
 import OrangeCalender from "../../Assets/img/orangecalender.svg";
-import { data, Linedata, Lineoptions, options } from "../Utils/DashboardChart";
+import { filterOptions, Lineoptions, options } from "../Utils/DashboardChart";
 
 function Home() {
-  const mapData = {
-    CN: 100000,
-    IN: 9900,
-    SA: 86,
-    EG: 70,
-    SE: 0,
-    FI: 0,
-    FR: 0,
-    US: 20,
-    pk: 20
+  const [filterOption, setFilterOption] = useState(filterOptions[0]);
+  const navigate = useNavigate();
+
+  const {
+    data: { visitors },
+    refetch
+  } = useQuery("visitors", () => httpFetchVisitors("", true), {
+    initialData: {
+      limit: 20,
+      page: 1,
+      total: 0
+    }
+  });
+
+  const [lineData, setLineData] = useState({
+    labels: [],
+    data: []
+  });
+
+  const {
+    data: {
+      stats: {
+        labels: chartLabel,
+        data: chartData,
+        visitsByCountry,
+        visitsByCountryData,
+        totalUniqueVisitors
+      }
+    }
+  } = useQuery(["chartStats", filterOption], () => httpGetChartStats(filterOption), {
+    initialData: {
+      stats: {
+        labels: [],
+        data: [],
+        visitsByCountry: [],
+        visitsByCountryData: [],
+        totalUniqueVisitors: 0
+      }
+    }
+  });
+
+  let Linedata = (canvas) => {
+    let CTX = document.querySelector(".chart-line canvas").getContext("2d");
+    let gradient = CTX.createLinearGradient(0, 140, 0, 220);
+    gradient.addColorStop(0, "#D1E9F7");
+
+    gradient.addColorStop(1, "#ECF6FC");
+
+    return {
+      labels: lineData?.data ? [...lineData?.labels] : [],
+      datasets: [
+        {
+          label: "Unique Visits",
+          data: lineData?.data ? [...lineData?.data] : [],
+          fill: true,
+
+          backgroundColor: gradient,
+          borderColor: "#2D98DA"
+        }
+      ]
+    };
+  };
+
+  const data = {
+    labels: [...visitsByCountry],
+    datasets: [
+      {
+        label: "# of Unique Visits",
+        data: [...visitsByCountryData],
+        backgroundColor: ["#9953B7", "#18AB8F", "#2D96D6", "#EEF0F6"],
+        hoverOffset: 5,
+        borderColor: ["#9953B7", "#18AB8F", "#2D96D6", "#EEF0F6"],
+        borderWidth: 1,
+        cutout: 80
+      }
+    ]
   };
 
   const {
@@ -50,6 +115,13 @@ function Home() {
       emailCount: 0
     }
   });
+
+  useEffect(() => {
+    setLineData({
+      labels: chartLabel,
+      data: chartData
+    });
+  }, [filterOption, chartLabel]);
 
   return (
     <div className="Home main-wrapper d-flex">
@@ -93,8 +165,17 @@ function Home() {
             <div className="chart-line-wrapper">
               <div className="top d-flex-align-center">
                 <h3>Analytics</h3>
-                <select name="" id="">
-                  <option value="Last 30 days">Last 30 days</option>
+                <select
+                  value={filterOption}
+                  onChange={(e) => setFilterOption(e.target.value)}
+                  name=""
+                  id=""
+                >
+                  {filterOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="chart-line" style={{ marginTop: 30, height: 280 }}>
@@ -226,95 +307,37 @@ function Home() {
 
               <div className="chart-container">
                 <p>
-                  2,378 <span>Visitors</span>
+                  {totalUniqueVisitors} <span>Visitors</span>
                 </p>
                 <Doughnut data={data} options={options} />
-              </div>
-            </div>
-
-            <div className="visitor-vector-map">
-              <div className="top d-flex-align-center">
-                <h3>Visitors</h3>
-                <div className="dots">
-                  <svg
-                    width="22"
-                    height="6"
-                    viewBox="0 0 22 6"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle cx="2.0625" cy="3" r="2.0625" fill="#282D4A" />
-                    <circle cx="11" cy="3" r="2.0625" fill="#282D4A" />
-                    <circle cx="19.9375" cy="3" r="2.0625" fill="#282D4A" />
-                  </svg>
-                </div>
-              </div>
-
-              <div style={{ height: 200 }} className="map">
-                <VectorMap
-                  map={"world_mill"}
-                  backgroundColor="#fff"
-                  zoomOnScroll={false}
-                  regionStyle={{
-                    initial: {
-                      fill: "#dfe1f7"
-                    },
-                    hover: {
-                      fill: "#7822e6"
-                    },
-                    selected: {
-                      fill: "#7822e6"
-                    }
-                  }}
-                  series={{
-                    regions: [
-                      {
-                        values: mapData, //this is your data
-                        scale: ["#7822e6"], //your color game's here
-                        normalizeFunction: "polynomial"
-                      }
-                    ]
-                  }}
-                  regionsSelectable={true}
-                  containerStyle={{
-                    width: "100%",
-                    height: "100%"
-                  }}
-                  containerClassName="map"
-                />
               </div>
             </div>
 
             <div className="Customer-Lists">
               <div className="top d-flex-align-center">
                 <h3>Customer Lists</h3>
-                <a href="#">See All</a>
+                <a onClick={() => navigate(privateRoutes.liveChat)}>See All</a>
               </div>
               <ul className="bottom">
-                <li className="d-flex-align-center">
-                  <img src={Person1} alt="" />
-                  <div className="presentation">
-                    <p>Jhon Smith</p>
-                    <p>jhonsmith@gmail.com</p>
-                  </div>
-                  <button>Contact</button>
-                </li>
-                <li className="d-flex-align-center">
-                  <img src={Person2} alt="" />
-                  <div className="presentation">
-                    <p>Talan Siphron</p>
-                    <p>talansiph@gmail.com</p>
-                  </div>
-                  <button>Contact</button>
-                </li>
-                <li className="d-flex-align-center">
-                  <img src={Person3} alt="" />
-                  <div className="presentation">
-                    <p>Wilson Baptista</p>
-                    <p>wilson@gmail.com</p>
-                  </div>
-                  <button>Contact</button>
-                </li>
+                {visitors?.map((EachVisitor) => (
+                  <li className="d-flex-align-center">
+                    {EachVisitor.picture ? (
+                      <img src={EachVisitor.picture} alt="" />
+                    ) : (
+                      <InitialsImage name={EachVisitor?.name} color={EachVisitor?.color} />
+                    )}
+                    <div className="presentation">
+                      <p>{EachVisitor?.name}</p>
+                      <p>{EachVisitor?.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate(`${privateRoutes.liveChat}/${EachVisitor?.uuid}`)}
+                    >
+                      Contact
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

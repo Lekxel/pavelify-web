@@ -27,6 +27,7 @@ const LiveChatWidget = () => {
   const [visitor, setVisitor] = useState(currentVisitorProfile());
   const [message, setMessage] = useState("");
   const [chats, setChats] = useState([]);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const scrollDown = () => {
     chats?.length && messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -57,6 +58,7 @@ const LiveChatWidget = () => {
       message
     });
     setMessage("");
+    setShowEmojiPicker(false);
     setChats((c) => [
       ...c,
       { message, isAttachment: false, sender: "visitor", _id: Math.random() * 1000000 }
@@ -92,14 +94,18 @@ const LiveChatWidget = () => {
       ...c,
       {
         message: data.message,
-        isAttachment: false,
+        isAttachment: Boolean(data.isAttachment),
         sender: "operator",
-        _id: Math.random() * 1000000
+        _id: Math.random() * 1000000,
+        attachment: data.attachment,
+        attachmentType: data.attachmentType,
+        read: false
       }
     ]);
   }, []);
 
   useEffect(() => {
+    setShowEmojiPicker(false);
     if (company && company?._id) {
       socket.connect();
       fetchPreviousConversations();
@@ -194,6 +200,8 @@ const LiveChatWidget = () => {
         setMessage={setMessage}
         chats={chats}
         messagesEndRef={messagesEndRef}
+        showEmojiPicker={showEmojiPicker}
+        setShowEmojiPicker={setShowEmojiPicker}
       />
       <Introduction
         innerSize={innerSize}

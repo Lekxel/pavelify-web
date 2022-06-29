@@ -1,6 +1,9 @@
+import { httpGetChartStats } from "api/dashboard";
 import { httpFetchVisitors } from "api/visitor";
+import countries from "App/Utils/countries.json";
 import flags from "App/Utils/countryFlags";
 import { DateTime } from "luxon";
+import { useEffect, useState } from "react";
 import { VectorMap } from "react-jvectormap";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router";
@@ -15,17 +18,53 @@ import Sidebar from "../component/Sidebar";
 function LiveVisitors() {
   const navigate = useNavigate();
 
-  const mapData = {
-    CN: 100000,
-    IN: 9900,
-    SA: 86,
-    EG: 70,
-    SE: 0,
-    FI: 0,
-    FR: 0,
-    US: 20,
-    pk: 20
-  };
+  const [traffic, setTraffic] = useState([]);
+  const [mapData, setMapData] = useState({});
+
+  const {
+    data: {
+      stats: {
+        labels: chartLabel,
+        data: chartData,
+        visitsByCountry,
+        visitsByCountryData,
+        totalUniqueVisitors
+      }
+    }
+  } = useQuery(["chartStats", "Last 7 Days"], () => httpGetChartStats("Last 7 Days"), {
+    initialData: {
+      stats: {
+        labels: [],
+        data: [],
+        visitsByCountry: [],
+        visitsByCountryData: [],
+        totalUniqueVisitors: 0
+      }
+    }
+  });
+
+  useEffect(() => {
+    let dt = [];
+    visitsByCountry.forEach((c, index) => {
+      if (c) {
+        dt.push({
+          country: c,
+          visits: visitsByCountryData[index]
+        });
+      }
+    });
+    setTraffic(dt);
+
+    let md = {};
+    visitsByCountry.forEach((a, i) => {
+      let country = countries.filter((c) => c.name === a);
+      if (country?.length) {
+        md[country[0].countryCode] = visitsByCountryData[i];
+      }
+    });
+
+    setMapData(md);
+  }, [visitsByCountry]);
 
   const status = "online";
 
@@ -90,7 +129,9 @@ function LiveVisitors() {
                       </li>
                       <li>{DateTime.fromISO(visitor?.timestamp).toFormat("DD")}</li>
                       <li>
-                        <a href="http://palevay.com">http://palevay.com</a>
+                        <a target={"_blank"} href="http://palevay.com">
+                          http://palevay.com
+                        </a>
                       </li>
                       <li>
                         <div className="icons-wrapper">
@@ -121,46 +162,28 @@ function LiveVisitors() {
               <h4>Traffic Channels</h4>
               <div className="table">
                 <ul className="table-head grid-col-3">
-                  <li>STATES</li>
-                  <li>Orders</li>
-                  <li>Sales</li>
+                  <li>Country</li>
+                  <li>Unique Visits</li>
                 </ul>
                 <ul className="table-body">
-                  <ul className="row grid-col-3">
-                    <li>United States</li>
-                    <li>23,890</li>
-                    <li>$3,900</li>
-                  </ul>
-                  <ul className="row grid-col-3">
-                    <li>Germany</li>
-                    <li>16,890</li>
-                    <li>$3,900</li>
-                  </ul>
-                  <ul className="row grid-col-3">
-                    <li>Japan</li>
-                    <li>12,900</li>
-                    <li>$3,900</li>
-                  </ul>
-                  <ul className="row grid-col-3">
-                    <li>Portugal</li>
-                    <li>9,800</li>
-                    <li>$3,900</li>
-                  </ul>
-                  <ul className="row grid-col-3">
-                    <li>Rusia</li>
-                    <li>11,890</li>
-                    <li>$3,900</li>
-                  </ul>
-                  <ul className="row grid-col-3">
-                    <li>France</li>
-                    <li>8,099</li>
-                    <li>$3,900</li>
-                  </ul>
-                  <ul className="row grid-col-3">
-                    <li>Spain</li>
-                    <li>23,890</li>
-                    <li>$3,900</li>
-                  </ul>
+                  {traffic?.map((t) => (
+                    <ul key={t?.country} className="row grid-col-3">
+                      <li className="d-flex-align-center">
+                        <img
+                          src={
+                            t?.country
+                              ? flags?.filter((f) => f.CountryName === t?.country)[0].Flag
+                              : ""
+                          }
+                          alt=""
+                          className="flag me-2"
+                          style={{ width: "25px" }}
+                        />
+                        <span>{t?.country}</span>
+                      </li>
+                      <li>{t?.visits}</li>
+                    </ul>
+                  ))}
                 </ul>
               </div>
             </div>

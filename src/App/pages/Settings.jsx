@@ -1,9 +1,11 @@
 import SettingsAccount from "App/component/organisms/settings/pages/SettingsAccount";
+import SettingsDepartment from "App/component/organisms/settings/pages/SettingsDepartment";
 import SettingsEmailSetup from "App/component/organisms/settings/pages/SettingsEmailSetup";
 import SettingsIntegrations from "App/component/organisms/settings/pages/SettingsIntegrations";
 import SettingsLiveChat from "App/component/organisms/settings/pages/SettingsLiveChat";
 import SettingsNotification from "App/component/organisms/settings/pages/SettingsNotification";
 import SettingsOperatingHours from "App/component/organisms/settings/pages/SettingsOperatingHours";
+import SettingsQuickResponse from "App/component/organisms/settings/pages/SettingsQuickResponse";
 import SettingsSidebar from "App/component/organisms/settings/SettingsSidebar";
 import { useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -46,6 +48,10 @@ function Settings() {
         return <SettingsOperatingHours />;
       case privateRoutes.settingsNotifications:
         return <SettingsNotification />;
+      case privateRoutes.settingsQuickResponse:
+        return <SettingsQuickResponse />;
+      case privateRoutes.settingsDepartments:
+        return <SettingsDepartment />;
 
       default:
         return <div />;
@@ -58,13 +64,17 @@ function Settings() {
         return "email_provider";
       case privateRoutes.settingsIntegration:
         return "integration";
+      case privateRoutes.settingsQuickResponse:
+        return "Contact Operators";
+      case privateRoutes.settingsDepartments:
+        return "Contact Operators";
       default:
         return "";
     }
   };
 
   return (
-    <div className={`Settings main-wrapper d-flex ${additionalContainerClass()}`}>
+    <div className={`Settings  main-wrapper d-flex ${additionalContainerClass()}`}>
       <Sidebar active="settings" />
       <div className="body-area">
         {/* header */}

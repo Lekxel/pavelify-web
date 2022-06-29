@@ -68,6 +68,8 @@
         "no-promise-executor-return": "off",
         "radix": "off",
         "no-unused-expressions": "off",
-        "jsx-a11y/no-noninteractive-element-interactions": "off"
+        "jsx-a11y/no-noninteractive-element-interactions": "off",
+        "no-unsafe-optional-chaining": "off",
+        "no-else-return": "off"
     }
 }

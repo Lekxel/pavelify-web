@@ -363,16 +363,16 @@
   letter-spacing: -0.01em;
 }
 .Home .bottom-area > *:nth-child(1) {
-  grid-column: span 7;
+  grid-column: span 10;
 }
-.Home .bottom-area > *:nth-child(2),
+/* .Home .bottom-area > *:nth-child(2),  */
 .Home .bottom-area > *:last-child {
   grid-column: span 3;
 }
-.Home .bottom-area > *:nth-child(3) {
+.Home .bottom-area > *:nth-child(2) {
   grid-column: span 3;
 }
-.Home .bottom-area > *:nth-child(4) {
+.Home .bottom-area > *:nth-child(3) {
   grid-column: span 4;
 }
 .Home .todo-list .bottom,
@@ -1262,13 +1262,19 @@
 }
 .LiveChat .messages-box-area > *:nth-child(odd) {
   background-color: #fff;
-  height: 870px;
+  /* height: 870px; */
   overflow: auto;
   padding: 2rem 1rem;
   border-radius: 7px 0px 0px 7px;
 }
 .LiveChat .messages-box-area > *:last-child {
   border-radius: 0px 7px 7px 0px;
+}
+
+.messages-box-area .left-side,
+.messages-box-area .right-side,
+.messages-box-area .middle-side {
+  max-height: 90vh;
 }
 
 .messages-box-area .left-side .top-area {
@@ -1392,7 +1398,7 @@
 .messages-box-area .middle-side .messages-container-wrapper .message-container {
   display: flex;
   flex-direction: column;
-  height: 750px;
+  height: 80vh;
   overflow: auto;
   padding: 2rem 2rem;
   background: #eff3f6;
@@ -1739,6 +1745,14 @@
 .grid-box-area .traffic-channels .table-head > *:not(:first-child),
 .grid-box-area .traffic-channels .table-body > * > *:not(:first-child) {
   text-align: center;
+}
+
+.grid-box-area .traffic-channels .table-head,
+.grid-box-area .traffic-channels .table-body .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  grid-gap: 10px;
 }
 .grid-box-area .traffic-channels .table-body {
   border-bottom: none;

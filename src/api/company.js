@@ -7,3 +7,11 @@ export const httpCompanyInfo = (companyID) => {
 export const httpUpdateCompany = (payload) => {
   return post(`/company/update`, payload);
 };
+
+export const httpAddDepartment = (payload) => {
+  return post(`/company/addDepartment`, payload);
+};
+
+export const httpDeleteDepartment = (payload) => {
+  return post(`/company/removeDepartment`, payload);
+};

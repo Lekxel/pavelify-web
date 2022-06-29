@@ -1,27 +1,136 @@
-import BodyHeader from "../component/BodyHeader";
-import Sidebar from "../component/Sidebar";
-
-import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { httpGetUser } from "api/auth";
+import { httpFetchStats, httpGetChartStats } from "api/dashboard";
+import { httpFetchVisitors } from "api/visitor";
+import countries from "App/Utils/countries.json";
+import InitialsImage from "helpers/InitialsImage";
+import { useEffect, useState } from "react";
+import { Doughnut, Line } from "react-chartjs-2";
 import { VectorMap } from "react-jvectormap";
+import { useQuery } from "react-query";
+import { useNavigate } from "react-router";
+import { privateRoutes } from "routes/routes";
+import { moneyFormat } from "utilities/misc";
 import CalenderPurple from "../../Assets/img/calender-purple.png";
 import ChatGreen from "../../Assets/img/chat-green.png";
-import Person1 from "../../Assets/img/Frame 1.png";
-import Person2 from "../../Assets/img/Frame 2.png";
-import Person3 from "../../Assets/img/Frame 3.png";
 import MessageBlue from "../../Assets/img/message-blue.png";
-import { BarData, BarOptions, data, Linedata, Lineoptions, options } from "../Utils/AnalyticsChart";
+import BodyHeader from "../component/BodyHeader";
+import Sidebar from "../component/Sidebar";
+import { filterOptions, Lineoptions, options } from "../Utils/DashboardChart";
+
 function Analytics() {
-  const mapData = {
-    CN: 100000,
-    IN: 9900,
-    SA: 86,
-    EG: 70,
-    SE: 0,
-    FI: 0,
-    FR: 0,
-    US: 20,
-    pk: 20
+  const [filterOption, setFilterOption] = useState(filterOptions[0]);
+  const [mapData, setMapData] = useState({});
+  const navigate = useNavigate();
+
+  const {
+    data: { visitors },
+    refetch
+  } = useQuery("visitors", () => httpFetchVisitors("", true), {
+    initialData: {
+      limit: 20,
+      page: 1,
+      total: 0
+    }
+  });
+
+  const [lineData, setLineData] = useState({
+    labels: [],
+    data: []
+  });
+
+  const {
+    data: {
+      stats: {
+        labels: chartLabel,
+        data: chartData,
+        visitsByCountry,
+        visitsByCountryData,
+        totalUniqueVisitors
+      }
+    }
+  } = useQuery(["chartStats", filterOption], () => httpGetChartStats(filterOption), {
+    initialData: {
+      stats: {
+        labels: [],
+        data: [],
+        visitsByCountry: [],
+        visitsByCountryData: [],
+        totalUniqueVisitors: 0
+      }
+    }
+  });
+
+  let Linedata = (canvas) => {
+    let CTX = document.querySelector(".chart-line canvas").getContext("2d");
+    let gradient = CTX.createLinearGradient(0, 140, 0, 220);
+    gradient.addColorStop(0, "#D1E9F7");
+
+    gradient.addColorStop(1, "#ECF6FC");
+
+    return {
+      labels: lineData?.data ? [...lineData?.labels] : [],
+      datasets: [
+        {
+          label: "Unique Visits",
+          data: lineData?.data ? [...lineData?.data] : [],
+          fill: true,
+
+          backgroundColor: gradient,
+          borderColor: "#2D98DA"
+        }
+      ]
+    };
   };
+
+  const data = {
+    labels: [...visitsByCountry],
+    datasets: [
+      {
+        label: "# of Unique Visits",
+        data: [...visitsByCountryData],
+        backgroundColor: ["#9953B7", "#18AB8F", "#2D96D6", "#EEF0F6"],
+        hoverOffset: 5,
+        borderColor: ["#9953B7", "#18AB8F", "#2D96D6", "#EEF0F6"],
+        borderWidth: 1,
+        cutout: 80
+      }
+    ]
+  };
+
+  const {
+    data: { user }
+  } = useQuery("user", httpGetUser, {
+    initialData: {}
+  });
+
+  const {
+    data: { stats }
+  } = useQuery("stats", httpFetchStats, {
+    initialData: {
+      chatCount: 0,
+      calendarCount: 0,
+      emailCount: 0
+    }
+  });
+
+  useEffect(() => {
+    setLineData({
+      labels: chartLabel,
+      data: chartData
+    });
+  }, [filterOption, chartLabel]);
+
+  useEffect(() => {
+    let dt = {};
+    visitsByCountry.forEach((a, i) => {
+      let country = countries.filter((c) => c.name === a);
+      if (country?.length) {
+        dt[country[0].countryCode] = visitsByCountryData[i];
+      }
+    });
+
+    setMapData(dt);
+  }, [visitsByCountry]);
 
   return (
     <div className="Home main-wrapper d-flex">
@@ -34,29 +143,29 @@ function Analytics() {
         <div className="body-main-area">
           <div className="top-banner-results">
             <div className="box">
-              <h4 className="heading">Current Pavelify</h4>
-              <p>Insights</p>
+              <h4 className="heading">Company Name</h4>
+              <p>{user?.company?.companyName}</p>
             </div>
             <div className="box d-flex-align-center">
               <img src={ChatGreen} alt="" />
 
               <div className="presentation">
                 <h4 className="heading">Chat Leads Acquired</h4>
-                <p>20</p>
+                <p>{moneyFormat(stats?.chatCount)}</p>
               </div>
             </div>
             <div className="box d-flex-align-center">
               <img src={CalenderPurple} alt="" />
               <div className="presentation">
                 <h4 className="heading">Total Email Tickets</h4>
-                <p>1,456</p>
+                <p>{moneyFormat(stats?.emailCount)}</p>
               </div>
             </div>
             <div className="box d-flex-align-center">
               <img src={MessageBlue} alt="" />
               <div className="presentation">
                 <h4 className="heading">Calendar Booking</h4>
-                <p>189</p>
+                <p>{moneyFormat(stats?.calendarCount)}</p>
               </div>
             </div>
           </div>
@@ -65,21 +174,21 @@ function Analytics() {
             <div className="chart-line-wrapper">
               <div className="top d-flex-align-center">
                 <h3>Analytics</h3>
-                <select name="" id="">
-                  <option value="Last 30 days">Last 30 days</option>
+                <select
+                  value={filterOption}
+                  onChange={(e) => setFilterOption(e.target.value)}
+                  name=""
+                  id=""
+                >
+                  {filterOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="chart-line" style={{ marginTop: 30, height: 280 }}>
                 <Line data={Linedata} options={Lineoptions} />
-              </div>
-            </div>
-
-            <div className="todo-list">
-              <div className="top d-flex-align-center" style={{ marginTop: 10 }}>
-                <h3>User Activity</h3>
-              </div>
-              <div className="bar-chart-wrapper" style={{ marginTop: 40, height: 280 }}>
-                <Bar data={BarData} options={BarOptions} />
               </div>
             </div>
 
@@ -103,7 +212,7 @@ function Analytics() {
 
               <div className="chart-container">
                 <p>
-                  2,378 <span>Visitors</span>
+                  {totalUniqueVisitors} <span>Visitors</span>
                 </p>
                 <Doughnut data={data} options={options} />
               </div>
@@ -165,33 +274,28 @@ function Analytics() {
             <div className="Customer-Lists">
               <div className="top d-flex-align-center">
                 <h3>Customer Lists</h3>
-                <a href="#">See All</a>
+                <a onClick={() => navigate(privateRoutes.liveChat)}>See All</a>
               </div>
               <ul className="bottom">
-                <li className="d-flex-align-center">
-                  <img src={Person1} alt="" />
-                  <div className="presentation">
-                    <p>Jhon Smith</p>
-                    <p>jhonsmith@gmail.com</p>
-                  </div>
-                  <button>Contact</button>
-                </li>
-                <li className="d-flex-align-center">
-                  <img src={Person2} alt="" />
-                  <div className="presentation">
-                    <p>Talan Siphron</p>
-                    <p>talansiph@gmail.com</p>
-                  </div>
-                  <button>Contact</button>
-                </li>
-                <li className="d-flex-align-center">
-                  <img src={Person3} alt="" />
-                  <div className="presentation">
-                    <p>Wilson Baptista</p>
-                    <p>wilson@gmail.com</p>
-                  </div>
-                  <button>Contact</button>
-                </li>
+                {visitors?.map((EachVisitor) => (
+                  <li className="d-flex-align-center">
+                    {EachVisitor.picture ? (
+                      <img src={EachVisitor.picture} alt="" />
+                    ) : (
+                      <InitialsImage name={EachVisitor?.name} color={EachVisitor?.color} />
+                    )}
+                    <div className="presentation">
+                      <p>{EachVisitor?.name}</p>
+                      <p>{EachVisitor?.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => navigate(`${privateRoutes.liveChat}/${EachVisitor?.uuid}`)}
+                    >
+                      Contact
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

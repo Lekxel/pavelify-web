@@ -15,3 +15,7 @@ export const httpDeleteOperator = (id) => {
 export const httpGetConversation = (uuid) => {
   return get(`/operators/getConversation/${uuid}`);
 };
+
+export const httpSendAttachment = (uuid, attachment) => {
+  return post(`/operators/sendAttachment/${uuid}`, { attachment });
+};

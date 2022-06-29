@@ -205,7 +205,7 @@ export const SettingsAccount = () => {
         </div>{" "}
         <div className="input-wrapper">
           <label htmlFor="Language">Language</label>
-          <select name="" id="">
+          <select className="bg-white" name="" id="">
             <option value="default">default</option>
           </select>
         </div>{" "}

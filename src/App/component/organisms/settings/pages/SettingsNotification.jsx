@@ -1,9 +1,3 @@
-import { Link } from "react-router-dom";
-import React, { useEffect } from "react";
-import BodyHeader from "App/component/BodyHeader";
-import Sidebar from "App/component/Sidebar";
-import SettingsSidebar from "App/component/organisms/settings/SettingsSidebar";
-
 const SettingsNotification = () => (
   <div className="right-side account-right-side notification-right-side">
     <h2 className="special-h2">

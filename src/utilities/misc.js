@@ -52,3 +52,104 @@ export const removeFalsyValues = (obj) => {
 };
 
 export const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+const max_file_size_in_kb = 1024 * 1024 * 10;
+const allowed_extensions = [
+  "png",
+  "jpeg",
+  "jpg",
+  "gif",
+  "doc",
+  "docx",
+  "pdf",
+  "xls",
+  "xlsx",
+  "mp4",
+  "3gp",
+  "txt",
+  "csv",
+  "msword"
+];
+
+const getFileSizeKB = (file_size) => {
+  file_size = parseInt(file_size / 1024);
+  return file_size;
+};
+
+const getFileType = (file) => {
+  return file?.type.split("/").pop() || file?.name.split(".")[file?.name.split(".").length - 1];
+};
+
+const arrToLowerCase = (arr = []) => {
+  return arr.map((str) => str.toLowerCase());
+};
+
+export const changeFileName = (file, newName) => {
+  return new File([file], newName, {
+    // type: file.type,
+    type: "text/plain",
+    lastModified: file.lastModified
+  });
+};
+
+export const onFilePicked = (e) => {
+  let file_size_kb;
+  let file_type;
+
+  let { files } = e.target;
+
+  file_size_kb = getFileSizeKB(files[0].size);
+  file_type = getFileType(files[0]).toLowerCase();
+
+  if (max_file_size_in_kb && file_size_kb > max_file_size_in_kb) {
+    alert(`Maximum allowed file size = ${max_file_size_in_kb} kb`);
+    return false;
+  }
+
+  if (allowed_extensions && !arrToLowerCase(allowed_extensions).includes(file_type)) {
+    alert(`Allowed file type = ${allowed_extensions}`);
+    return false;
+  }
+
+  return files[0];
+};
+
+export const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
+export const linkify = (text = "") => {
+  let urlRegex =
+    // eslint-disable-next-line
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+  return text.replace(urlRegex, function (url) {
+    return `<a target="_blank" href="${url}">${url}</a>`;
+  });
+};
+
+export const loadAttachment = (attachment, type, isClient = false) => {
+  try {
+    if (type === "image") {
+      return `<img alt="img-attachment" src='${attachment}' style="width:${
+        isClient ? "200px" : "300px"
+      }px;padding:12px;" />`;
+    } else if (type === "video") {
+      return `<video width="${isClient ? "200" : "320"}" height="${
+        isClient ? "180" : "240"
+      }" controls>
+  <source src="${attachment}#t=0.8" type="video/mp4">
+</video>`;
+    } else if (type === "application" || type === "text" || type === "") {
+      return `<img alt="img-attachment" src='/images/document.png' style="width:35px;margin-right:5px;" /> <span>${linkify(
+        attachment
+      )}</span>`;
+    }
+    return linkify(attachment);
+  } catch (e) {
+    return null;
+  }
+};

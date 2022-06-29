@@ -1,5 +1,5 @@
 import { httpGetUser } from "api/auth";
-import { httpGetConversation } from "api/operator";
+import { httpGetConversation, httpSendAttachment } from "api/operator";
 import { httpFetchVisitors } from "api/visitor";
 import DefaultChatInfo from "App/component/livechat/DefaultChatInfo";
 import DefaultChatPage from "App/component/livechat/DefaultChatPage";
@@ -10,10 +10,13 @@ import InitialsImage from "helpers/InitialsImage";
 import { DateTime } from "luxon";
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { EmojiPicker } from "react-emoji-search";
+import ReactHtmlParser from "react-html-parser";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router";
 import { privateRoutes } from "routes/routes";
 import { SocketContext } from "socket";
+import { showError } from "utilities/alerts";
+import { loadAttachment, onFilePicked, toBase64 } from "utilities/misc";
 import SpainFlag from "../../Assets/img/flag-spain.png";
 import Logo from "../../Assets/img/Pavelify.png";
 import time from "../../Assets/img/svg/time.svg";
@@ -32,6 +35,7 @@ function LiveChat() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [quickReplies, setQuickReplies] = useState([]);
   const [showQuickReplies, setShowQuickReplies] = useState(false);
+  const inputFile = useRef(null);
 
   const {
     data: { user }
@@ -71,7 +75,7 @@ function LiveChat() {
   const {
     data: { visitors, limit, page, total },
     refetch
-  } = useQuery("visitors", () => httpFetchVisitors(""), {
+  } = useQuery("visitors", () => httpFetchVisitors("", true), {
     initialData: {
       limit: 20,
       page: 1,
@@ -121,6 +125,47 @@ function LiveChat() {
       .then((data) => {
         if (data.success) {
           setChats(data.chats);
+          console.log(data.chats);
+          //  console.log(data.visits);
+        }
+      })
+      .catch((err) => {});
+  };
+
+  const sendAttachment = async (e) => {
+    if (!visitor.uuid) return;
+    const file = onFilePicked(e);
+    if (!file) {
+      return showError("Error adding attachment");
+    }
+
+    const fileBase64 = await toBase64(file);
+
+    httpSendAttachment(visitor.uuid, fileBase64)
+      .then((data) => {
+        if (data.success) {
+          setChats((c) => [
+            ...c,
+            {
+              isAttachment: true,
+              sender: "operator",
+              _id: Math.random() * 1000000,
+              timestamp: DateTime.now(),
+              attachment: data.attachment,
+              attachmentType: data.attachmentType,
+              attachmentSize: data.attachmentSize
+            }
+          ]);
+
+          socket.emit("sendAttachment", {
+            isAttachment: true,
+            sender: "operator",
+            _id: Math.random() * 1000000,
+            timestamp: DateTime.now(),
+            attachment: data.attachment,
+            attachmentType: data.attachmentType,
+            attachmentSize: data.attachmentSize
+          });
         }
       })
       .catch((err) => {});
@@ -135,10 +180,13 @@ function LiveChat() {
       ...c,
       {
         message: data.message,
-        isAttachment: false,
+        isAttachment: Boolean(data.isAttachment),
         sender: "visitor",
         _id: Math.random() * 1000000,
-        timestamp: DateTime.now()
+        timestamp: DateTime.now(),
+        attachment: data.attachment,
+        attachmentType: data.attachmentType,
+        read: false
       }
     ]);
   }, []);
@@ -146,15 +194,13 @@ function LiveChat() {
   useEffect(() => {
     setShowEmojiPicker(false);
     setShowQuickReplies(false);
-    socket.off("incommingMessage", handleIncomingMessage);
-    socket.disconnect();
     if (visitor?.uuid) {
       socket.connect();
       fetchPreviousConversations();
       socket.on("incomingMessage", handleIncomingMessage);
     }
     return () => {
-      socket.off("incommingMessage", handleIncomingMessage);
+      socket.off("incomingMessage", handleIncomingMessage);
       socket.disconnect();
     };
   }, [visitor?.uuid]);
@@ -336,7 +382,17 @@ function LiveChat() {
                                 : ""
                             }`}
                           >
-                            <p>{EachChat.message}</p>
+                            <p>
+                              {ReactHtmlParser(
+                                EachChat?.isAttachment
+                                  ? loadAttachment(
+                                      EachChat.attachment,
+                                      EachChat.attachmentType,
+                                      false
+                                    )
+                                  : EachChat.message
+                              )}
+                            </p>
                             <div className="date-area d-flex-align-center">
                               <p>.</p>
                               <img src={time} alt="" />
@@ -405,6 +461,14 @@ function LiveChat() {
                             </button>
                           </li>
                         </ul>
+                        <input
+                          type="file"
+                          id="file"
+                          onChange={sendAttachment}
+                          accept=".png,.jpeg,.jpg,.gif,.doc,.docx,.pdf,.xls,.xlsx,.mp4,.3gp,.txt,.csv,"
+                          ref={inputFile}
+                          style={{ display: "none" }}
+                        />
                         <div className="input-wrapper d-flex-align-center">
                           <input
                             value={message}
@@ -417,7 +481,10 @@ function LiveChat() {
                               }
                             }}
                           />
-                          <i className="fas fa-paperclip pt-2 cursor-pointer"></i>
+                          <i
+                            onClick={() => inputFile.current.click()}
+                            className="fas fa-paperclip pt-2 cursor-pointer"
+                          ></i>
                           <i
                             onClick={() => setShowEmojiPicker((p) => !p)}
                             className="far fa-smile-beam pt-2 cursor-pointer"

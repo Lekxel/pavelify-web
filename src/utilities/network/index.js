@@ -5,6 +5,12 @@ import { currentUserAuthToken } from "utilities/storage";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
+const logout = () => {
+  localStorage.removeItem("token");
+  // window.location.href = publicRoutes.login
+  window.location.replace(publicRoutes.login);
+};
+
 export const post = (url, data) => {
   return axios
     .post(`${baseURL}${url}`, data, {
@@ -13,12 +19,13 @@ export const post = (url, data) => {
       }
     })
     .then(({ data, status }) => {
-      if (status === 401) {
-        window.location.replace(publicRoutes.login);
-      }
       return data;
     })
     .catch(({ response }) => {
+      const { status, data } = response;
+      if (status === 401) {
+        logout();
+      }
       toast.error(response.data.message, {
         position: "top-right",
         autoClose: 3000,
@@ -43,6 +50,10 @@ export const get = (url) =>
     .then(({ data }) => data)
 
     .catch(({ response }) => {
+      const { status, data } = response;
+      if (status === 401) {
+        logout();
+      }
       toast.error(response.data.message, {
         position: "top-right",
         autoClose: 3000,
@@ -64,6 +75,10 @@ export const put = (url, data) =>
     })
     .then(({ data }) => data)
     .catch(({ response }) => {
+      const { status, data } = response;
+      if (status === 401) {
+        logout();
+      }
       toast.error(response.data.message, {
         position: "top-right",
         autoClose: 3000,
@@ -85,6 +100,10 @@ export const deleteRequest = (url) =>
     })
     .then(({ data }) => data)
     .catch(({ response }) => {
+      const { status, data } = response;
+      if (status === 401) {
+        logout();
+      }
       toast.error(response.data.message, {
         position: "top-right",
         autoClose: 3000,
@@ -105,6 +124,10 @@ export const patch = (url, data) =>
       }
     })
     .catch(({ response }) => {
+      const { status, data } = response;
+      if (status === 401) {
+        logout();
+      }
       toast.error(response.data.message, {
         position: "top-right",
         autoClose: 3000,

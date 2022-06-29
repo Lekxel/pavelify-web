@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+import { EmojiPicker } from "react-emoji-search";
 import DefaultSender from "../../../../Assets/img/sender_default.svg";
 import SenderImage from "../../../../Assets/img/sender_navy.svg";
 import { TextMessage } from "../../Atoms/LiveChat/TextMessage";
@@ -11,13 +13,19 @@ export const LiveChatMessageArea = ({
   setMessage,
   handleSendMessage,
   chats,
-  messagesEndRef
+  messagesEndRef,
+  showEmojiPicker,
+  setShowEmojiPicker
 }) => {
   const HandleCovertingScreen = (e) => {
     e.preventDefault();
     document.querySelector("#collpase-area").style.display = "block";
     document.querySelector("#MessageArea").style.display = "none";
   };
+
+  const addEmoji = useCallback((emoji) => {
+    setMessage((m) => m + emoji);
+  }, []);
 
   return (
     <div
@@ -47,15 +55,26 @@ export const LiveChatMessageArea = ({
       <div className={styles.body}>
         <div className={`${styles.bodyContent} ${width <= 600 ? styles.bodyContent_600 : ""}`}>
           {chats.map((chat) => (
-            <TextMessage
-              key={chat._id}
-              message={chat.message}
-              isMe={Boolean(chat.sender === "visitor")}
-            />
+            <TextMessage key={chat._id} chat={chat} isMe={Boolean(chat.sender === "visitor")} />
           ))}
           <div ref={messagesEndRef} />
         </div>
         <div className={`${styles.form} ${width <= 600 ? styles.form_600 : ""}`}>
+          {showEmojiPicker && (
+            <div
+              style={{
+                height: "400px"
+              }}
+            >
+              <EmojiPicker
+                set="apple"
+                emojiSize={24}
+                emojiSpacing={8}
+                onEmojiClick={addEmoji}
+                mode="light"
+              />
+            </div>
+          )}
           <div className={styles.inputWrapper}>
             <input
               value={message}
@@ -70,7 +89,7 @@ export const LiveChatMessageArea = ({
               }}
             />
             <div className={`${styles.IconWrapper} ${styles.Smile}`}>
-              <i className="far fa-smile-wink"></i>
+              <i onClick={() => setShowEmojiPicker((p) => !p)} className="far fa-smile-wink"></i>
             </div>
             <div className={styles.IconWrapper}>
               <i className="fas fa-paperclip"></i>
