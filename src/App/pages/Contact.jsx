@@ -1,19 +1,38 @@
-import { useEffect } from "react";
+import { httpFetchContacts } from "api/dashboard";
+import Pagination from "App/Utils/Pagination";
+import InitialsImage from "helpers/InitialsImage";
+import { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
+import { useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router";
+import { privateRoutes } from "routes/routes";
 import Calenders from "../../Assets/img/calendar.png";
 import DocumentText from "../../Assets/img/document-text.png";
-import Edit from "../../Assets/img/edit-2.png";
-import Person1 from "../../Assets/img/Frame 1.png";
-import Person2 from "../../Assets/img/Frame 2.png";
-import Person3 from "../../Assets/img/Frame 3.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
 import Message from "../../Assets/img/message.png";
-import PlusIcon from "../../Assets/img/purple-plus.png";
-import RightArrow from "../../Assets/img/right-contact.png";
 import Tickets from "../../Assets/img/sms-tracking.png";
-import Trash from "../../Assets/img/trash.png";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
+
+const channels = ["email", "calendar"];
+
 function Contact() {
+  const { channel } = useParams() || { channel: "livechat" };
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedContacts, setSelectedContacts] = useState([]);
+
+  const {
+    data: { contacts, limit, page, total, totalPages },
+    refetch
+  } = useQuery(["contacts", channel, currentPage], () => httpFetchContacts(channel, currentPage), {
+    initialData: {
+      limit: 10,
+      page: 1,
+      total: 0,
+      totalPages: 1
+    }
+  });
+
   useEffect(() => {
     let Checkbox = document.querySelector("#all-check-checkbox");
     let CheckboxTbody = document.querySelectorAll(".table-body .row .col1 input");
@@ -30,7 +49,17 @@ function Contact() {
         });
       }
     });
-  }, []);
+  }, [channel, contacts]);
+
+  const topTitle = () => {
+    if (channel === "email") {
+      return "Email Tickets";
+    } else if (channel === "calendar") {
+      return "Calendars";
+    }
+    return "Live Chats";
+  };
+
   return (
     <div className="Contact main-wrapper d-flex">
       {/* sidebar */}
@@ -44,22 +73,30 @@ function Contact() {
             <div className="left-side">
               <div className="top-area d-flex-align-center">
                 <h3>Channels</h3>
-                <img src={PlusIcon} alt="" />
               </div>
               <ul>
-                <li className="d-flex-align-center active">
+                <li
+                  className={`${!channels.includes(channel) ? "active" : ""} d-flex-align-center`}
+                  onClick={() => navigate(`${privateRoutes.contacts}/livechat`)}
+                >
                   <div className="icon-wrapper">
                     <img src={Message} alt="" />
                   </div>
                   <p>Live Chats</p>
                 </li>
-                <li className="d-flex-align-center">
+                <li
+                  className={`${channel === "email" ? "active" : ""} d-flex-align-center`}
+                  onClick={() => navigate(`${privateRoutes.contacts}/email`)}
+                >
                   <div className="icon-wrapper">
                     <img src={Tickets} alt="" />
                   </div>
                   <p>Email Tickets</p>
                 </li>
-                <li className="d-flex-align-center">
+                <li
+                  className={`${channel === "calendar" ? "active" : ""} d-flex-align-center`}
+                  onClick={() => navigate(`${privateRoutes.contacts}/calendar`)}
+                >
                   <div className="icon-wrapper">
                     <img src={Calenders} alt="" />
                   </div>
@@ -71,21 +108,32 @@ function Contact() {
             {/* right area */}
             <div className="right-area">
               <div className="top-area d-flex-align-center">
-                <h3>Live Chats</h3>
-                <div className="export-area d-flex-align-center">
+                <h3>{topTitle()}</h3>
+                <CSVLink
+                  data={
+                    contacts
+                      ? contacts?.map((c) => ({
+                          name: c.name,
+                          email: c.email,
+                          country: c.country
+                        }))
+                      : []
+                  }
+                  filename={`${channel}-contacts.csv`}
+                  target={"_blank"}
+                  className="export-area d-flex-align-center cursor-pointer"
+                >
                   <img src={DocumentText} alt="" />
-                  <p>Export</p>
-                </div>
+                  <p className="pt-3">Export</p>
+                </CSVLink>
 
-                <div className="slider-area  d-flex-align-center">
-                  <p>
-                    <span>1</span> - <span>3</span> of <span>3</span>
-                  </p>
-                  <div className="slider-images d-flex-align-center">
-                    <img src={LeftArrow} alt="" />
-                    <img src={RightArrow} alt="" />
-                  </div>
-                </div>
+                <Pagination
+                  setPage={setCurrentPage}
+                  page={page}
+                  limit={limit}
+                  total={total}
+                  totalPages={totalPages}
+                />
               </div>
               <div className="table-wrapper">
                 <div className="table">
@@ -113,151 +161,37 @@ function Contact() {
                     </div>
                   </div>
                   <div className="table-body">
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person1} alt="" />
-                        <p>Jhon Lenon</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <select name="" id="">
-                          <option value="">Subscribed</option>
-                        </select>
-                      </div>
-                      <div className="col col5">
-                        <p>United States</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>-</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
+                    {contacts?.map((contact) => (
+                      <div key={contact.id} className="row">
+                        <div className="col col1">
+                          <input type="checkbox" name="" id="" />
+                        </div>
+                        <div className="col col2 d-flex-align-center">
+                          <InitialsImage name={contact?.name || contact?.email} />
+                          <p style={{ wordBreak: "break-all" }}>{contact?.name}</p>
+                        </div>
+                        <div className="col col3">
+                          <p style={{ wordBreak: "break-all" }}>{contact?.email}</p>
+                        </div>
+                        <div className="col col4">
+                          <select name="" id="">
+                            <option value="">Unsubscribed</option>
+                          </select>
+                        </div>
+                        <div className="col col5">
+                          <p>{contact?.country}</p>
+                        </div>
+                        <div className="col col6">
+                          <h5>-</h5>
+                        </div>
+                        <div className="col col7">
+                          <div className="images-wrapper d-flex-align-center">
+                            {/* <img src={Edit} alt="" />
+                            <img src={Trash} alt="" /> */}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person2} alt="" />
-                        <p>Phillip Lipshutz</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <select name="" id="">
-                          <option value="">Subscribed</option>
-                        </select>
-                      </div>
-                      <div className="col col5">
-                        <p>Germany</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>-</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person3} alt="" />
-                        <p>Davis Vetrovs</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <select name="" id="">
-                          <option value="">Subscribed</option>
-                        </select>
-                      </div>
-                      <div className="col col5">
-                        <p>Swizerland</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>-</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person1} alt="" />
-                        <p>James Ekstrom</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <select name="" id="">
-                          <option value="">Subscribed</option>
-                        </select>
-                      </div>
-                      <div className="col col5">
-                        <p>Japan</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>-</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col col1">
-                        <input type="checkbox" name="" id="" />
-                      </div>
-                      <div className="col col2 d-flex-align-center">
-                        <img src={Person1} alt="" />
-                        <p>Craig Saris</p>
-                      </div>
-                      <div className="col col3">
-                        <p>jhonle@gmail.com</p>
-                      </div>
-                      <div className="col col4">
-                        <select name="" id="">
-                          <option value="">Subscribed</option>
-                        </select>
-                      </div>
-                      <div className="col col5">
-                        <p>Indonesia</p>
-                      </div>
-                      <div className="col col6">
-                        <h5>-</h5>
-                      </div>
-                      <div className="col col7">
-                        <div className="images-wrapper d-flex-align-center">
-                          <img src={Edit} alt="" />
-                          <img src={Trash} alt="" />
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>

@@ -1,38 +1,30 @@
-import { httpLogin } from "api/auth";
+import { forgotPassword } from "api/auth";
 import Spinner from "App/component/Atoms/Spinner";
 import React from "react";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { privateRoutes, publicRoutes } from "routes/routes";
+import { publicRoutes } from "routes/routes";
 import { showError, showSuccess } from "utilities/alerts";
-import { sleep } from "utilities/misc";
-import { setCurrentUser, setCurrentUserAuthToken } from "utilities/storage";
 import { Button } from "../../../Atoms/Auth/Button/Button";
 import { InputWrapper } from "../../../molecules/Auth/InputWrapper/InputWrapper";
 import styles from "./LoginForm.module.css";
-export const LoginForm = () => {
+export const ForgotPasswordForm = () => {
   const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = () => {
     setIsLoading(true);
 
-    httpLogin(email, password)
+    forgotPassword(email)
       .then(async (data) => {
-        if (data.user) {
+        if (data.success) {
           showSuccess(data.message);
-          setCurrentUserAuthToken(data.accessToken);
-          setCurrentUser(data.user);
-          await sleep(3000);
-          navigate(privateRoutes.dashboard);
           setIsLoading(false);
         }
       })
       .catch((err) => {
         setIsLoading(false);
-        showError(err.message || err.password || err.email);
+        showError(err.message || err.email);
       });
   };
 
@@ -40,14 +32,12 @@ export const LoginForm = () => {
     const { id, value } = e.target;
     if (id === "email") {
       setEmail(value);
-    } else if (id === "password") {
-      setPassword(value);
     }
   };
 
   return (
     <div className={styles.LoginFormWrapper}>
-      <h1 className={styles.heading}>Login here...</h1>
+      <h1 className={styles.heading}>Reset Password</h1>
       <InputWrapper
         id="email"
         labelText="Email"
@@ -57,28 +47,17 @@ export const LoginForm = () => {
         value={email}
         onChange={onChange}
       />
-      <InputWrapper
-        id="password"
-        labelText="Password"
-        inputType="password"
-        inputPlaceholder="Enter Your Password"
-        InputWidth="100%"
-        value={password}
-        onChange={onChange}
-      />
-
-      <Link to={publicRoutes.forgotPassword}>Forgot Password?</Link>
 
       <Button
         onClick={handleSubmit}
-        text={isLoading ? <Spinner /> : "Login"}
+        text={isLoading ? <Spinner /> : "Continue"}
         disabled={isLoading}
         style={{ marginTop: 20 }}
       />
 
-      <span className={styles.helpingMessage}>New here?</span>
+      <span className={styles.helpingMessage}>OR</span>
 
-      <Button to={publicRoutes.register} text="Register" type="link" outline={true} />
+      <Button to={publicRoutes.login} text="Sign In" type="link" outline={true} />
     </div>
   );
 };

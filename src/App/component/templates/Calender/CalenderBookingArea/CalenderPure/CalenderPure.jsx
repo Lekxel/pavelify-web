@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { CalenderJs } from "./event/calender";
 
 export const CalenderPure = ({ data: { setDate, date, event, calendarClicked } }) => {

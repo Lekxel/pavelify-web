@@ -1,5 +1,5 @@
+import EmojiPicker from "emoji-picker-react";
 import { useCallback } from "react";
-import { EmojiPicker } from "react-emoji-search";
 import DefaultSender from "../../../../Assets/img/sender_default.svg";
 import SenderImage from "../../../../Assets/img/sender_navy.svg";
 import { TextMessage } from "../../Atoms/LiveChat/TextMessage";
@@ -23,7 +23,7 @@ export const LiveChatMessageArea = ({
     document.querySelector("#MessageArea").style.display = "none";
   };
 
-  const addEmoji = useCallback((emoji) => {
+  const addEmoji = useCallback((e, { emoji }) => {
     setMessage((m) => m + emoji);
   }, []);
 
@@ -61,17 +61,12 @@ export const LiveChatMessageArea = ({
         </div>
         <div className={`${styles.form} ${width <= 600 ? styles.form_600 : ""}`}>
           {showEmojiPicker && (
-            <div
-              style={{
-                height: "400px"
-              }}
-            >
+            <div className="mb-1">
               <EmojiPicker
-                set="apple"
-                emojiSize={24}
-                emojiSpacing={8}
+                pickerStyle={{
+                  width: "100%"
+                }}
                 onEmojiClick={addEmoji}
-                mode="light"
               />
             </div>
           )}

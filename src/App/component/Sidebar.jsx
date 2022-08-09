@@ -1,8 +1,24 @@
+import { httpCountStats } from "api/dashboard";
+import "Assets/styles/css/layout.css";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { privateRoutes } from "routes/routes";
 import SideBarLogo from "../../Assets/img/Pavelify.png";
-import "../../Assets/styles/css/layout.css";
 function Sidebar({ active }) {
+  const {
+    data: {
+      stats: { onlineVisitor, emailCount, unreadChats }
+    }
+  } = useQuery("countStats", () => httpCountStats(), {
+    initialData: {
+      stats: {
+        onlineVisitor: 0,
+        emailCount: 0,
+        unreadChats: 0
+      }
+    }
+  });
+
   return (
     <div className="Sidebar">
       <img src={SideBarLogo} alt="" />
@@ -42,6 +58,7 @@ function Sidebar({ active }) {
                 fill="#6A7097"
               />
             </svg>
+            {unreadChats > 0 ? <span className="badgeCount">{unreadChats}</span> : null}
           </Link>
         </li>
 
@@ -59,6 +76,7 @@ function Sidebar({ active }) {
                 fill="#6A7097"
               />
             </svg>
+            {emailCount > 0 ? <span className="badgeCount">{emailCount}</span> : null}
           </Link>
         </li>
 
@@ -121,6 +139,7 @@ function Sidebar({ active }) {
                 fill="#6A7097"
               />
             </svg>
+            {onlineVisitor > 0 ? <span className="badgeCount">{onlineVisitor}</span> : null}
           </Link>
         </li>
 

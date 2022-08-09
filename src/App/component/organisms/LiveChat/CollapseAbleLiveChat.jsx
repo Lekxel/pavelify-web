@@ -10,7 +10,6 @@ export const CollapseAbleLiveChat = ({
   companyID,
   scrollDown
 }) => {
-  // console.log(appearance);
   return (
     <div
       className={`${styles.CollapseAbleLiveChat}  ${
@@ -26,7 +25,7 @@ export const CollapseAbleLiveChat = ({
         >
           <i className="fas fa-times"></i>
         </div>
-        <h1 className={`${styles.heading} ${width <= 400 && styles.heading_400}`}>
+        <h1 className={`${styles.heading} ${width <= 600 && styles.heading_400}`}>
           {/* Hello from Pavelify 👋🏻 */}
           {appearance?.gettingStartedMessage}
         </h1>

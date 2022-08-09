@@ -1,10 +1,10 @@
 import { httpCompanyInfo } from "api/company";
 import { httpPreviousConversations } from "api/visitor";
 import { Introduction } from "App/component/organisms/LiveChat/Introduction";
-import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import useSocket from "hooks/useSocket";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery } from "react-query";
 import { useParams } from "react-router";
-import { SocketContext } from "socket";
 import { showError } from "utilities/alerts";
 import { sleep, validateEmail, validateName, validatePhone } from "utilities/misc";
 import { currentVisitorProfile, setCurrentVisitorProfile } from "utilities/storage";
@@ -16,7 +16,7 @@ import { HandleBotDisplay } from "./events/HandleBotDisplay";
 import styles from "./LiveChat.module.css";
 
 const LiveChatWidget = () => {
-  const socket = useContext(SocketContext);
+  const socket = useSocket();
   const params = useParams();
   const messagesEndRef = useRef(null);
   const [appearance, setAppearance] = useState({});

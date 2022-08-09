@@ -15,7 +15,7 @@ const SettingsSidebar = ({ containerClass = "", active = "" }) => {
           <Link to={privateRoutes.settingsEmailTickets}>Email Tickets</Link>
         </li>
         <li className={path === privateRoutes.settingsCalendar && "active"}>
-          <Link to={privateRoutes.calendarBooking}>Calendars</Link>
+          <Link to={privateRoutes.settingsCalendar}>Calendars</Link>
         </li>
         <li className={path === privateRoutes.settingsMessengers && "active"}>
           <Link to={privateRoutes.settingsMessengers}>Messengers</Link>

@@ -1,6 +1,5 @@
-import React from "react";
 import styles from "./Input.module.css";
-export const Input = ({ placeholder, type, width, id, value, onChange }) => {
+export const Input = ({ placeholder, type, width, id, value, onChange, disabled }) => {
   return (
     <input
       type={type}
@@ -10,6 +9,7 @@ export const Input = ({ placeholder, type, width, id, value, onChange }) => {
       style={{ width: width }}
       value={value}
       onChange={onChange}
+      disabled={disabled}
     />
   );
 };

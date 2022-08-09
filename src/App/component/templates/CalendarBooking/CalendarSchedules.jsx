@@ -8,11 +8,15 @@ import { useEffect, useState } from "react";
 
 const CaledarSchedules = ({ bookings }) => {
   const [events, setEvents] = useState([]);
-  console.log(bookings);
+  const [date, setDate] = useState("");
+
+  const isThisDay = (d) =>
+    DateTime.fromJSDate(date).toFormat("dd-MM-yyyy") === DateTime.fromSQL(d).toFormat("dd-MM-yyyy");
+
   useEffect(() => {
     document.querySelector(".fc-prev-button").setAttribute("id", "calender-prev-button");
     document.querySelector(".fc-next-button").setAttribute("id", "calender-next-button");
-    Calender();
+    Calender(date, setDate, {});
   }, []);
 
   useEffect(() => {
@@ -79,9 +83,11 @@ const CaledarSchedules = ({ bookings }) => {
         <div className="bottom-after-calender">
           <h3>Scheduled Lists</h3>
           <ul>
-            {events.map((event, index) => (
-              <li key={String(index)}>{event.title}</li>
-            ))}
+            {events
+              ?.filter((ev) => isThisDay(ev.date))
+              .map((event, index) => (
+                <li key={String(index)}>{event.title}</li>
+              ))}
           </ul>
         </div>
       </div>

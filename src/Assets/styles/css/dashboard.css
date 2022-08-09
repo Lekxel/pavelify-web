@@ -274,7 +274,7 @@
   border-radius: 7px;
   box-shadow: 0px 11px 100px 0px #0000000d;
   padding: 2rem 2rem;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
@@ -506,7 +506,7 @@
 }
 
 .body-main-area {
-  padding: 2rem;
+  padding: 0.5rem 2rem;
 }
 .jvectormap-zoomin,
 .jvectormap-zoomout {
@@ -515,7 +515,6 @@
 .body-main-area > h2,
 .body-main-area .body-box > .right-side h2 {
   font-size: 24px;
-
   font-weight: 700;
   color: #282d4a;
 }
@@ -641,7 +640,7 @@
   font-size: 12px;
   cursor: pointer;
   font-weight: 500;
-  width: 108px;
+  width: 150px;
   border: none;
   outline: none;
 }
@@ -690,7 +689,7 @@
 /* #calender */
 /* settings css */
 .body-main-area .body-box {
-  margin-top: 2rem;
+  margin-top: 0rem;
   width: 100%;
   background: #fff !important;
   border-radius: 7px;
@@ -1038,7 +1037,7 @@
   background: #fff;
   border-radius: 7px;
   padding: 0rem 2rem;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 .EmailTickets .navigation-bar li {
   height: 69px;
@@ -1077,7 +1076,6 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-
   margin-left: 10px;
 }
 .EmailTickets .navigation-bar li + li {
@@ -1135,7 +1133,7 @@
 }
 .EmailTickets .table-body-area .row {
   width: 100%;
-  padding: 1.5rem;
+  padding: 0.7rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1183,7 +1181,8 @@
   color: #282d4a;
   padding-top: 14px;
 }
-.EmailTickets .table-body-area .right-side .open-btn {
+.EmailTickets .table-body-area .right-side .open-btn,
+.EmailTickets .table-body-area .right-side .close-btn {
   background: #e3f4f0;
   color: #16a085;
   border-radius: 4px;
@@ -1194,6 +1193,11 @@
   width: 88px;
   border: none;
   outline: none;
+}
+
+.EmailTickets .table-body-area .right-side .close-btn {
+  color: #7822e6;
+  background-color: #efe4fc;
 }
 
 /* Operators */
@@ -1246,7 +1250,8 @@
   outline: none;
   cursor: pointer;
 }
-.Operators .body-area .body-main-area .table .table-body .col4 .offline {
+.Operators .body-area .body-main-area .table .table-body .col4 .offline,
+.offline {
   background-color: #efe4fc;
   color: #7822e6;
 }
@@ -1256,6 +1261,10 @@
 .LiveChat .messages-box-area {
   display: grid;
   grid-template-columns: 0.5fr 1fr 0.5fr;
+}
+.LiveChat.Ticket .messages-box-area {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 }
 .LiveChat .messages-box-area > *:nth-child(even) {
   background-color: #f8f9fb;
@@ -1370,6 +1379,24 @@
   justify-content: center;
   margin-top: 6px;
   height: 18px;
+  display: flex;
+}
+
+.badgeCount {
+  background: #e74c3c;
+  border-radius: 50%;
+  width: 18px;
+  font-size: 10px;
+  color: #fff;
+  justify-content: center;
+  margin-top: 6px;
+  height: 18px;
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 18px;
+  position: absolute;
+  margin-left: -8px;
+  margin-top: -2px;
 }
 
 /* middle-side */
@@ -1440,6 +1467,14 @@
 .messages-box-area .middle-side .message-container .message > p {
   background: #fff;
   border-radius: 99px;
+  color: #333;
+  padding: 0.6rem 1.5rem;
+  font-size: 15px;
+}
+
+.messages-box-area .middle-side .message-container .message > div {
+  background: #fff;
+  border-radius: 12px;
   color: #333;
   padding: 0.6rem 1.5rem;
   font-size: 15px;
@@ -1526,7 +1561,13 @@
   .messages-container-wrapper
   .message-sender-form
   .input-wrapper
-  input {
+  input,
+.messages-box-area
+  .middle-side
+  .messages-container-wrapper
+  .message-sender-form
+  .input-wrapper
+  textarea {
   font-family: "DM Sans", sans-serif;
   font-size: 15px;
   height: 48px;
@@ -1534,8 +1575,15 @@
   width: 100%;
   margin-right: 10px;
   outline: none;
-
   border: none;
+}
+.messages-box-area
+  .middle-side
+  .messages-container-wrapper
+  .message-sender-form
+  .input-wrapper
+  textarea.ticket-message-input {
+  height: 60px;
 }
 .messages-box-area
   .middle-side
@@ -1693,7 +1741,8 @@
   font-weight: 400;
 }
 
-.messages-box-area > .right-side .info-area .last-view-page .link {
+.messages-box-area > .right-side .info-area .last-view-page .link,
+.viewed-pages.last-view-page .link {
   font-size: 12px;
 
   font-weight: 400;
@@ -1706,7 +1755,7 @@
 .grid-box-area {
   grid-template-rows: 390px 390px;
   grid-gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
 }
 .grid-box-area .visitors-in-site .table {
   height: 720px;
@@ -2561,4 +2610,7 @@
     padding-right: 1rem;
     padding-left: 1rem;
   }
+}
+.cursor-pointer {
+  cursor: pointer;
 }

@@ -1,4 +1,5 @@
 import SettingsAccount from "App/component/organisms/settings/pages/SettingsAccount";
+import SettingsCalendarSetup from "App/component/organisms/settings/pages/SettingsCalendarSetup";
 import SettingsDepartment from "App/component/organisms/settings/pages/SettingsDepartment";
 import SettingsEmailSetup from "App/component/organisms/settings/pages/SettingsEmailSetup";
 import SettingsIntegrations from "App/component/organisms/settings/pages/SettingsIntegrations";
@@ -52,6 +53,8 @@ function Settings() {
         return <SettingsQuickResponse />;
       case privateRoutes.settingsDepartments:
         return <SettingsDepartment />;
+      case privateRoutes.settingsCalendar:
+        return <SettingsCalendarSetup />;
 
       default:
         return <div />;
@@ -68,6 +71,8 @@ function Settings() {
         return "Contact Operators";
       case privateRoutes.settingsDepartments:
         return "Contact Operators";
+      case privateRoutes.settingsCalendar:
+        return "email_provider";
       default:
         return "";
     }

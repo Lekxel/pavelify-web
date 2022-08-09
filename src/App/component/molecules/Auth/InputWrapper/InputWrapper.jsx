@@ -1,4 +1,3 @@
-import React from "react";
 import { Input } from "../../../Atoms/Auth/Input/Input";
 import styles from "./InputWrapper.module.css";
 export const InputWrapper = ({
@@ -10,7 +9,8 @@ export const InputWrapper = ({
   style,
   inputStyle = null,
   value,
-  onChange
+  onChange,
+  disabled = false
 }) => {
   return (
     <div className={styles.InputWrapper} style={style}>
@@ -24,6 +24,7 @@ export const InputWrapper = ({
         placeholder={inputPlaceholder}
         width={InputWidth}
         onChange={onChange}
+        disabled={disabled}
       />
     </div>
   );

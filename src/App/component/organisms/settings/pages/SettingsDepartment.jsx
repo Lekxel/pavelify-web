@@ -158,7 +158,7 @@ const SettingsDepartment = () => {
 
                   <div className="col col7">
                     <div className="images-wrapper">
-                      <button type="button" onClick={() => handleDelete(q)}>
+                      <button className="btn" type="button" onClick={() => handleDelete(q)}>
                         <img src={Trash} alt="" />
                       </button>
                     </div>

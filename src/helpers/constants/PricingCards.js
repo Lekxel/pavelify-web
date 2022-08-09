@@ -19,7 +19,7 @@ export const PricingCardcontent = [
     price: "$25",
     time: "Month",
     duration: "Suitable for early stage Startups ",
-    buy_now_link: "",
+    buy_now_link: "29879",
     free_trail_link: "/register?plan=essential",
     services: [
       "Up to 4 Agents",
@@ -37,7 +37,7 @@ export const PricingCardcontent = [
     price: "$47",
     time: "Month",
     duration: "Suitable for scaling Businesses who want more for less.",
-    buy_now_link: "",
+    buy_now_link: "29880",
     free_trail_link: "/register?plan=pro",
     services: [
       "Up to 10  Agents",

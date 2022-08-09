@@ -1,22 +1,22 @@
 import { httpGetUser } from "api/auth";
 import { httpDeleteEvent, httpFetchEvents, httpSaveEvent } from "api/calendar";
 import Spinner from "App/component/Atoms/Spinner";
+import Pagination from "App/Utils/Pagination";
 import copy from "clipboard-copy";
 import TimezoneOptions from "helpers/TimezoneOptions";
 import useGetSubdomain from "hooks/useGetSubdomain";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import Datetime from "react-date-time-new";
+import "react-date-time-new/css/react-datetime.css";
 import { useQuery } from "react-query";
-import TimePicker from "react-time-picker";
 import { showError, showSuccess } from "utilities/alerts";
 import { capitalize, days as daysOfTheWeek, validateName } from "utilities/misc";
 import Edit from "../../Assets/img/edit-2.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
 import Trash from "../../Assets/img/trash.png";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
-// import TimePicker from "react-time-picker/dist/entry.nostyle";
 
 const locations = ["zoom", "google meet", "phone"];
 
@@ -33,9 +33,10 @@ function CalendarEvents() {
   const [days, setDays] = useState([]);
   const [slug, setSlug] = useState("");
   const [duration, setDuration] = useState("15");
-  const [timezone, setTimezone] = useState("");
+  const [timezone, setTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
   const { domain } = useGetSubdomain();
   const [livechatVisibility, setLivechatVisibility] = useState("No");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     data: { user }
@@ -44,13 +45,14 @@ function CalendarEvents() {
   });
 
   const {
-    data: { events, limit, page, total },
+    data: { events, limit, page, total, totalPages },
     refetch
-  } = useQuery("events", httpFetchEvents, {
+  } = useQuery("events", () => httpFetchEvents(currentPage), {
     initialData: {
       limit: 10,
       page: 1,
-      total: 0
+      total: 0,
+      totalPages: 1
     }
   });
 
@@ -63,18 +65,23 @@ function CalendarEvents() {
     setSlug("");
     setLivechatVisibility("No");
     setDays([]);
+    setTimezone(Intl.DateTimeFormat().resolvedOptions().timeZone);
   };
 
   const handleSubmit = () => {
     if (!validateName(title)) {
       return showError("Title is required");
     }
+    if (!to || !from) return showError("Available time is required is required");
     setLoading(true);
 
     const data = {
       title,
       slug,
-      availableTimeRange: { from, to },
+      availableTimeRange: {
+        from: DateTime.fromJSDate(from).toFormat("HH:mm"),
+        to: DateTime.fromJSDate(to).toFormat("HH:mm")
+      },
       availableDays: days,
       duration,
       showOnLivechat: Boolean(livechatVisibility === "Yes"),
@@ -108,13 +115,14 @@ function CalendarEvents() {
     setEvent(event);
     setTitle(event.title);
     setLocation(event.location);
-    setFrom(event.availableTimeRange.from);
-    setTo(event.availableTimeRange.to);
+    setFrom(DateTime.fromFormat(event.availableTimeRange.from, "HH:mm").toJSDate());
+    setTo(DateTime.fromFormat(event.availableTimeRange.to, "HH:mm").toJSDate());
     setDuration(event.duration);
     setSlug(event.slug);
     setLivechatVisibility(event.showOnLivechat ? "Yes" : "No");
     setDays(event.availableDays);
     setShowModal(true);
+    setTimezone(event.timezone);
   };
 
   const handleDelete = () => {
@@ -194,15 +202,27 @@ function CalendarEvents() {
                       Direct Link
                     </label>
                   </b>
-                  <input
-                    type="text"
-                    placeholder="Link"
-                    className="form-control"
-                    value={slug}
-                    onChange={(e) =>
-                      setSlug(e.target.value.replace(/[^a-z0-9 ]/g, "").replace(/\s/g, "-"))
-                    }
-                  />
+                  <div
+                    className="px-2"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      // justifyContent: "space-between",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px"
+                    }}
+                  >
+                    <span>https://meeting.pavelify.help/{user?.company?.slug}/</span>
+                    <input
+                      type="text"
+                      placeholder="Link"
+                      className="form-control border-0 ps-0 shadow-none"
+                      value={slug}
+                      onChange={(e) =>
+                        setSlug(e.target.value.replace(/[^a-z0-9 ]/g, "").replace(/\s/g, "-"))
+                      }
+                    />
+                  </div>
                 </div>
 
                 <div className="mt-4">
@@ -220,25 +240,37 @@ function CalendarEvents() {
                     }}
                   >
                     <div className="col">
-                      <TimePicker
+                      <Datetime
+                        dateFormat={false}
+                        timeFormat={true}
+                        onChange={(s) => setFrom(DateTime.fromISO(s.toISOString()).toJSDate())}
+                        value={from}
+                      />
+                      {/* <TimePicker
                         hourPlaceholder="hh"
                         minutePlaceholder="mm"
                         required
                         value={from}
-                        onChange={setFrom}
-                      />
+                        onChange={(s) => console.log(s)}
+                      /> */}
                     </div>
                     <div className="col text-center">
                       <b className="text-center">-</b>
                     </div>
                     <div className="col">
-                      <TimePicker
+                      <Datetime
+                        dateFormat={false}
+                        timeFormat={true}
+                        onChange={(s) => setTo(DateTime.fromISO(s.toISOString()).toJSDate())}
+                        value={to}
+                      />
+                      {/* <TimePicker
                         hourPlaceholder="hh"
                         minutePlaceholder="mm"
                         required
                         value={to}
                         onChange={setTo}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -297,7 +329,7 @@ function CalendarEvents() {
                       {daysOfTheWeek.map((day, index) => (
                         <div key={String(index)} className="col-4 col-md-3 my-2">
                           <input
-                            className="form-control d-inline"
+                            className="d-inline"
                             id={day}
                             checked={days.indexOf(day) >= 0}
                             type="checkbox"
@@ -426,17 +458,13 @@ function CalendarEvents() {
               <div className="top-area d-flex-align-center">
                 <button onClick={handleAdd}>Add New Event</button>
 
-                <div className="slider-area  d-flex-align-center">
-                  <p>
-                    <span>{(page - 1) * limit + 1}</span> -{" "}
-                    <span>{total > page * limit ? page * limit : total}</span> of{" "}
-                    <span>{total}</span>
-                  </p>
-                  <div className="slider-images d-flex-align-center">
-                    <img src={LeftArrow} alt="" />
-                    <img src={RightArrow} alt="" />
-                  </div>
-                </div>
+                <Pagination
+                  setPage={setCurrentPage}
+                  page={page}
+                  limit={limit}
+                  total={total}
+                  totalPages={totalPages}
+                />
               </div>
 
               <div className="table-wrapper">
@@ -469,7 +497,7 @@ function CalendarEvents() {
                       events.map((eachEevnt, index) => (
                         <div key={eachEevnt?._id} className="table-head">
                           <div className="col col1">
-                            <b>{index + 1}</b>
+                            <b>{page * limit - limit + index + 1}</b>
                           </div>
                           <div className="col col2 d-flex-align-center">
                             <p>{eachEevnt?.title}</p>

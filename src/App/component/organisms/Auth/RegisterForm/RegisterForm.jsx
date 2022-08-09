@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Fields } from "helpers/constants/RegisterFormFeilds";
 import { Button } from "App/component/Atoms/Auth/Button/Button";
+import Spinner from "App/component/Atoms/Spinner";
 import { InputWrapper } from "App/component/molecules/Auth/InputWrapper/InputWrapper";
-import { HandleStep } from "./events/HandleStep";
-import styles from "./Register.module.css";
+import { Fields } from "helpers/constants/RegisterFormFeilds";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { publicRoutes } from "routes/routes";
+import { showError, showSuccess } from "utilities/alerts";
 import {
   parseQueryParams,
   validateEmail,
@@ -14,11 +15,10 @@ import {
   validateSubdomain,
   validateUrl
 } from "utilities/misc";
-import { useLocation, useNavigate } from "react-router";
-import { BASIC, ESSENTIAL, PRO } from "utilities/plans";
-import { showError, showSuccess } from "utilities/alerts";
 import { post } from "utilities/network";
-import Spinner from "App/component/Atoms/Spinner";
+import { BASIC, ESSENTIAL, PRO } from "utilities/plans";
+import { HandleStep } from "./events/HandleStep";
+import styles from "./Register.module.css";
 
 export const RegisterForm = () => {
   const [Step, setStep] = useState([]);
@@ -109,6 +109,7 @@ export const RegisterForm = () => {
       })
       .catch((err) => {
         setIsLoading(false);
+        showError(err.message);
       });
   };
 

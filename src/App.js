@@ -7,7 +7,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Routes from "routes";
-import { socket, SocketContext } from "socket";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -24,12 +23,12 @@ function App() {
     <React.StrictMode>
       <div style={{ position: "relative" }} className="App">
         <QueryClientProvider client={queryClient}>
-          <SocketContext.Provider value={socket}>
-            <Router>
-              <ScrollToTop />
-              <Routes />
-            </Router>
-          </SocketContext.Provider>
+          {/* <SocketContext.Provider value={socket}> */}
+          <Router>
+            <ScrollToTop />
+            <Routes />
+          </Router>
+          {/* </SocketContext.Provider> */}
         </QueryClientProvider>
         <ToastContainer />
       </div>

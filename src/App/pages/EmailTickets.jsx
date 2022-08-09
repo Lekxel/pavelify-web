@@ -1,17 +1,54 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 
+import { httpFetchTickets } from "api/email";
+import Pagination from "App/Utils/Pagination";
+import InitialsImage from "helpers/InitialsImage";
+import { DateTime } from "luxon";
+import { useQuery } from "react-query";
+import { useNavigate, useParams } from "react-router";
+import { privateRoutes } from "routes/routes";
+import { capitalize } from "utilities/misc";
 import BlueLow from "../../Assets/img/blue-low.png";
-import DocumentText from "../../Assets/img/document-text.png";
-import Person1 from "../../Assets/img/Frame 1.png";
-import Person2 from "../../Assets/img/Frame 2.png";
-import Person3 from "../../Assets/img/Frame 3.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
 import user from "../../Assets/img/user.png";
 
+const statuses = ["open", "due", "hold", "unassigned"];
+
 function EmailTickets() {
+  const { status } = useParams() || { status: "all" };
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const {
+    data: {
+      tickets,
+      limit,
+      page,
+      total,
+      totalPages,
+      openCount,
+      dueCount,
+      holdCount,
+      unassignedCount,
+      allCount
+    },
+    refetch
+  } = useQuery(["tickets", status, currentPage], () => httpFetchTickets(status, currentPage), {
+    initialData: {
+      limit: 10,
+      page: 1,
+      total: 0,
+      totalPages: 1,
+      openCount: 0,
+      dueCount: 0,
+      holdCount: 0,
+      unassignedCount: 0,
+      allCount: 0
+    },
+    keepPreviousData: true
+  });
+
   useEffect(() => {
     let Checkbox = document.querySelector("#all-check-checkbox");
     let CheckboxTbody = document.querySelectorAll(".table-body-area .row .checkbox-wrapper input");
@@ -29,6 +66,7 @@ function EmailTickets() {
       }
     });
   }, []);
+
   return (
     <div className="EmailTickets main-wrapper d-flex">
       {/* sidebar */}
@@ -39,25 +77,40 @@ function EmailTickets() {
 
         <div className="body-main-area">
           <ul className="navigation-bar d-flex-align-center">
-            <li className="active d-flex-align-center">
+            <li
+              className={`${!statuses.includes(status) ? "active" : ""} d-flex-align-center`}
+              onClick={() => navigate(`${privateRoutes.emailTickets}/all`)}
+            >
               <p>All Tickets</p>
-              <span>3</span>
+              <span>{allCount}</span>
             </li>
-            <li className="d-flex-align-center">
+            <li
+              className={`${status === "open" ? "active" : ""} d-flex-align-center`}
+              onClick={() => navigate(`${privateRoutes.emailTickets}/open`)}
+            >
               <p>Open</p>
-              <span>1</span>
+              <span>{openCount}</span>
             </li>
-            <li className="d-flex-align-center">
+            <li
+              className={`${status === "due" ? "active" : ""} d-flex-align-center`}
+              onClick={() => navigate(`${privateRoutes.emailTickets}/due`)}
+            >
               <p>Due Today</p>
-              <span>3</span>
+              <span>{dueCount}</span>
             </li>
-            <li className="d-flex-align-center">
+            <li
+              className={`${status === "hold" ? "active" : ""} d-flex-align-center`}
+              onClick={() => navigate(`${privateRoutes.emailTickets}/hold`)}
+            >
               <p>On Hold</p>
-              <span>0</span>
+              <span>{holdCount}</span>
             </li>
-            <li className="d-flex-align-center">
+            <li
+              className={`${status === "unassigned" ? "active" : ""} d-flex-align-center`}
+              onClick={() => navigate(`${privateRoutes.emailTickets}/unassigned`)}
+            >
               <p>Unassigned</p>
-              <span>0</span>
+              <span>{unassignedCount}</span>
             </li>
           </ul>
           <div className="body-box">
@@ -86,7 +139,7 @@ function EmailTickets() {
                 <div className="drop-down-wrapper d-flex-align-center">
                   <p>Filter by:</p>
                   <div className="drop-down d-flex-align-center">
-                    <p>Departement</p>
+                    <p>Department</p>
                     <svg
                       width="7"
                       height="3"
@@ -101,106 +154,61 @@ function EmailTickets() {
               </div>
 
               <div className="right-area d-flex-align-center">
-                <div className="export-area d-flex-align-center">
-                  <img src={DocumentText} alt="" />
-                  <p>Export</p>
-                </div>
-
-                <div className="slider-area  d-flex-align-center">
-                  <p>
-                    <span>1</span> - <span>3</span> of <span>3</span>
-                  </p>
-                  <div className="slider-images d-flex-align-center">
-                    <img src={LeftArrow} alt="" />
-                    <img src={RightArrow} alt="" />
-                  </div>
-                </div>
+                <Pagination
+                  setPage={setCurrentPage}
+                  page={page}
+                  limit={limit}
+                  total={total}
+                  totalPages={totalPages}
+                />
               </div>
             </div>
 
             {/*table body area */}
 
             <div className="table-body-area">
-              <div className="row d-flex-align-center">
-                <div className="checkbox-wrapper">
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div className="profile-area d-flex-align-center">
-                  <img src={Person1} alt="" />
-                  <div className="presentation">
-                    <h4>Hello I wanna collab with you</h4>
-                    <p>
-                      <span>jhonsmith@gmail.com</span> - <span>12 June 2021 10:00 AM</span>
-                    </p>
+              {tickets?.map((ticket) => (
+                <div
+                  onClick={() => navigate(`${privateRoutes.ticket}/${ticket._id}`)}
+                  key={ticket._id}
+                  className="row d-flex-align-center cursor-pointer"
+                >
+                  <div className="checkbox-wrapper">
+                    <input type="checkbox" name="" id="" />
                   </div>
-                </div>
-                <div className="right-side d-flex-align-center">
-                  <div className="icon-wrapper d-flex-align-center">
-                    <img src={BlueLow} alt="" />
-                    <p>Low</p>
+                  <div className="profile-area d-flex-align-center">
+                    <InitialsImage
+                      name={ticket?.from?.name || ticket?.from?.address}
+                      color={ticket.color}
+                    />
+                    <div className="presentation ms-2">
+                      {ticket?.unreadCount ? (
+                        <h4>{ticket.subject}</h4>
+                      ) : (
+                        <p className="text-black">{ticket.subject}</p>
+                      )}
+                      <p>
+                        <span>{ticket.from?.address}</span> -{" "}
+                        <span>{DateTime.fromISO(ticket.timestamp).toFormat("DD t")}</span>
+                      </p>
+                    </div>
                   </div>
-                  <div className="icon-wrapper d-flex-align-center">
-                    <img src={user} alt="" />
-                    <p>Support</p>
-                  </div>
+                  <div className="right-side d-flex-align-center">
+                    <div className="icon-wrapper d-flex-align-center">
+                      <img src={BlueLow} alt="" />
+                      <p>Low</p>
+                    </div>
+                    <div className="icon-wrapper d-flex-align-center">
+                      <img src={user} alt="" />
+                      <p>{capitalize(ticket.department)}</p>
+                    </div>
 
-                  <button className="open-btn">Open</button>
-                </div>
-              </div>
-
-              <div className="row d-flex-align-center">
-                <div className="checkbox-wrapper">
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div className="profile-area d-flex-align-center">
-                  <img src={Person2} alt="" />
-                  <div className="presentation">
-                    <h4>A new message from sir</h4>
-                    <p>
-                      <span>jsalungpras@gmail.com</span> - <span>12 June 2021 10:00 AM</span>
-                    </p>
+                    <button className={ticket.status === "pending" ? "open-btn" : "close-btn"}>
+                      {capitalize(ticket.status)}
+                    </button>
                   </div>
                 </div>
-                <div className="right-side d-flex-align-center">
-                  <div className="icon-wrapper d-flex-align-center">
-                    <img src={BlueLow} alt="" />
-                    <p>Low</p>
-                  </div>
-                  <div className="icon-wrapper d-flex-align-center">
-                    <img src={user} alt="" />
-                    <p>Support</p>
-                  </div>
-
-                  <button className="open-btn">Open</button>
-                </div>
-              </div>
-
-              <div className="row d-flex-align-center">
-                <div className="checkbox-wrapper">
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div className="profile-area d-flex-align-center">
-                  <img src={Person3} alt="" />
-                  <div className="presentation">
-                    <h4>Please continue the last project</h4>
-                    <p>
-                      <span>ericklance@gmail.com</span> - <span>12 June 2021 10:00 AM</span>
-                    </p>
-                  </div>
-                </div>
-                <div className="right-side d-flex-align-center">
-                  <div className="icon-wrapper d-flex-align-center">
-                    <img src={BlueLow} alt="" />
-                    <p>Low</p>
-                  </div>
-                  <div className="icon-wrapper d-flex-align-center">
-                    <img src={user} alt="" />
-                    <p>Support</p>
-                  </div>
-
-                  <button className="open-btn">Open</button>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

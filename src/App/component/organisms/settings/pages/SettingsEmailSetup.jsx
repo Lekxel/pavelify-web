@@ -15,7 +15,9 @@ import pic7 from "Assets/img/Page-2-Image-7.jpg";
 import pic8 from "Assets/img/Page-2-Image-8.jpg";
 import pic9 from "Assets/img/Page-2-Image-9.jpg";
 import pic16 from "Assets/img/Page-3-Image-16.jpg";
+import copy from "clipboard-copy";
 import { useQuery } from "react-query";
+import { showSuccess } from "utilities/alerts";
 
 const SettingsEmailSetup = () => {
   const {
@@ -23,6 +25,11 @@ const SettingsEmailSetup = () => {
   } = useQuery("user", httpGetUser, {
     initialData: {}
   });
+
+  const copyLink = async (email) => {
+    await copy(email);
+    showSuccess("Email copied to clipboard");
+  };
 
   return (
     <div className="right-side Operating-right-side">
@@ -33,7 +40,9 @@ const SettingsEmailSetup = () => {
       </p>
       <div className="step step1">
         <h3>1. Copy the following email</h3>
-        <p>contact@{user?.company?.slug}.pavelify.com</p>
+        <p onClick={() => copyLink(`contact@${user?.company?.slug}.pavelify.com`)}>
+          contact@{user?.company?.slug}.pavelify.com
+        </p>
       </div>
       <div className="step">
         <h3>2. Setup email Forwarding</h3>

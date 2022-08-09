@@ -13,11 +13,11 @@ export const forgotPassword = (email) => {
   });
 };
 
-export const resetPassword = (email, password, token) => {
+export const resetPassword = (email, password, code) => {
   return post("/auth/confirmResetPassword", {
     email,
-    password,
-    token
+    newPassword: password,
+    code
   });
 };
 

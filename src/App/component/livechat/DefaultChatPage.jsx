@@ -2,10 +2,10 @@ import CalendarIcon from "Assets/img/calender-purple.png";
 import AppIcon from "Assets/img/checkmark.png";
 import ChatIcon from "Assets/img/green-message.png";
 import SupportIcon from "Assets/img/live-chat.png";
-import Logo1 from "Assets/img/logo1.png";
 import TeamIcon from "Assets/img/message-blue.png";
 import Logo from "Assets/img/Pavelify.png";
 import UserIcon from "Assets/img/user.png";
+import InitialsImage from "helpers/InitialsImage";
 import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
 import { privateRoutes } from "routes/routes";
@@ -31,60 +31,11 @@ const DefaultChatPage = () => (
       </div>
 
       <div className="contact-images d-flex-align-center">
-        <img
-          style={{
-            width: "40px",
-            objectFit: "contain",
-            marginRight: "5px"
-          }}
-          src={Logo1}
-          alt=""
-        />
-        <img
-          style={{
-            width: "40px",
-            objectFit: "contain",
-            marginRight: "5px"
-          }}
-          src={Logo1}
-          alt=""
-        />
-        <img
-          style={{
-            width: "40px",
-            objectFit: "contain",
-            marginRight: "5px"
-          }}
-          src={Logo1}
-          alt=""
-        />
-        <img
-          style={{
-            width: "40px",
-            objectFit: "contain",
-            marginRight: "5px"
-          }}
-          src={Logo1}
-          alt=""
-        />
-        <img
-          style={{
-            width: "40px",
-            objectFit: "contain",
-            marginRight: "5px"
-          }}
-          src={Logo1}
-          alt=""
-        />
-        <img
-          style={{
-            width: "40px",
-            objectFit: "contain",
-            marginRight: "5px"
-          }}
-          src={Logo1}
-          alt=""
-        />
+        <InitialsImage width={"40px"} height="40px" name={"A"} />
+        <InitialsImage width={"40px"} height="40px" color={"orange"} name={"B"} />
+        <InitialsImage width={"40px"} height="40px" color={"red"} name={"C"} />
+        <InitialsImage width={"40px"} height="40px" color={"purple"} name={"D"} />
+        <InitialsImage width={"40px"} height="40px" color={"indigo"} name={"E"} />
         <div className="add-contact">
           <svg
             width="36"

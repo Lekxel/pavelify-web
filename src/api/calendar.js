@@ -5,8 +5,8 @@ export const httpSaveEvent = (payload, eventID, isAdd = true) => {
   return post(`/calendar/${isAdd ? "addEvent" : editStr}`, payload);
 };
 
-export const httpFetchEvents = () => {
-  return get("/calendar/fetchEvents");
+export const httpFetchEvents = (page) => {
+  return get(`/calendar/fetchEvents?page=${page}`);
 };
 
 export const httpDeleteEvent = (id) => {
@@ -21,8 +21,8 @@ export const httpBookEvent = (payload, eventID) => {
   return post(`/calendar/bookEvent/${eventID}`, payload);
 };
 
-export const httpFetchBookings = (status) => {
-  return get(`/calendar/fetchBookings?status=${status}`);
+export const httpFetchBookings = (status, page) => {
+  return get(`/calendar/fetchBookings?status=${status}&page=${page}`);
 };
 
 export const httpFetchEventsForLivechat = (companyID) => {

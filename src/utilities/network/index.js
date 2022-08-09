@@ -15,7 +15,7 @@ export const post = (url, data) => {
   return axios
     .post(`${baseURL}${url}`, data, {
       headers: {
-        Authorization: `Bearer ${currentUserAuthToken() || ""}`
+        Authorization: currentUserAuthToken() ? `Bearer ${currentUserAuthToken() || ""}` : undefined
       }
     })
     .then(({ data, status }) => {
@@ -43,7 +43,7 @@ export const get = (url) =>
   axios
     .get(`${baseURL}${url}`, {
       headers: {
-        Authorization: `Bearer ${currentUserAuthToken() || ""}`
+        Authorization: currentUserAuthToken() ? `Bearer ${currentUserAuthToken() || ""}` : undefined
       }
     })
 
@@ -70,7 +70,7 @@ export const put = (url, data) =>
   axios
     .put(`${baseURL}${url}`, data, {
       headers: {
-        Authorization: `Bearer ${currentUserAuthToken() || ""}`
+        Authorization: currentUserAuthToken() ? `Bearer ${currentUserAuthToken() || ""}` : undefined
       }
     })
     .then(({ data }) => data)
@@ -95,7 +95,7 @@ export const deleteRequest = (url) =>
   axios
     .delete(`${baseURL}${url}`, {
       headers: {
-        Authorization: `Bearer ${currentUserAuthToken() || ""}`
+        Authorization: currentUserAuthToken() ? `Bearer ${currentUserAuthToken() || ""}` : undefined
       }
     })
     .then(({ data }) => data)
@@ -120,7 +120,7 @@ export const patch = (url, data) =>
   axios
     .patch(`${baseURL}${url}`, data, {
       headers: {
-        Authorization: `Bearer ${currentUserAuthToken() || ""}`
+        Authorization: currentUserAuthToken() ? `Bearer ${currentUserAuthToken() || ""}` : undefined
       }
     })
     .catch(({ response }) => {

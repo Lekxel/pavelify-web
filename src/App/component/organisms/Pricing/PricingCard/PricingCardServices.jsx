@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./PricingCardServices.module.css";
 export const PricingCardServices = ({ services }) => {
   return (

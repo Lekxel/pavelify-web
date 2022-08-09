@@ -121,7 +121,11 @@ function BodyHeader({ active, page = "" }) {
       </form>
 
       <div className="right-area d-flex-align-center">
-        {user?.company?.plan === BASIC ? <button className="sm-btn">Upgrade</button> : null}
+        {user?.company?.plan === BASIC ? (
+          <Link to={privateRoutes.plans}>
+            <button className="sm-btn">Upgrade</button>
+          </Link>
+        ) : null}
         <div className="icon-wrapper">
           <svg
             width="24"
@@ -155,7 +159,7 @@ function BodyHeader({ active, page = "" }) {
         </div>
 
         <div className="profile-name-area d-flex-align-center d-flex-justify-center">
-          <p>
+          <p className="pt-2">
             {user?.picture ? (
               <img
                 style={{
@@ -172,8 +176,8 @@ function BodyHeader({ active, page = "" }) {
               <i style={{ fontSize: "30px" }} className="fas fa-user-circle"></i>
             )}
           </p>
-          <p>{user?.name}</p>
-          <div className="icon-wrapper">
+          <p className="pt-3">{user?.name}</p>
+          <div className="icon-wrapper pt-2">
             <svg
               width="7"
               height="4"

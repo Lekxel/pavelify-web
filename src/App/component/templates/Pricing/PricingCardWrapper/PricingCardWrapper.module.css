@@ -6,6 +6,10 @@
   background: #fff;
   margin-top: 30rem;
 }
+.dashboard {
+  margin-top: 5rem;
+  margin-left: 1.5rem;
+}
 .Content {
   margin: 0rem auto !important;
   grid-template-columns: 1fr 1fr 1fr;
@@ -26,5 +30,8 @@
 @media screen and (max-width: 500px) {
   .PricingCardWrapper {
     margin-top: 15rem;
+  }
+  .dashboard {
+    margin-top: 5rem;
   }
 }

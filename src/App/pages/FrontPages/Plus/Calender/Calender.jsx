@@ -2,7 +2,7 @@ import { httpBookEvent, httpGetEvent } from "api/calendar";
 import { Button } from "App/component/Atoms/Auth/Button/Button";
 import useGetSubdomain from "hooks/useGetSubdomain";
 import { DateTime } from "luxon";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { publicRoutes } from "routes/routes";
 import { showError } from "utilities/alerts";
@@ -49,7 +49,7 @@ export const Calender = () => {
 
   useEffect(() => {
     if (time && date) {
-      let d = DateTime.fromJSDate(date).setZone(timezone);
+      let d = DateTime.fromJSDate(date, { zone: timezone });
       const [times, daylight] = time.split(" ");
       let [h, m] = times.split(":");
       daylight === "PM" && (h = parseInt(h) + 12);
@@ -120,7 +120,7 @@ export const Calender = () => {
       return showError("Please enter your valid email");
     }
     if (!validatePhone(phone)) {
-      return showError("Please enter a valid phone number");
+      return showError("Please enter a valid phone number with country code");
     }
 
     const data = {
@@ -195,7 +195,7 @@ export const Calender = () => {
             }}
           >
             Powered by{" "}
-            <a target="_blank" href="https://pavelify.com">
+            <a target="_blank" href={process.env.REACT_APP_SOCKET_URL}>
               Pavelify
             </a>
           </p>

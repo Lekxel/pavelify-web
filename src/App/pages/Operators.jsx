@@ -1,16 +1,15 @@
 import { httpGetUser } from "api/auth";
 import { httpDeleteOperator, httpFetchOperators, httpSaveOperator } from "api/operator";
 import Spinner from "App/component/Atoms/Spinner";
+import Pagination from "App/Utils/Pagination";
 import { DateTime } from "luxon";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { showError, showSuccess } from "utilities/alerts";
 import { capitalize, validateEmail, validateName } from "utilities/misc";
 import Edit from "../../Assets/img/edit-2.png";
 import Person1 from "../../Assets/img/Frame 1.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
-import RightArrow from "../../Assets/img/right-contact.png";
 import Trash from "../../Assets/img/trash.png";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
@@ -24,6 +23,7 @@ function Operators() {
   const [department, setDepartment] = useState([]);
   const [operator, setOperator] = useState();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const {
     data: { user }
@@ -31,32 +31,33 @@ function Operators() {
     initialData: {}
   });
 
-  useEffect(() => {
-    let Checkbox = document.querySelector("#all-check-checkbox");
-    let CheckboxTbody = document.querySelectorAll(".table-body .row .col1 input");
+  // useEffect(() => {
+  //   let Checkbox = document.querySelector("#all-check-checkbox");
+  //   let CheckboxTbody = document.querySelectorAll(".table-body .row .col1 input");
 
-    //    click event on first checkbox i mean main checkbox
-    Checkbox.addEventListener("click", (e) => {
-      if (e.target.checked === true) {
-        CheckboxTbody.forEach((EachInput) => {
-          EachInput.checked = true;
-        });
-      } else {
-        CheckboxTbody.forEach((EachInput) => {
-          EachInput.checked = false;
-        });
-      }
-    });
-  }, []);
+  //   //    click event on first checkbox i mean main checkbox
+  //   Checkbox.addEventListener("click", (e) => {
+  //     if (e.target.checked === true) {
+  //       CheckboxTbody.forEach((EachInput) => {
+  //         EachInput.checked = true;
+  //       });
+  //     } else {
+  //       CheckboxTbody.forEach((EachInput) => {
+  //         EachInput.checked = false;
+  //       });
+  //     }
+  //   });
+  // }, []);
 
   const {
-    data: { operators, limit, page, total },
+    data: { operators, limit, page, total, totalPages },
     refetch
-  } = useQuery("operators", httpFetchOperators, {
+  } = useQuery(["operators", currentPage], () => httpFetchOperators(currentPage), {
     initialData: {
       limit: 10,
       page: 1,
-      total: 0
+      total: 0,
+      totalPages: 1
     }
   });
 
@@ -241,23 +242,20 @@ function Operators() {
                 <h3>Operators</h3>
                 <button onClick={handleAdd}>Add New Operator</button>
 
-                <div className="slider-area d-flex-align-center">
-                  <p>
-                    <span>{(page - 1) * limit + 1}</span> -{" "}
-                    <span>{total > page * limit ? page * limit : total}</span> of{" "}
-                    <span>{total}</span>
-                  </p>
-                  <div className="slider-images d-flex-align-center">
-                    <img src={LeftArrow} alt="" />
-                    <img src={RightArrow} alt="" />
-                  </div>
-                </div>
+                <Pagination
+                  setPage={setCurrentPage}
+                  page={page}
+                  limit={limit}
+                  total={total}
+                  totalPages={totalPages}
+                />
               </div>
               <div className="table-wrapper">
                 <div className="table">
                   <div className="table-head">
                     <div className="col col1">
-                      <input type="checkbox" name="" id="all-check-checkbox" />
+                      {/* <input type="checkbox" name="" id="all-check-checkbox" /> */}
+                      <b>#</b>
                     </div>
                     <div className="col col2">
                       <h5>Profile</h5>
@@ -283,7 +281,8 @@ function Operators() {
                       operators.map((operator, index) => (
                         <div key={operator?._id} className="table-head">
                           <div className="col col1">
-                            <input type="checkbox" name="" id="" />
+                            {/* <input type="checkbox" name="" id="" /> */}
+                            <b>{page * limit - limit + index + 1}.</b>
                           </div>
                           <div className="col col2 d-flex-align-center">
                             <p>

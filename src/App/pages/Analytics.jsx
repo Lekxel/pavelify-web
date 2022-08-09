@@ -277,16 +277,16 @@ function Analytics() {
                 <a onClick={() => navigate(privateRoutes.liveChat)}>See All</a>
               </div>
               <ul className="bottom">
-                {visitors?.map((EachVisitor) => (
-                  <li className="d-flex-align-center">
+                {visitors?.slice(0, 5)?.map((EachVisitor, index) => (
+                  <li key={String(index)} className="d-flex-align-center">
                     {EachVisitor.picture ? (
                       <img src={EachVisitor.picture} alt="" />
                     ) : (
                       <InitialsImage name={EachVisitor?.name} color={EachVisitor?.color} />
                     )}
                     <div className="presentation">
-                      <p>{EachVisitor?.name}</p>
-                      <p>{EachVisitor?.email}</p>
+                      <p style={{ wordBreak: "break-all" }}>{EachVisitor?.name}</p>
+                      <p style={{ wordBreak: "break-all" }}>{EachVisitor?.email}</p>
                     </div>
                     <button
                       type="button"

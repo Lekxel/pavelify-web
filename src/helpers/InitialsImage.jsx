@@ -1,3 +1,5 @@
+import { capitalize } from "utilities/misc";
+
 const InitialsImage = ({ name, color, height, width }) => (
   <span
     style={{
@@ -13,7 +15,7 @@ const InitialsImage = ({ name, color, height, width }) => (
       fontWeight: "bold"
     }}
   >
-    {name?.charAt(0)}
+    {capitalize(name?.charAt(0))}
   </span>
 );
 export default InitialsImage;

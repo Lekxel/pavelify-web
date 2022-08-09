@@ -1,6 +1,3 @@
-import BodyHeader from "../component/BodyHeader";
-import Sidebar from "../component/Sidebar";
-
 import { httpGetUser } from "api/auth";
 import { httpFetchStats, httpGetChartStats } from "api/dashboard";
 import { httpFetchVisitors } from "api/visitor";
@@ -19,6 +16,8 @@ import GreenMessage from "../../Assets/img/green-message.png";
 import LiveChat from "../../Assets/img/live-chat.png";
 import MessageBlue from "../../Assets/img/message-blue.png";
 import OrangeCalender from "../../Assets/img/orangecalender.svg";
+import BodyHeader from "../component/BodyHeader";
+import Sidebar from "../component/Sidebar";
 import { filterOptions, Lineoptions, options } from "../Utils/DashboardChart";
 
 function Home() {
@@ -74,7 +73,7 @@ function Home() {
       labels: lineData?.data ? [...lineData?.labels] : [],
       datasets: [
         {
-          label: "Unique Visits",
+          label: "Visits",
           data: lineData?.data ? [...lineData?.data] : [],
           fill: true,
 
@@ -186,7 +185,7 @@ function Home() {
             <div className="todo-list">
               <div className="top d-flex-align-center">
                 <h3>Todo Lists</h3>
-                <Link to={privateRoutes.settings}>
+                <Link to={privateRoutes.settingsIntegration}>
                   <a>See All</a>
                 </Link>
               </div>
@@ -194,46 +193,52 @@ function Home() {
                 <li className="d-flex-align-center">
                   <img src={LiveChat} alt="" />
                   <p>Configure Live chat </p>
-                  <a href="#">
-                    <img
-                      src={
-                        user?.company?.configuration?.todolist?.livechatConfigured
-                          ? Checkmark
-                          : ArrowRight
-                      }
-                      alt=""
-                    />
-                  </a>
+                  <Link to={privateRoutes.settingsLiveChat}>
+                    <a>
+                      <img
+                        src={
+                          user?.company?.configuration?.todolist?.livechatConfigured
+                            ? Checkmark
+                            : ArrowRight
+                        }
+                        alt=""
+                      />
+                    </a>
+                  </Link>
                 </li>
                 <li className="d-flex-align-center">
                   <img src={GreenMessage} alt="" />
                   <p>Configure Email Ticketing</p>
-                  <a href="#">
-                    <img
-                      src={
-                        user?.company?.configuration?.todolist?.emailTicketConfigured
-                          ? Checkmark
-                          : ArrowRight
-                      }
-                      alt=""
-                    />
-                  </a>
+                  <Link to={privateRoutes.settingsEmailTickets}>
+                    <a>
+                      <img
+                        src={
+                          user?.company?.configuration?.todolist?.emailTicketConfigured
+                            ? Checkmark
+                            : ArrowRight
+                        }
+                        alt=""
+                      />
+                    </a>
+                  </Link>
                 </li>
                 <li className="d-flex-align-center">
                   <div className="icon-wrapper orange">
                     <img src={OrangeCalender} alt="" />
                   </div>
                   <p>Configure Calendar Meeting</p>
-                  <a href="#">
-                    <img
-                      src={
-                        user?.company?.configuration?.todolist?.calendarConfigured
-                          ? Checkmark
-                          : ArrowRight
-                      }
-                      alt=""
-                    />
-                  </a>
+                  <Link to={privateRoutes.settingsCalendar}>
+                    <a>
+                      <img
+                        src={
+                          user?.company?.configuration?.todolist?.calendarConfigured
+                            ? Checkmark
+                            : ArrowRight
+                        }
+                        alt=""
+                      />
+                    </a>
+                  </Link>
                 </li>
 
                 <li className="d-flex-align-center ">
@@ -241,48 +246,54 @@ function Home() {
                     <i className="fab fa-facebook-messenger"></i>
                   </div>
                   <p>Integrate Messenger</p>
-                  <a href="#">
-                    <img
-                      src={
-                        user?.company?.configuration?.todolist?.messengerConfigured
-                          ? Checkmark
-                          : ArrowRight
-                      }
-                      alt=""
-                    />
-                  </a>
+                  <Link to={privateRoutes.settingsMessengers}>
+                    <a>
+                      <img
+                        src={
+                          user?.company?.configuration?.todolist?.messengerConfigured
+                            ? Checkmark
+                            : ArrowRight
+                        }
+                        alt=""
+                      />
+                    </a>
+                  </Link>
                 </li>
                 <li className="d-flex-align-center">
                   <div className="icon-wrapper hours">
                     <i className="fas fa-hourglass-start"></i>
                   </div>
                   <p>Set Operating Hours</p>
-                  <a href="#">
-                    <img
-                      src={
-                        user?.company?.configuration?.todolist?.operatingHoursConfigured
-                          ? Checkmark
-                          : ArrowRight
-                      }
-                      alt=""
-                    />
-                  </a>
+                  <Link to={privateRoutes.settingsOperatingHours}>
+                    <a>
+                      <img
+                        src={
+                          user?.company?.configuration?.todolist?.operatingHoursConfigured
+                            ? Checkmark
+                            : ArrowRight
+                        }
+                        alt=""
+                      />
+                    </a>
+                  </Link>
                 </li>
                 <li className="d-flex-align-center">
                   <div className="icon-wrapper contacts">
                     <i className="far fa-address-book"></i>
                   </div>
                   <p>Import Contacts</p>
-                  <a href="#">
-                    <img
-                      src={
-                        user?.company?.configuration?.todolist?.contactsConfigured
-                          ? Checkmark
-                          : ArrowRight
-                      }
-                      alt=""
-                    />
-                  </a>
+                  <Link to={privateRoutes.contacts}>
+                    <a>
+                      <img
+                        src={
+                          user?.company?.configuration?.todolist?.contactsConfigured
+                            ? Checkmark
+                            : ArrowRight
+                        }
+                        alt=""
+                      />
+                    </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -319,16 +330,16 @@ function Home() {
                 <a onClick={() => navigate(privateRoutes.liveChat)}>See All</a>
               </div>
               <ul className="bottom">
-                {visitors?.map((EachVisitor) => (
-                  <li className="d-flex-align-center">
+                {visitors?.slice(0, 5)?.map((EachVisitor) => (
+                  <li key={EachVisitor?.email} className="d-flex-align-center">
                     {EachVisitor.picture ? (
                       <img src={EachVisitor.picture} alt="" />
                     ) : (
                       <InitialsImage name={EachVisitor?.name} color={EachVisitor?.color} />
                     )}
                     <div className="presentation">
-                      <p>{EachVisitor?.name}</p>
-                      <p>{EachVisitor?.email}</p>
+                      <p style={{ wordBreak: "break-all" }}>{EachVisitor?.name}</p>
+                      <p style={{ wordBreak: "break-all" }}>{EachVisitor?.email}</p>
                     </div>
                     <button
                       type="button"

@@ -1,9 +1,8 @@
-import Edit from "Assets/img/edit-2.png";
 import Trash from "Assets/img/trash.png";
 import { DateTime } from "luxon";
 import { capitalize } from "utilities/misc";
 
-const BookingList = ({ bookings, handleSelectForDelete }) => {
+const BookingList = ({ bookings, handleSelectForDelete, page, limit }) => {
   return (
     <div className="table-wrapper">
       <div className="table">
@@ -35,7 +34,7 @@ const BookingList = ({ bookings, handleSelectForDelete }) => {
             bookings.map((eachBooking, index) => (
               <div key={eachBooking?._id} className="table-head">
                 <div className="col col7">
-                  <b>{index + 1}</b>
+                  <b>{page * limit - limit + index + 1}</b>
                 </div>
                 <div className="col col2">
                   <span>{eachBooking?.customerInfo?.name}</span>

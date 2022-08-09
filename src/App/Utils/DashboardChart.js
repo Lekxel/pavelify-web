@@ -60,6 +60,7 @@ export const Lineoptions = {
       }
     },
     y: {
+      beginAtZero: true,
       afterFit(scale) {
         // scale.paddingRight=600  //<-- set value as you wish
       },

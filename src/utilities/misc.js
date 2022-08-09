@@ -1,3 +1,5 @@
+import { isValidPhoneNumber } from "libphonenumber-js";
+
 export const parseQueryParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
@@ -31,7 +33,7 @@ export const validatePassword = (password) => password.length >= 6;
 export const validateName = (name) => name.length >= 3;
 export const validateSubdomain = (subdomain) =>
   /^[a-z]+[a-z0-9-]+[a-z]+$/.test(subdomain?.toLowerCase());
-export const validatePhone = (phone) => /^\d{11}$/.test(phone);
+export const validatePhone = (phone) => isValidPhoneNumber(phone);
 
 export const fileToBase64 = async (file) =>
   new Promise((resolve, reject) => {
@@ -134,11 +136,9 @@ export const linkify = (text = "") => {
 export const loadAttachment = (attachment, type, isClient = false) => {
   try {
     if (type === "image") {
-      return `<img alt="img-attachment" src='${attachment}' style="width:${
-        isClient ? "200px" : "300px"
-      }px;padding:12px;" />`;
+      return `<img alt="img-attachment" src='${attachment}' style="max-width:100%;padding:12px; object-fit:contain;max-height:100%" />`;
     } else if (type === "video") {
-      return `<video width="${isClient ? "200" : "320"}" height="${
+      return `<video max-width="${isClient ? "200" : "320"}" height="${
         isClient ? "180" : "240"
       }" controls>
   <source src="${attachment}#t=0.8" type="video/mp4">
@@ -153,3 +153,5 @@ export const loadAttachment = (attachment, type, isClient = false) => {
     return null;
   }
 };
+
+export const lastItemInArray = (arr) => arr[arr.length - 1];

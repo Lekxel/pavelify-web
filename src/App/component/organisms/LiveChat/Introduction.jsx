@@ -41,8 +41,8 @@ export const Introduction = ({
       id="Introduction"
     >
       <div className={`${styles.top} ${width <= 600 ? styles.top_600 : ""}`}>
-        <div className={`${styles.presentation} ms-5`}>
-          <h4 className={`text-center`}>{companyName}</h4>
+        <div className={`${styles.presentation}`}>
+          <h4 className={``}>{companyName}</h4>
           <p className={styles.para_top}>{preChat?.introductionMessage}</p>
         </div>
         <div
@@ -55,11 +55,11 @@ export const Introduction = ({
       </div>
 
       <div
-        className={`${styles.body} py-4 bg-white`}
+        className={`${styles.body} ${width <= 600 ? styles.body_600 : ""} py-4 bg-white`}
         id="name-entry"
         // style={{  position: "relative" }}
       >
-        <h5 className="text-center mt-2">
+        <h5 className="text-center px-3">
           Please give the team a way to reach you incase we get disconnected.
         </h5>
 
@@ -120,11 +120,11 @@ export const Introduction = ({
               the sole purpose of providing you support.
             </small>
           </p>
-          <div className="text-center mt-3 mb-3">
+          <div className={`text-center mb-3  ${width <= 600 ? "pt-5" : "pt-3"}`}>
             <button
               id="submit-name"
               type="submit"
-              className="btn btn-block"
+              className="btn btn-block px-5 py-2"
               style={{
                 background: appearance?.backgroundColor || "#13215e",
                 color: "white"

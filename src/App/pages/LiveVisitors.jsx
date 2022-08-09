@@ -2,22 +2,21 @@ import { httpGetChartStats } from "api/dashboard";
 import { httpFetchVisitors } from "api/visitor";
 import countries from "App/Utils/countries.json";
 import flags from "App/Utils/countryFlags";
+import Pagination from "App/Utils/Pagination";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { VectorMap } from "react-jvectormap";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router";
 import { privateRoutes } from "routes/routes";
-import GermanyFlag from "../../Assets/img/flag-germany.png";
-import LeftArrow from "../../Assets/img/left-contact.png";
+import { lastItemInArray } from "utilities/misc";
 import FireFox from "../../Assets/img/logos_firefox.png";
-import RightArrow from "../../Assets/img/right-contact.png";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
 
 function LiveVisitors() {
   const navigate = useNavigate();
-
+  const [currentPage, setCurrentPage] = useState(1);
   const [traffic, setTraffic] = useState([]);
   const [mapData, setMapData] = useState({});
 
@@ -69,17 +68,21 @@ function LiveVisitors() {
   const status = "online";
 
   const {
-    data: { visitors, limit, page, total },
+    data: { visitors, limit, page, total, totalPages },
     refetch
-  } = useQuery(["visitors", status], () => httpFetchVisitors(status), {
-    initialData: {
-      limit: 10,
-      page: 1,
-      total: 0
+  } = useQuery(
+    ["visitors", status, currentPage],
+    () => httpFetchVisitors(status, "", currentPage),
+    {
+      initialData: {
+        limit: 10,
+        page: 1,
+        total: 0,
+        totalPages: 1
+      },
+      keepPreviousData: true
     }
-  });
-
-  console.log(visitors);
+  );
 
   return (
     <div className="LiveVisitors main-wrapper  d-flex">
@@ -93,17 +96,13 @@ function LiveVisitors() {
             <div className="visitors-in-site">
               <div className="top-area d-flex-align-center">
                 <h4>Visitors on your site at the moment</h4>
-                <div className="slider-area  d-flex-align-center">
-                  <p>
-                    <span>{(page - 1) * limit + 1}</span> -{" "}
-                    <span>{total > page * limit ? page * limit : total}</span> of{" "}
-                    <span>{total}</span>
-                  </p>
-                  <div className="slider-images d-flex-align-center">
-                    <img src={LeftArrow} alt="" />
-                    <img src={RightArrow} alt="" />
-                  </div>
-                </div>
+                <Pagination
+                  setPage={setCurrentPage}
+                  page={page}
+                  limit={limit}
+                  total={total}
+                  totalPages={totalPages}
+                />
               </div>
               <div className="table" style={{ overflowY: "auto" }}>
                 <ul className="table-head">
@@ -117,7 +116,7 @@ function LiveVisitors() {
                 <ul className="table-body">
                   {visitors?.map((visitor, index) => (
                     <div key={visitor?.uuid} className="row">
-                      <li>{index + 1}.</li>
+                      <li>{page * limit - limit + index + 1}.</li>
                       <li>
                         <div className="tag" style={{ background: visitor?.color || "red" }}>
                           {visitor?.name?.replace("#", "").charAt(0).toUpperCase()}
@@ -129,17 +128,25 @@ function LiveVisitors() {
                       </li>
                       <li>{DateTime.fromISO(visitor?.timestamp).toFormat("DD")}</li>
                       <li>
-                        <a target={"_blank"} href="http://palevay.com">
-                          http://palevay.com
-                        </a>
+                        {visitor?.visits?.length ? (
+                          <a
+                            target="_blank"
+                            href={lastItemInArray(visitor?.visits)?.url}
+                            className="link"
+                          >
+                            {lastItemInArray(visitor?.visits)?.url}{" "}
+                          </a>
+                        ) : null}
                       </li>
                       <li>
                         <div className="icons-wrapper">
                           <img
                             src={
-                              visitor?.country
-                                ? flags?.filter((f) => f.CountryName === visitor?.country)[0].Flag
-                                : GermanyFlag
+                              visitor?.country ? (
+                                flags?.filter((f) => f.CountryName === visitor?.country)[0].Flag
+                              ) : (
+                                <span />
+                              )
                             }
                             alt=""
                           />

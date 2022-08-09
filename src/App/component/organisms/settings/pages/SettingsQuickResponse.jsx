@@ -170,7 +170,7 @@ const SettingsQuickResponse = () => {
 
                   <div className="col col7">
                     <div className="images-wrapper">
-                      <button type="button" onClick={() => handleDelete(index)}>
+                      <button className="btn" type="button" onClick={() => handleDelete(index)}>
                         <img src={Trash} alt="" />
                       </button>
                     </div>

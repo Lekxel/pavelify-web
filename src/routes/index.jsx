@@ -25,9 +25,13 @@ import PrivacyPolicy from "App/pages/FrontPages/Plus/Privacy Policy/PrivacyPolic
 import Terms from "App/pages/FrontPages/Plus/Terms/Terms";
 // import { ConfirmationPopUpCalender } from "App/pages/FrontPages/Plus/ConfirmationPopUpCalender/ConfirmationPopUpCalender";
 import Home_Desk from "App/pages/Home_Desk";
+import Plans from "App/pages/Plans";
 
 import { httpGetUser } from "api/auth";
 import LiveChatWidget from "App/component/templates/LiveChat/LiveChat";
+import ConfirmResetPassword from "App/pages/FrontPages/Plus/Auth/Login/ConfirmResetPassword";
+import ForgotPassword from "App/pages/FrontPages/Plus/Auth/Login/ForgotPassword";
+import Ticket from "App/pages/Ticket";
 import Logout from "helpers/Logout";
 import Redirect from "helpers/Redirect";
 import useGetSubdomain from "hooks/useGetSubdomain";
@@ -77,6 +81,22 @@ const Switch = () => {
               />
             }
           />
+          <Route
+            path={publicRoutes.forgotPassword}
+            element={
+              <Redirect
+                url={`${window.location.protocol}//${privateRoutes.app}.${domain}${publicRoutes.forgotPassword}${window.location?.search}`}
+              />
+            }
+          />
+          <Route
+            path={publicRoutes.confirmResetPassword}
+            element={
+              <Redirect
+                url={`${window.location.protocol}//${privateRoutes.app}.${domain}${publicRoutes.confirmResetPassword}${window.location?.search}`}
+              />
+            }
+          />
           <Route path={publicRoutes.livechatWidget} element={<LiveChatWidget />} />
         </>
       );
@@ -88,7 +108,8 @@ const Switch = () => {
         <>
           <Route path={publicRoutes.login} element={<Login />} />
           <Route path={publicRoutes.register} element={<Register />} />
-
+          <Route path={publicRoutes.forgotPassword} element={<ForgotPassword />} />
+          <Route path={publicRoutes.confirmResetPassword} element={<ConfirmResetPassword />} />
           <Route path={privateRoutes.logout} element={<Logout />} />
 
           <Route
@@ -172,11 +193,48 @@ const Switch = () => {
             }
           />
 
+          <Route path={privateRoutes.contacts}>
+            <Route
+              path={""}
+              element={
+                <RequireAuth>
+                  <Contact />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path={":channel"}
+              element={
+                <RequireAuth>
+                  <Contact />
+                </RequireAuth>
+              }
+            />
+          </Route>
+
+          <Route path={privateRoutes.emailTickets}>
+            <Route
+              path={""}
+              element={
+                <RequireAuth>
+                  <EmailTickets />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path={":status"}
+              element={
+                <RequireAuth>
+                  <EmailTickets />
+                </RequireAuth>
+              }
+            />
+          </Route>
           <Route
-            path={privateRoutes.emailTickets}
+            path={`${privateRoutes.ticket}/:ticketID`}
             element={
               <RequireAuth>
-                <EmailTickets />
+                <Ticket />
               </RequireAuth>
             }
           />
@@ -195,6 +253,14 @@ const Switch = () => {
             element={
               <RequireAuth>
                 <Operators />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path={privateRoutes.plans}
+            element={
+              <RequireAuth>
+                <Plans />
               </RequireAuth>
             }
           />
