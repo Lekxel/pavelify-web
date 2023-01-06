@@ -40,6 +40,9 @@ const LiveChatWidget = () => {
   const refetchVisitor = () => {
     setVisitor(currentVisitorProfile());
   };
+  const handlePageView = (data) => {
+    socket.emit("pageView", data);
+  };
 
   const {
     data: { company }
@@ -82,13 +85,6 @@ const LiveChatWidget = () => {
     [socket]
   );
 
-  const handlePageView = useCallback(
-    (data) => {
-      socket.emit("pageView", data);
-    },
-    [socket]
-  );
-
   const handleIncomingMessage = useCallback((data) => {
     setChats((c) => [
       ...c,
@@ -104,15 +100,20 @@ const LiveChatWidget = () => {
     ]);
   }, []);
 
+  const connectSocket = async () => {
+    await socket.connect();
+  };
+
   useEffect(() => {
     setShowEmojiPicker(false);
     if (company && company?._id) {
-      socket.connect();
+      connectSocket();
       fetchPreviousConversations();
       socket.on("incomingMessage", handleIncomingMessage);
     }
     return () => {
       // socket.off("connect", joinRoom);
+      socket.disconnect();
       socket.off("incomingMessage", handleIncomingMessage);
     };
   }, [company, socket]);
@@ -129,6 +130,7 @@ const LiveChatWidget = () => {
   const handleScreenSizeChange = () => {
     window.parent.postMessage(JSON.stringify({ type: "HANDLE_SCREEN_SIZE_CHANGE" }), "*");
   };
+
   const handleIframeMessages = async (message) => {
     try {
       const data =
@@ -180,7 +182,7 @@ const LiveChatWidget = () => {
     return () => {
       window.removeEventListener("message", handleIframeMessages, false);
     };
-  }, []);
+  }, [handleIframeMessages]);
   return company ? (
     <div className={styles.LiveChat}>
       <CollapseAbleLiveChat
@@ -214,14 +216,19 @@ const LiveChatWidget = () => {
         setPhoneNumber={setPhoneNumber}
         companyName={company?.companyName}
         introduce={introduce}
+        appearance={appearance}
       />
       <button
         className={styles.button}
         onClick={(e) => HandleBotDisplay(e, innerSize)}
         onTouchStart={(e) => HandleBotDisplay(e, innerSize)}
         id="burgerButton"
+        style={{
+          backgroundColor: appearance?.backgroundColor || "rgb(18,35,94)"
+        }}
       >
-        <img src={burger} alt="" className={styles.Img} />
+        <img id="chatIconImg" src={burger} alt="" className={styles.Img} />
+        <i id="closeIconButton" className="fa fa-times fa-lg text-white d-none"></i>
       </button>
     </div>
   ) : null;

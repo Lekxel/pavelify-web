@@ -16,6 +16,9 @@ export const CollapseAbleLiveChat = ({
         width <= 600 ? styles.CollapseAbleLiveChat_600 : ""
       }  ${width <= 400 ? styles.CollapseAbleLiveChat_400 : ""} collapse-bot`}
       id="collpase-area"
+      style={{
+        backgroundColor: appearance?.backgroundColor || "rgb(18,35,94)"
+      }}
     >
       <div className={styles.top}>
         <div
@@ -34,9 +37,14 @@ export const CollapseAbleLiveChat = ({
           {appearance?.gettingStartedStatus}
         </p>
       </div>
-      <LiveChatConversation scrollDown={scrollDown} companyName={companyName} visitor={visitor} />
+      <LiveChatConversation
+        appearance={appearance}
+        scrollDown={scrollDown}
+        companyName={companyName}
+        visitor={visitor}
+      />
       {/* <LiveChatSearch /> */}
-      <BookMeeting companyID={companyID} />
+      <BookMeeting appearance={appearance} companyID={companyID} />
     </div>
   );
 };

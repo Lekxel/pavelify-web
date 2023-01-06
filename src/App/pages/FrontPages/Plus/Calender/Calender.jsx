@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router";
 import { publicRoutes } from "routes/routes";
 import { showError } from "utilities/alerts";
 import { timeFunction } from "utilities/calendar";
-import { validateEmail, validateName, validatePhone } from "utilities/misc";
+import { validateEmail, validateName } from "utilities/misc";
 import { CalenderBookingArea } from "../../../../component/templates/Calender/CalenderBookingArea/CalenderBookingArea";
 
 import { PeronMettingArea } from "../../../../component/templates/Calender/PeronMettingArea/PeronMettingArea";
@@ -119,9 +119,9 @@ export const Calender = () => {
     if (!validateEmail(email)) {
       return showError("Please enter your valid email");
     }
-    if (!validatePhone(phone)) {
-      return showError("Please enter a valid phone number with country code");
-    }
+    // if (!validatePhone(phone)) {
+    //   return showError("Please enter a valid phone number with country code");
+    // }
 
     const data = {
       name,

@@ -35,18 +35,26 @@ export const Introduction = ({
 
   return (
     <div
+      style={{
+        backgroundColor: appearance?.backgroundColor || "rgb(18,35,94)"
+      }}
       className={`${styles.LiveChatMessageArea} ${
         width <= 600 ? styles.LiveChatMessageArea_600 : ""
       } collapse-bot`}
       id="Introduction"
     >
-      <div className={`${styles.top} ${width <= 600 ? styles.top_600 : ""}`}>
+      <div
+        style={{
+          height: "100px"
+        }}
+        className={`${styles.top} mx-3 ${width <= 600 ? styles.top_600 : ""}`}
+      >
         <div className={`${styles.presentation}`}>
           <h4 className={``}>{companyName}</h4>
           <p className={styles.para_top}>{preChat?.introductionMessage}</p>
         </div>
         <div
-          className={`${styles.CloseIcon} ${styles.closeIconIntro}`}
+          className={`${styles.CloseIcon} ${styles.closeIcon}`}
           onClick={close}
           onTouchStart={close}
         >

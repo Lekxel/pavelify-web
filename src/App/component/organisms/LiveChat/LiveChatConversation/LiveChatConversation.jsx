@@ -1,7 +1,7 @@
 import InitialsImage from "helpers/InitialsImage";
 import { SenderButton } from "../../../Atoms/LiveChat/SeconderButton";
 import styles from "./LiveChatConversation.module.css";
-export const LiveChatConversation = ({ companyName, visitor, scrollDown }) => {
+export const LiveChatConversation = ({ companyName, visitor, scrollDown, appearance }) => {
   const HandleCovertingScreen = (e) => {
     e.preventDefault();
     document.querySelector("#collpase-area").style.display = "none";
@@ -20,6 +20,7 @@ export const LiveChatConversation = ({ companyName, visitor, scrollDown }) => {
       <InitialsImage name={companyName} />
       {/* <ConversationMembers members={LiveChatMembers} /> */}
       <SenderButton
+        bg={appearance?.backgroundColor}
         text={visitor?.hasIntroduced ? "Continue Conversation" : "Start New Conversation"}
         onClick={HandleCovertingScreen}
       />

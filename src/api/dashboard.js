@@ -12,6 +12,10 @@ export const httpFetchContacts = (channel, page) => {
   return get(`/dashboard/contacts?channel=${channel}&page=${page}`);
 };
 
+export const httpFetchAllContacts = (channel) => {
+  return get(`/dashboard/allContacts?channel=${channel}`);
+};
+
 export const httpCountStats = () => {
   return get("/dashboard/countStats");
 };

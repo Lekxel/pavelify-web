@@ -1,6 +1,6 @@
 import { httpGetUser } from "api/auth";
-import { httpGetTicket } from "api/email";
-import { httpAssignTicket, httpFetchOperators, httpSendAttachment } from "api/operator";
+import { httpGetTicket, httpReplyTicket } from "api/email";
+import { httpAssignTicket, httpFetchOperators } from "api/operator";
 import Spinner from "App/component/Atoms/Spinner";
 import DefaultSender from "Assets/img/sender_default.svg";
 import SenderImage from "Assets/img/sender_navy.svg";
@@ -14,8 +14,8 @@ import ReactHtmlParser from "react-html-parser";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router";
 import { privateRoutes } from "routes/routes";
-import { showError, showSuccess } from "utilities/alerts";
-import { loadAttachment, onFilePicked, toBase64 } from "utilities/misc";
+import { showSuccess } from "utilities/alerts";
+import { loadAttachment } from "utilities/misc";
 import time from "../../Assets/img/svg/time.svg";
 import BodyHeader from "../component/BodyHeader";
 import Sidebar from "../component/Sidebar";
@@ -83,21 +83,30 @@ function Ticket() {
     if (message?.trim().length < 2) {
       return;
     }
-    socket.emit("sendMessage", {
-      message
-    });
     setMessage("");
     setShowEmojiPicker(false);
     setShowQuickReplies(false);
+
+    httpReplyTicket(params.ticketID, message)
+      .then((data) => {
+        if (data.success) {
+          refetch();
+        }
+      })
+      .catch((err) => {});
+    // socket.emit("sendMessage", {
+    //   message
+    // });
   }, [socket, message]);
 
   const handleUpdateNote = useCallback(async () => {
     if (note?.trim().length < 2) {
       return;
     }
-    socket.emit("updateChatNote", {
-      note
-    });
+    return null;
+    // socket.emit("updateChatNote", {
+    //   note
+    // });
   }, [socket, note]);
 
   const handleQuickReply = useCallback((reply) => {
@@ -107,21 +116,22 @@ function Ticket() {
   }, []);
 
   const sendAttachment = async (e) => {
-    if (!ticket._id) return;
-    const file = onFilePicked(e);
-    if (!file) {
-      return showError("Error adding attachment");
-    }
+    return true;
+    // if (!ticket._id) return;
+    // const file = onFilePicked(e);
+    // if (!file) {
+    //   return showError("Error adding attachment");
+    // }
 
-    const fileBase64 = await toBase64(file);
+    // const fileBase64 = await toBase64(file);
 
-    httpSendAttachment("", fileBase64)
-      .then((data) => {
-        // if (data.success) {
-        //   console.log(data);
-        // }
-      })
-      .catch((err) => {});
+    // httpSendAttachment("", fileBase64)
+    //   .then((data) => {
+    //     // if (data.success) {
+    //     //   console.log(data);
+    //     // }
+    //   })
+    //   .catch((err) => {});
   };
 
   const scrollDown = () => {
@@ -320,7 +330,7 @@ function Ticket() {
                       id="file"
                       onChange={sendAttachment}
                       accept=".png,.jpeg,.jpg,.gif,.doc,.docx,.pdf,.xls,.xlsx,.mp4,.3gp,.txt,.csv,"
-                      ref={inputFile}
+                      // ref={inputFile}
                       style={{ display: "none" }}
                     />
                     <div className="input-wrapper d-flex-align-center">

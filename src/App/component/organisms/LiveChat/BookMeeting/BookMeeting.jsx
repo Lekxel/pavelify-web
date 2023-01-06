@@ -5,7 +5,7 @@ import { useState } from "react";
 import { capitalize } from "utilities/misc";
 import { SenderButton } from "../../../Atoms/LiveChat/SeconderButton";
 import styles from "./BookMeeting.module.css";
-export const BookMeeting = ({ companyID }) => {
+export const BookMeeting = ({ companyID, appearance }) => {
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -39,24 +39,42 @@ export const BookMeeting = ({ companyID }) => {
           <Spinner className="text-primary" />
         </div>
       ) : loaded ? (
-        <div>
-          {events.map((event) => (
-            <a
-              target={"_blank"}
-              href={`${window.location.protocol}//meeting.${domain}/${event?.company?.slug}/${event.slug}`}
-              className={"text-black text-center d-block text-primary"}
-              key={event?._id}
-            >
-              <span>{event?.title}</span>
-              <br />
-              <small>
-                ({event?.duration}minutes on {capitalize(event?.location)})
-              </small>
-            </a>
-          ))}
-        </div>
+        !events.length ? (
+          <p className="mt-3 text-center" style={{ color: "#222" }}>
+            No Meeting available
+          </p>
+        ) : (
+          <div>
+            {events.map((event) => (
+              <a
+                target={"_blank"}
+                href={`${window.location.protocol}//meeting.${domain}/${event?.company?.slug}/${event.slug}`}
+                className={"text-black text-center d-block text-primary"}
+                style={{
+                  borderBottom: "1px solid lightgrey",
+                  marginBottom: "10px",
+                  padding: "12px 5px",
+                  boxShadow: "2px 2px 2px 2px lightgrey",
+                  borderRadius: "8px"
+                }}
+                key={event?._id}
+              >
+                <span>{event?.title}</span>
+                <br />
+                <small
+                  style={{
+                    fontSize: "12px"
+                  }}
+                >
+                  ({event?.duration}minutes on {capitalize(event?.location)})
+                </small>
+              </a>
+            ))}
+          </div>
+        )
       ) : (
         <SenderButton
+          bg={appearance?.backgroundColor}
           onClick={onClick}
           text="Book a meeting"
           img={<i className="fas fa-calendar-week"></i>}

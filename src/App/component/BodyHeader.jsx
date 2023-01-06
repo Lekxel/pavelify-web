@@ -1,16 +1,24 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { httpGetUser } from "api/auth";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { privateRoutes } from "routes/routes";
+import { logout } from "utilities/network";
 import { BASIC } from "utilities/plans";
 function BodyHeader({ active, page = "" }) {
+  const [isOpen, setIsOpen] = useState(false);
+
   const {
     data: { user }
   } = useQuery("user", httpGetUser, {
     initialData: {}
   });
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="BodyHeader d-flex-align-center">
@@ -158,7 +166,10 @@ function BodyHeader({ active, page = "" }) {
           </svg>
         </div>
 
-        <div className="profile-name-area d-flex-align-center d-flex-justify-center">
+        <div
+          onClick={toggleDropdown}
+          className="profile-name-area d-flex-align-center d-flex-justify-center cursor-pointer"
+        >
           <p className="pt-2">
             {user?.picture ? (
               <img
@@ -189,6 +200,7 @@ function BodyHeader({ active, page = "" }) {
             </svg>
           </div>
         </div>
+        <Dropdown isOpen={isOpen} />
       </div>
 
       <div
@@ -200,5 +212,26 @@ function BodyHeader({ active, page = "" }) {
     </div>
   );
 }
+
+const Dropdown = ({ isOpen }) =>
+  isOpen ? (
+    <div
+      className="position-absolute bg-white shadow text-start pt-4 rounded"
+      style={{
+        right: "28px",
+        top: "50px",
+        padding: "10px 30px"
+      }}
+    >
+      <Link className="cursor-pointer" to={privateRoutes.settingsAccount}>
+        <p>My Profile</p>
+      </Link>
+      <p className="text-start text-primary cursor-pointer" onClick={logout}>
+        <span>Logout</span>
+      </p>
+    </div>
+  ) : (
+    <div />
+  );
 
 export default BodyHeader;

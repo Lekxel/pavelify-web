@@ -10,7 +10,6 @@ import { httpFetchVisitors, httpGetVisitor } from "api/visitor";
 import Spinner from "App/component/Atoms/Spinner";
 import DefaultChatInfo from "App/component/livechat/DefaultChatInfo";
 import DefaultChatPage from "App/component/livechat/DefaultChatPage";
-import flags from "App/Utils/countryFlags";
 import DefaultSender from "Assets/img/sender_default.svg";
 import SenderImage from "Assets/img/sender_navy.svg";
 import copy from "clipboard-copy";
@@ -486,18 +485,16 @@ function LiveChat() {
                             ) : (
                               <InitialsImage name={EachVisitor?.name} color={EachVisitor?.color} />
                             )}
-                            <img
-                              src={
-                                EachVisitor?.country ? (
-                                  flags?.filter((f) => f.CountryName === EachVisitor?.country)[0]
-                                    .Flag
-                                ) : (
-                                  <span />
-                                )
-                              }
-                              alt=""
-                              className="flag"
-                            />
+                            {EachVisitor?.country ? (
+                              <img
+                                style={{ width: "22px" }}
+                                src={`https://countryflagsapi.com/png/${EachVisitor?.country}`}
+                                alt="flag"
+                                className="flag"
+                              />
+                            ) : (
+                              <span />
+                            )}
                           </div>
                           <div className="presentation d-flex-align-center">
                             <div className="left-side">
@@ -716,17 +713,15 @@ function LiveChat() {
                             color={visitor?.color}
                           />
                         )}
-                        <img
-                          src={
-                            visitor?.country ? (
-                              flags?.filter((f) => f.CountryName === visitor?.country)[0].Flag
-                            ) : (
-                              <span />
-                            )
-                          }
-                          alt=""
-                          className="flag"
-                        />
+                        {visitor?.country ? (
+                          <img
+                            style={{ width: "30px" }}
+                            src={`https://countryflagsapi.com/png/${visitor?.country}`}
+                            alt=""
+                          />
+                        ) : (
+                          <span />
+                        )}
                       </div>
 
                       <p className="name">{visitor?.name}</p>

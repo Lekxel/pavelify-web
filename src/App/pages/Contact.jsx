@@ -1,7 +1,9 @@
-import { httpFetchContacts } from "api/dashboard";
+import { httpFetchAllContacts, httpFetchContacts } from "api/dashboard";
+import Spinner from "App/component/Atoms/Spinner";
 import Pagination from "App/Utils/Pagination";
 import InitialsImage from "helpers/InitialsImage";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import { CSVLink } from "react-csv";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router";
@@ -16,10 +18,14 @@ import Sidebar from "../component/Sidebar";
 const channels = ["email", "calendar"];
 
 function Contact() {
-  const { channel } = useParams() || { channel: "livechat" };
+  const { channel = "livechat" } = useParams();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedContacts, setSelectedContacts] = useState([]);
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [processedData, setProcessedData] = useState([]);
+  const csvInstance = useRef();
 
   const {
     data: { contacts, limit, page, total, totalPages },
@@ -60,6 +66,70 @@ function Contact() {
     return "Live Chats";
   };
 
+  useEffect(() => {
+    if (processedData.length && csvInstance.current && csvInstance.current.link) {
+      setTimeout(() => {
+        csvInstance.current.link.click();
+        setProcessedData([]);
+        setShow(false);
+      });
+    }
+  }, [processedData]);
+
+  const exportAll = async () => {
+    setLoading(true);
+    httpFetchAllContacts(channel)
+      .then((data) => {
+        setLoading(false);
+        if (data.success) {
+          const { contacts } = data;
+          setProcessedData(
+            contacts
+              ? contacts?.map((c) => ({
+                  name: c.name,
+                  email: c.email,
+                  country: c.country
+                }))
+              : []
+          );
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
+  const processSelected = () => {
+    let Checkbox = document.querySelector("#all-check-checkbox");
+
+    if (Checkbox.checked) {
+      setProcessedData(
+        contacts
+          ? contacts?.map((c) => ({
+              name: c.name,
+              email: c.email,
+              country: c.country
+            }))
+          : []
+      );
+    } else {
+      let CheckboxTbody = document.querySelectorAll(".table-body .row .col1 input");
+
+      let tobeProcessed = [];
+      CheckboxTbody.forEach((c, index) => {
+        if (c.checked) {
+          let contact = contacts[index];
+          tobeProcessed.push({
+            name: contact.name,
+            email: contact.email,
+            country: contact.country
+          });
+        }
+      });
+      setProcessedData(tobeProcessed);
+    }
+  };
+
   return (
     <div className="Contact main-wrapper d-flex">
       {/* sidebar */}
@@ -67,6 +137,31 @@ function Contact() {
       <div className="body-area">
         {/* header */}
         <BodyHeader page="Contacts" />
+
+        <Modal show={show} centered onHide={() => setShow(false)}>
+          <Modal.Header>
+            <Modal.Title>Export Data</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="mb-4">What to Export?</div>
+            <div className="mb-4">
+              <Button className="me-5" variant="primary" onClick={processSelected}>
+                {loading ? <Spinner /> : "Selected Contacts"}
+              </Button>
+              <Button variant="primary" onClick={exportAll}>
+                {loading ? <Spinner /> : "Export All"}
+              </Button>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button className="me-5" variant="secondary" onClick={() => setShow(false)}>
+              Cancel
+            </Button>
+            {/* <Button variant="danger" onClick={handleDelete}>
+              {loading ? <Spinner /> : "Delete"}
+            </Button> */}
+          </Modal.Footer>
+        </Modal>
 
         <div className="body-main-area">
           <div className="body-box">
@@ -109,23 +204,20 @@ function Contact() {
             <div className="right-area">
               <div className="top-area d-flex-align-center">
                 <h3>{topTitle()}</h3>
-                <CSVLink
-                  data={
-                    contacts
-                      ? contacts?.map((c) => ({
-                          name: c.name,
-                          email: c.email,
-                          country: c.country
-                        }))
-                      : []
-                  }
-                  filename={`${channel}-contacts.csv`}
-                  target={"_blank"}
-                  className="export-area d-flex-align-center cursor-pointer"
+                <span
+                  onClick={() => setShow(true)}
+                  className="d-block export-area d-flex-align-center cursor-pointer"
                 >
                   <img src={DocumentText} alt="" />
-                  <p className="pt-3">Export</p>
-                </CSVLink>
+                  <span className="d-inline-block">Export</span>
+                </span>
+                <CSVLink
+                  data={processedData}
+                  filename={`${channel}-contacts.csv`}
+                  target={"_blank"}
+                  className="hidden"
+                  ref={csvInstance}
+                ></CSVLink>
 
                 <Pagination
                   setPage={setCurrentPage}

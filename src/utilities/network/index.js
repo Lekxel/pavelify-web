@@ -5,7 +5,7 @@ import { currentUserAuthToken } from "utilities/storage";
 
 const baseURL = process.env.REACT_APP_BASE_URL;
 
-const logout = () => {
+export const logout = () => {
   localStorage.removeItem("token");
   // window.location.href = publicRoutes.login
   window.location.replace(publicRoutes.login);

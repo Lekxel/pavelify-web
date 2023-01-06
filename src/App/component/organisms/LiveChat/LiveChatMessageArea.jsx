@@ -1,7 +1,6 @@
 import EmojiPicker from "emoji-picker-react";
 import { useCallback } from "react";
-import DefaultSender from "../../../../Assets/img/sender_default.svg";
-import SenderImage from "../../../../Assets/img/sender_navy.svg";
+import DefaultSender from "../../../../Assets/img/sender.svg";
 import { TextMessage } from "../../Atoms/LiveChat/TextMessage";
 import styles from "./LiveChatMessageArea.module.css";
 
@@ -34,11 +33,12 @@ export const LiveChatMessageArea = ({
       } collapse-bot`}
       id="MessageArea"
     >
-      <div className={`${styles.top} ${width <= 600 ? styles.top_600 : ""}`}>
-        <div className={styles.CloseIcon} onClick={HandleCovertingScreen}>
-          <i className="fas fa-chevron-left"></i>
-        </div>
-
+      <div
+        style={{
+          backgroundColor: appearance?.backgroundColor || "rgb(18,35,94)"
+        }}
+        className={`${styles.top} ${width <= 600 ? styles.top_600 : ""}`}
+      >
         <div className={styles.operator}></div>
 
         <div className={styles.presentation}>
@@ -50,12 +50,20 @@ export const LiveChatMessageArea = ({
             <i className="fas fa-ellipsis-v text-white"></i>
           </button>
         </div>
+        <div className={styles.CloseIcon} onClick={HandleCovertingScreen}>
+          <i className="fas fa-chevron-down"></i>
+        </div>
       </div>
 
       <div className={styles.body}>
         <div className={`${styles.bodyContent} ${width <= 600 ? styles.bodyContent_600 : ""}`}>
           {chats.map((chat) => (
-            <TextMessage key={chat._id} chat={chat} isMe={Boolean(chat.sender === "visitor")} />
+            <TextMessage
+              color={appearance?.backgroundColor}
+              key={chat._id}
+              chat={chat}
+              isMe={Boolean(chat.sender === "visitor")}
+            />
           ))}
           <div ref={messagesEndRef} />
         </div>
@@ -70,8 +78,28 @@ export const LiveChatMessageArea = ({
               />
             </div>
           )}
+
           <div className={styles.inputWrapper}>
-            <input
+            <div
+              style={{
+                background: "white",
+                textAlign: "center",
+                borderBottom: "1px solid #ddd",
+                position: "absolute",
+                top: "-20px",
+                width: "100%"
+              }}
+            >
+              <small style={{ fontSize: "11px" }} className="text-muted py-auto">
+                {" "}
+                Powered by{" "}
+                <a href="https://pavelify.com" target="_blank">
+                  <i style={{ color: appearance?.backgroundColor }} className="fa fa-bolt "></i>{" "}
+                  <b>Pavelify</b>
+                </a>
+              </small>
+            </div>
+            <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               type="text"
@@ -83,16 +111,26 @@ export const LiveChatMessageArea = ({
                 }
               }}
             />
-            <div className={`${styles.IconWrapper} ${styles.Smile}`}>
-              <i onClick={() => setShowEmojiPicker((p) => !p)} className="far fa-smile-wink"></i>
-            </div>
-            <div className={styles.IconWrapper}>
-              <i className="fas fa-paperclip"></i>
-            </div>
 
-            <label htmlFor="send" className={styles.LabelWrapper}>
-              <img src={message?.trim().length < 2 ? DefaultSender : SenderImage} alt="" />
-            </label>
+            {message?.trim() ? (
+              <label
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                  border: "none",
+                  cursor: "pointer",
+                  background: `${message?.trim().length < 2 ? "grey" : "#2D96D7"}`,
+                  boxShadow: "1px 1px 1px lightgrey",
+
+                  position: "relative"
+                }}
+                htmlFor="send"
+                className={styles.LabelWrapper}
+              >
+                <img src={DefaultSender} alt="" />
+              </label>
+            ) : null}
 
             <input
               onClick={handleSendMessage}
@@ -101,6 +139,14 @@ export const LiveChatMessageArea = ({
               id="send"
               style={{ display: "none" }}
             />
+          </div>
+          <div className={styles.iconsContainer}>
+            <div className={`${styles.IconWrapper} ${styles.Smile}`}>
+              <i onClick={() => setShowEmojiPicker((p) => !p)} className="far fa-smile-wink"></i>
+            </div>
+            <div className={styles.IconWrapper}>
+              <i className="fas fa-paperclip"></i>
+            </div>
           </div>
         </div>
       </div>

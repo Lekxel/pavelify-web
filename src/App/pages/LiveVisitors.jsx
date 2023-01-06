@@ -83,7 +83,6 @@ function LiveVisitors() {
       keepPreviousData: true
     }
   );
-
   return (
     <div className="LiveVisitors main-wrapper  d-flex">
       {/* sidebar */}
@@ -140,17 +139,20 @@ function LiveVisitors() {
                       </li>
                       <li>
                         <div className="icons-wrapper">
+                          {visitor?.country ? (
+                            <img
+                              style={{ width: "30px" }}
+                              src={`https://countryflagsapi.com/png/${visitor?.country}`}
+                              alt="flag"
+                            />
+                          ) : (
+                            <span />
+                          )}
                           <img
-                            src={
-                              visitor?.country ? (
-                                flags?.filter((f) => f.CountryName === visitor?.country)[0].Flag
-                              ) : (
-                                <span />
-                              )
-                            }
-                            alt=""
+                            style={{ width: "30px" }}
+                            src={visitor?.browser ? `images/${visitor?.browser}.png` : FireFox}
+                            alt="browser"
                           />
-                          <img src={FireFox} alt="" />
                         </div>
 
                         <button

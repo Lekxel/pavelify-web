@@ -12,6 +12,8 @@ export const HandleBotDisplay = (e, innerSize) => {
         document.querySelector(".collapse-bot").style.display = "none";
       }, 400);
       document.querySelector(".collapse-bot").classList.remove("active");
+      document.querySelector("#closeIconButton").classList.add("d-none");
+      document.querySelector("#chatIconImg").classList.remove("d-none");
     } else {
       document.querySelector(".collapse-bot").style.display = "block";
 
@@ -20,6 +22,8 @@ export const HandleBotDisplay = (e, innerSize) => {
         document.querySelector(".collapse-bot").style.transform = " translateY(0px)";
       }, 100);
       document.querySelector(".collapse-bot").classList.add("active");
+      document.querySelector("#closeIconButton").classList.remove("d-none");
+      document.querySelector("#chatIconImg").classList.add("d-none");
     }
   } else if (e.target.id === "burgerButton") {
     document.querySelector(".collapse-bot").style.display = "block";
